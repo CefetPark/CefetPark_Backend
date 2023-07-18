@@ -1,4 +1,6 @@
-﻿using CefetPark.Domain.Interfaces.Models;
+﻿using CefetPark.Application.Interfaces.Services;
+using CefetPark.Application.Services;
+using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Infra.Contexts;
 using CefetPark.Infra.Models;
 using CefetPark.Utils.Interfaces.Models;
@@ -21,6 +23,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<DataContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<INotificador, Notificador>();
+            services.AddScoped<IAuthService, AuthService>();
 
 
             return services;

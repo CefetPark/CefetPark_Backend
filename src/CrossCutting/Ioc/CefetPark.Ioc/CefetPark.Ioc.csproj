@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\CefetPark.Application\CefetPark.Application.csproj" />
     <ProjectReference Include="..\..\..\Domain\CefetPark.Domain\CefetPark.Domain.csproj" />
     <ProjectReference Include="..\..\..\Infra\CefetPark.Infra\CefetPark.Infra.csproj" />
     <ProjectReference Include="..\..\Utils\CefetPark.Utils\CefetPark.Utils.csproj" />

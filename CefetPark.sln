@@ -7,29 +7,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{307211C4-222
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{4E458C2C-10B9-4EB8-AB04-3E91366AE225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.WebApi", "src\WebApi\CefetPark.WebApi\CefetPark.WebApi.csproj", "{BFC81D82-21E3-4CC7-A819-72CE3A1A5B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.WebApi", "src\WebApi\CefetPark.WebApi\CefetPark.WebApi.csproj", "{BFC81D82-21E3-4CC7-A819-72CE3A1A5B48}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{7D01A580-ED51-4692-BCA5-0B227C008D8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.Application", "src\Application\CefetPark.Application\CefetPark.Application.csproj", "{2B46C8B8-F41E-4245-903B-BCCFA4D82A77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.Application", "src\Application\CefetPark.Application\CefetPark.Application.csproj", "{2B46C8B8-F41E-4245-903B-BCCFA4D82A77}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5421CC74-6CEB-4D30-A994-E56552F7760D} = {5421CC74-6CEB-4D30-A994-E56552F7760D}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{12F2D3A9-68A2-4636-9329-56877716DD00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.Infra", "src\Infra\CefetPark.Infra\CefetPark.Infra.csproj", "{33FF9B06-7543-4C6C-8710-19D72C2B239B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.Infra", "src\Infra\CefetPark.Infra\CefetPark.Infra.csproj", "{33FF9B06-7543-4C6C-8710-19D72C2B239B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{373A3A60-FEDF-4889-9844-8FAF495776A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9697012C-1678-4058-BF77-6F628D8B644F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.Domain", "src\Domain\CefetPark.Domain\CefetPark.Domain.csproj", "{42737EEF-3628-4D39-B4B1-03E75969D132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.Domain", "src\Domain\CefetPark.Domain\CefetPark.Domain.csproj", "{42737EEF-3628-4D39-B4B1-03E75969D132}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{1501BDC7-801A-4677-8062-794227E7BCA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{6669E9C4-A535-478B-8FE6-D802423FFF94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.Ioc", "src\CrossCutting\Ioc\CefetPark.Ioc\CefetPark.Ioc.csproj", "{8560495F-28ED-4113-9E3D-9665AF633FE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.Ioc", "src\CrossCutting\Ioc\CefetPark.Ioc\CefetPark.Ioc.csproj", "{8560495F-28ED-4113-9E3D-9665AF633FE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefetPark.Utils", "src\CrossCutting\Utils\CefetPark.Utils\CefetPark.Utils.csproj", "{5421CC74-6CEB-4D30-A994-E56552F7760D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefetPark.Utils", "src\CrossCutting\Utils\CefetPark.Utils\CefetPark.Utils.csproj", "{5421CC74-6CEB-4D30-A994-E56552F7760D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

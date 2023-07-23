@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7198;http://localhost:5198",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DefaultConnection": "Server=cefet-park.cb3uo8evogqk.us-east-1.rds.amazonaws.com;Database=sys;Uid=admin;Pwd=Cefet123!;"
       }
     },
     "IIS Express": {

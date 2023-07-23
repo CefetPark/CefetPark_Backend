@@ -6,11 +6,6 @@ using CefetPark.Infra.Models;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CefetPark.Ioc.DependeciesInjection
 {

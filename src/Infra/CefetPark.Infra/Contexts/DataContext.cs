@@ -2,7 +2,7 @@
 using CefetPark.Infra.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Data.Entity.ModelConfiguration.Conventions;
+
 
 namespace CefetPark.Infra.Contexts
 {
@@ -59,29 +59,64 @@ namespace CefetPark.Infra.Contexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configuração para desabilitar a pluralização
+            modelBuilder.Entity<Carro>().ToTable("Carro"); 
+            modelBuilder.Entity<Cor>().ToTable("Cor"); 
+            modelBuilder.Entity<Departamento>().ToTable("Departamento"); 
+            modelBuilder.Entity<Endereco>().ToTable("Endereco"); 
+            modelBuilder.Entity<Estacionamento>().ToTable("Estacionamento"); 
+            modelBuilder.Entity<Marca>().ToTable("Marca"); 
+            modelBuilder.Entity<Modelo>().ToTable("Modelo"); 
+            modelBuilder.Entity<RegistroEntradaSaida>().ToTable("RegistroEntradaSaida"); 
+            modelBuilder.Entity<TipoLogradouro>().ToTable("TipoLogradouro"); 
+            modelBuilder.Entity<TipoUsuario>().ToTable("TipoUsuario"); 
+            modelBuilder.Entity<Usuario>().ToTable("Usuario"); 
+            modelBuilder.Entity<UsuarioCarro>().ToTable("UsuarioCarro");
 
-            //remover a pluralização padrão do Etity Framework que é em inglês
-            //modelBuilder(Remove<PluralizingTableNameConvention>());
+            // Configuração para remover as convenções de cascata de exclusão
+            /* ao excluir um registro pai, o Entity Framework Core não excluirá automaticamente
+             * os registros filhos relacionados.Em vez disso, você precisará gerenciar manualmente
+             * a exclusão de registros dependentes.*/
+            // Para relações um-para-muitos (OneToMany)
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+            // Para relações muitos-para-muitos (ManyToMany)
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var navigation in entity.GetNavigations())
+                {
+                    navigation.ForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
+                }
+            }
 
-            ///*Desabilitar o delete em cascata em relacionamentos 1:N evitando
-            // ter registros filhos     sem registros pai*/
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Entity<Carro>();
+            //modelBuilder.Entity<Cor>();
+            //modelBuilder.Entity<Departamento>();
+            //modelBuilder.Entity<Endereco>();
+            //modelBuilder.Entity<Estacionamento>();
+            //modelBuilder.Entity<Marca>();
+            //modelBuilder.Entity<Modelo>();
+            //modelBuilder.Entity<RegistroEntradaSaida>();
+            //modelBuilder.Entity<TipoLogradouro>();
+            //modelBuilder.Entity<TipoUsuario>();
+            //modelBuilder.Entity<Usuario>();
+            //modelBuilder.Entity<UsuarioCarro>();
 
-            ////Basicamente a mesma configuração, porém em relacionamenos N:N
-            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-
-            //modelBuilder.ApplyConfiguration(new CorConfiguration());
-
-            ///*Toda propriedade do tipo string na entidade POCO
-            // seja configurado como VARCHAR no SQL Server*/
-            //modelBuilder.Properties<string>().Configure(p => p.HasColumnType("varchar"));
-
-            ///*Toda propriedade do tipo string na entidade POCO seja configurado como VARCHAR (150) no banco de dados */
-            //modelBuilder.Properties<string>().Configure(p => p.HasMaxLength(150));
-            //new CorConfiguration().CorConfiguration(modelBuilder.Entity<Cor>());
-            //modelBuilder.Configurations.Add(new CarroConfiguration());
-            //CorConfiguration corConfiguration = new CorConfiguration();
-            //modelBuilder.ApplyConfiguration<CorConfiguration>(corConfiguration);
+            modelBuilder.ApplyConfiguration(new CarroConfiguration());
+            modelBuilder.ApplyConfiguration(new CorConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartamentoConfiguration());
+            modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
+            modelBuilder.ApplyConfiguration(new EstacionamentoConfiguration());
+            modelBuilder.ApplyConfiguration(new MarcaConfiguration());
+            modelBuilder.ApplyConfiguration(new ModeloConfiguration());
+            modelBuilder.ApplyConfiguration(new RegistroEntradaSaidaConfiguration());
+            modelBuilder.ApplyConfiguration(new TipoLogradouroConfiguration());
+            modelBuilder.ApplyConfiguration(new TipoUsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioCarroConfiguration());
         }
     }
 }

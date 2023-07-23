@@ -1,32 +1,27 @@
 ﻿using CefetPark.Domain.Entidades;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CefetPark.Infra.Configurations
 {
-    public class MarcaConfiguration : EntityTypeConfiguration<Marca>
+    public class MarcaConfiguration : IEntityTypeConfiguration<Marca>
     {
-        public MarcaConfiguration()
+        public void Configure(EntityTypeBuilder<Marca> builder)
         {
             #region Chave primária
-            HasKey(k => k.Id);
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region Propriedades
-            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(p => p.Nome).IsRequired();
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Property(p => p.Nome).IsRequired().HasMaxLength(50);
             #endregion
 
             #region Relacionamentos
-            HasMany(r => r.Modelos)
-                .WithRequired(r => r.Marca)
-                .HasForeignKey(r => r.Marca_Id);
-            #endregion
+            builder.HasMany(r => r.Modelos)
+                    .WithOne(r => r.Marca)
+                    .HasForeignKey(r => r.Marca_Id);
+            #endregion            
         }
     }
 }

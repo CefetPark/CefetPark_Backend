@@ -1,35 +1,24 @@
 ﻿using CefetPark.Domain.Entidades;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CefetPark.Infra.Configurations
 {
-    public class EnderecoConfiguration : EntityTypeConfiguration<Endereco>
+    public class EnderecoConfiguration : IEntityTypeConfiguration<Endereco>
     {
-        public EnderecoConfiguration()
+        public void Configure(EntityTypeBuilder<Endereco> builder)
         {
             #region Chave primária
-            HasKey(k => k.Id);
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region Propriedades
-            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(p => p.Nome).IsRequired();
-            Property(p => p.Numero).IsRequired();
-            Property(p => p.Complemento).IsOptional();
-            Property(p => p.Bairro).IsRequired();
-            Property(p => p.Cep).IsRequired();
-            #endregion
-
-            #region Relacionamentos
-            //HasOne(r => r.Estacionamento)
-            //    .WithMany(r => r.Endereco)
-            //    .HasForeignKey(r => r.Endereco);
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Property(p => p.Nome).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Numero).IsRequired().HasMaxLength(10);
+            builder.Property(p => p.Complemento).HasMaxLength(50);
+            builder.Property(p => p.Bairro).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.Cep).IsRequired().HasMaxLength(8).IsFixedLength();
             #endregion
         }
     }

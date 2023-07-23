@@ -1,27 +1,37 @@
 ﻿using CefetPark.Domain.Entidades;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CefetPark.Infra.Configurations
 {
-    public class EstacionamentoConfiguration : EntityTypeConfiguration<Estacionamento>
+    public class EstacionamentoConfiguration : IEntityTypeConfiguration<Estacionamento>
     {
-        public EstacionamentoConfiguration()
+        public void Configure(EntityTypeBuilder<Estacionamento> builder)
         {
             #region Chave primária
-            HasKey(k => k.Id);
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region Propriedades
-            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(p => p.Nome).IsRequired();
-            Property(p => p.QtdVagasTotal).IsRequired();
-            Property(p => p.QtdVagasLivres).IsOptional();
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Property(p => p.Nome).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.QtdVagasTotal).IsRequired();
+            builder.Property(p => p.QtdVagasLivres).IsRequired();
+            #endregion
+
+            #region Relacionamentos
+            builder.HasOne(r => r.Endereco)
+                    .WithOne(r => r.Estacionamento)
+                    .HasForeignKey<Endereco>(r => r.Estacionamento_Id);
+            builder.HasMany(r => r.RegistrosEntradasSaidas)
+                    .WithOne(r => r.Estacionamento)
+                    .HasForeignKey(r => r.Estacionamento_Id);
             #endregion
         }
     }

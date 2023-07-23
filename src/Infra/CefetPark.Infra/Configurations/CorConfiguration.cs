@@ -1,32 +1,26 @@
 ﻿using CefetPark.Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CefetPark.Infra.Configurations
 {
-    public class CorConfiguration : EntityTypeConfiguration<Cor>
+    public class CorConfiguration : IEntityTypeConfiguration<Cor>
     {
-        public CorConfiguration()
+        public void Configure(EntityTypeBuilder<Cor> builder)
         {
             #region Chave primária
-            HasKey(k => k.Id);
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region Propriedades
-            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(p => p.Nome).IsRequired();
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Property(p => p.Nome).IsRequired().HasMaxLength(50);
             #endregion
 
             #region Relacionamentos
-            HasMany(r => r.Carros)
-                .WithRequired(r => r.Cor)
-                .HasForeignKey(r => r.Cor_Id);
+            builder.HasMany(r => r.Carros)
+                    .WithOne(r => r.Cor)
+                    .HasForeignKey(r => r.Cor_Id);
             #endregion
         }
     }    

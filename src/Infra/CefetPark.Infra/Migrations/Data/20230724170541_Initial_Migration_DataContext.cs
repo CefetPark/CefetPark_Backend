@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CefetPark.Infra.Migrations.Data
 {
-    public partial class Initial_Migration : Migration
+    public partial class Initial_Migration_DataContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,7 +25,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +68,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +88,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,7 +108,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +128,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,7 +149,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,13 +179,17 @@ namespace CefetPark.Infra.Migrations.Data
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cep = table.Column<string>(type: "char(8)", fixedLength: true, maxLength: 8, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Longitude = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Latitude = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TipoLogradouro_Id = table.Column<int>(type: "int", nullable: false),
                     Estacionamento_Id = table.Column<int>(type: "int", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -233,7 +237,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -267,7 +271,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -302,7 +306,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -339,7 +343,7 @@ namespace CefetPark.Infra.Migrations.Data
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
                     AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {

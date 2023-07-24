@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CefetPark.Infra.Migrations.Data
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230723192810_Initial_Migration")]
-    partial class Initial_Migration
+    [Migration("20230724170541_Initial_Migration_DataContext")]
+    partial class Initial_Migration_DataContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -162,6 +162,14 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.Property<int?>("Estacionamento_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
                         .IsRequired()

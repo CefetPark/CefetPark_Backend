@@ -161,6 +161,14 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<int?>("Estacionamento_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)

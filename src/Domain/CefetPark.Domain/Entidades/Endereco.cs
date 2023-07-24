@@ -13,6 +13,8 @@ namespace CefetPark.Domain.Entidades
         public string? Complemento { get; set; }
         public string Bairro { get; set; }
         public string Cep { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
         public int TipoLogradouro_Id { get; set; }
         public TipoLogradouro TipoLogradouro { get; set; }
         public int? Estacionamento_Id { get; set; }

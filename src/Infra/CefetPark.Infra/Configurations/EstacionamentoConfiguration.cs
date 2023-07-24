@@ -19,7 +19,6 @@ namespace CefetPark.Infra.Configurations
             #endregion
 
             #region Propriedades
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.Nome).IsRequired().HasMaxLength(50);
             builder.Property(p => p.QtdVagasTotal).IsRequired();
             builder.Property(p => p.QtdVagasLivres).IsRequired();
@@ -28,7 +27,7 @@ namespace CefetPark.Infra.Configurations
             #region Relacionamentos
             builder.HasOne(r => r.Endereco)
                     .WithOne(r => r.Estacionamento)
-                    .HasForeignKey<Endereco>(r => r.Estacionamento_Id);
+                    .HasForeignKey<Estacionamento>(r => r.Endereco_Id);
             builder.HasMany(r => r.RegistrosEntradasSaidas)
                     .WithOne(r => r.Estacionamento)
                     .HasForeignKey(r => r.Estacionamento_Id);

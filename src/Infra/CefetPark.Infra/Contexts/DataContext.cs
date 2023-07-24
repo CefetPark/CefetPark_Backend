@@ -16,7 +16,6 @@ namespace CefetPark.Infra.Contexts
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<RegistroEntradaSaida> RegistrosEntradasSaidas { get; set; }
-        public DbSet<TipoLogradouro> TiposLogradouros { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioCarro> UsuariosCarros { get; set; }
@@ -59,64 +58,8 @@ namespace CefetPark.Infra.Contexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuração para desabilitar a pluralização
-            modelBuilder.Entity<Carro>().ToTable("Carro"); 
-            modelBuilder.Entity<Cor>().ToTable("Cor"); 
-            modelBuilder.Entity<Departamento>().ToTable("Departamento"); 
-            modelBuilder.Entity<Endereco>().ToTable("Endereco"); 
-            modelBuilder.Entity<Estacionamento>().ToTable("Estacionamento"); 
-            modelBuilder.Entity<Marca>().ToTable("Marca"); 
-            modelBuilder.Entity<Modelo>().ToTable("Modelo"); 
-            modelBuilder.Entity<RegistroEntradaSaida>().ToTable("RegistroEntradaSaida"); 
-            modelBuilder.Entity<TipoLogradouro>().ToTable("TipoLogradouro"); 
-            modelBuilder.Entity<TipoUsuario>().ToTable("TipoUsuario"); 
-            modelBuilder.Entity<Usuario>().ToTable("Usuario"); 
-            modelBuilder.Entity<UsuarioCarro>().ToTable("UsuarioCarro");
-
-            // Configuração para remover as convenções de cascata de exclusão
-            /* ao excluir um registro pai, o Entity Framework Core não excluirá automaticamente
-             * os registros filhos relacionados.Em vez disso, você precisará gerenciar manualmente
-             * a exclusão de registros dependentes.*/
-            // Para relações um-para-muitos (OneToMany)
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
-            // Para relações muitos-para-muitos (ManyToMany)
-            foreach (var entity in modelBuilder.Model.GetEntityTypes())
-            {
-                foreach (var navigation in entity.GetNavigations())
-                {
-                    navigation.ForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
-                }
-            }
-
-            //modelBuilder.Entity<Carro>();
-            //modelBuilder.Entity<Cor>();
-            //modelBuilder.Entity<Departamento>();
-            //modelBuilder.Entity<Endereco>();
-            //modelBuilder.Entity<Estacionamento>();
-            //modelBuilder.Entity<Marca>();
-            //modelBuilder.Entity<Modelo>();
-            //modelBuilder.Entity<RegistroEntradaSaida>();
-            //modelBuilder.Entity<TipoLogradouro>();
-            //modelBuilder.Entity<TipoUsuario>();
-            //modelBuilder.Entity<Usuario>();
-            //modelBuilder.Entity<UsuarioCarro>();
-
-            modelBuilder.ApplyConfiguration(new CarroConfiguration());
-            modelBuilder.ApplyConfiguration(new CorConfiguration());
-            modelBuilder.ApplyConfiguration(new DepartamentoConfiguration());
-            modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
-            modelBuilder.ApplyConfiguration(new EstacionamentoConfiguration());
-            modelBuilder.ApplyConfiguration(new MarcaConfiguration());
-            modelBuilder.ApplyConfiguration(new ModeloConfiguration());
-            modelBuilder.ApplyConfiguration(new RegistroEntradaSaidaConfiguration());
-            modelBuilder.ApplyConfiguration(new TipoLogradouroConfiguration());
-            modelBuilder.ApplyConfiguration(new TipoUsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new UsuarioCarroConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

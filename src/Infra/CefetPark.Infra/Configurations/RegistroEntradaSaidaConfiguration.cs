@@ -12,7 +12,6 @@ namespace CefetPark.Infra.Configurations
             #endregion
 
             #region Propriedades
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.DataEntrada).IsRequired();
             builder.Property(p => p.DataSaida);
             #endregion

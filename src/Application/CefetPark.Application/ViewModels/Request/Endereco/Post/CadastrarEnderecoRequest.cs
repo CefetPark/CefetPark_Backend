@@ -9,6 +9,6 @@
         public string Cep { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }
-        public int TipoLogradouro_Id { get; set; }
+        public string TipoLogradouro { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CefetPark.Domain.Entidades;
+using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Infra.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -19,9 +20,13 @@ namespace CefetPark.Infra.Contexts
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioCarro> UsuariosCarros { get; set; }
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+
+
+        private readonly IUser _user;
+        public DataContext(DbContextOptions<DataContext> options, IUser user) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            _user = user;
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -30,6 +35,7 @@ namespace CefetPark.Infra.Contexts
                 if (entry.State == EntityState.Added)
                 {
                     this.ObterDataCriacao(entry);
+                    this.ObterCriadoPor(entry);
                 }
                 if (entry.State == EntityState.Modified)
                 {
@@ -43,6 +49,14 @@ namespace CefetPark.Infra.Contexts
             if (entry.Entity.GetType().GetProperty("DataCriacao") != null)
             {
                 entry.Property("DataCriacao").CurrentValue = DateTime.Now;
+            }
+        }
+        private void ObterCriadoPor(EntityEntry entry)
+        {
+            var propriedade = "CriadoPor";
+            if (entry.Entity.GetType().GetProperty(propriedade) != null)
+            {
+                entry.Property(propriedade).CurrentValue = _user.ObterUsuarioId();
             }
         }
         private void ObterDataAtualizacao(EntityEntry entry)

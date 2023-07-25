@@ -4,11 +4,12 @@ using CefetPark.Application.ViewModels.Request.Estacionamento.Post;
 using CefetPark.Application.ViewModels.Request.Estacionamento.Put;
 using CefetPark.Application.ViewModels.Response.Estacionamento.Get;
 using CefetPark.Domain.Entidades;
-using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Domain.Interfaces.Repositories;
+using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
+using System.Net;
 
 namespace CefetPark.Application.Services
 {
@@ -33,13 +34,13 @@ namespace CefetPark.Application.Services
 
             if (entidade == null)
             {
-                _notificador.Handle(new Notificacao("Entidade não Encontrada", System.Net.HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
                 return false;
             }
 
             _commonRepository.RastrearEntidade(entidade);
 
-            HelperAtualizacao.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
+            AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
 
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -62,7 +63,7 @@ namespace CefetPark.Application.Services
 
             if (entidade == null)
             {
-                _notificador.Handle(new Notificacao("Entidade não Encontrada", System.Net.HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
                 return false;
             }
 
@@ -81,7 +82,7 @@ namespace CefetPark.Application.Services
 
             if (entidade == null)
             {
-                _notificador.Handle(new Notificacao("Entidade não Encontrada", System.Net.HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
                 return null;
             }
 

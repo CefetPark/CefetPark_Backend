@@ -6,6 +6,7 @@ using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Application.ViewModels.Response.Auth.Post;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
+using CefetPark.Utils.Enums;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.AspNetCore.Identity;
@@ -79,7 +80,7 @@ namespace CefetPark.Application.Services
 
             if (usuario == null)
             {
-                _notificador.Handle(new Notificacao("Usuario_Id Não encontrado", HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
                 return null;
             }
 

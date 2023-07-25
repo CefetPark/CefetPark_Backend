@@ -1,6 +1,6 @@
 ﻿namespace CefetPark.Utils.Helpers
 {
-    public class HelperAtualizacao
+    public class AtualizacaoHelper
     {
         public static void AtualizarCamposEntidadeComBaseNaViewModel<T, Y>(T viewModel, Y entidade)
         {

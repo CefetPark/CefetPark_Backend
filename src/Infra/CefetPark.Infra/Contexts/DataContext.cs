@@ -39,6 +39,7 @@ namespace CefetPark.Infra.Contexts
                 }
                 if (entry.State == EntityState.Modified)
                 {
+                    this.ObterAtualizadoPor(entry);
                     this.ObterDataAtualizacao(entry);
                 }
             }
@@ -54,6 +55,14 @@ namespace CefetPark.Infra.Contexts
         private void ObterCriadoPor(EntityEntry entry)
         {
             var propriedade = "CriadoPor";
+            if (entry.Entity.GetType().GetProperty(propriedade) != null)
+            {
+                entry.Property(propriedade).CurrentValue = _user.ObterUsuarioId();
+            }
+        }
+        private void ObterAtualizadoPor(EntityEntry entry)
+        {
+            var propriedade = "AtualizadoPor";
             if (entry.Entity.GetType().GetProperty(propriedade) != null)
             {
                 entry.Property(propriedade).CurrentValue = _user.ObterUsuarioId();

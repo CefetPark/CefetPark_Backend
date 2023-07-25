@@ -4,7 +4,6 @@ using CefetPark.Application.Services;
 using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Infra.Contexts;
-using CefetPark.Infra.Models;
 using CefetPark.Infra.Repositories;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
@@ -27,10 +26,11 @@ namespace CefetPark.Ioc.DependeciesInjection
 
             #region Repositories
             services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IEstacionamentoRepository, EstacionamentoRepository>();
             #endregion
 
             #region Models
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<INotificador, Notificador>();
             services.AddScoped<IUser, AspNetUser>();
             #endregion

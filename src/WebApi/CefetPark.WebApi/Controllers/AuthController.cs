@@ -23,10 +23,10 @@ namespace CefetPark.WebApi.Controllers
         }
 
         [Authorize(Roles = "Adm")]
-        [HttpPost("registrar")]
-        public async Task<ActionResult> RegistrarAsync(RegistrarAuthRequest request)
+        [HttpPost("cadastrar")]
+        public async Task<ActionResult> CadastrarAsync(CadastrarAuthRequest request)
         {
-            var response = await _authService.RegistrarAsync(request);
+            var response = await _authService.CadastrarAsync(request);
             return CustomResponse(response);
         }
     }

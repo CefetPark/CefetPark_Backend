@@ -6,6 +6,6 @@ namespace CefetPark.Application.Interfaces.Services
     public interface IAuthService
     {
         public Task<LoginAuthResponse> LoginAsync(LoginAuthRequest request);
-        public Task<bool> RegistrarAsync(RegistrarAuthRequest request);
+        public Task<bool> CadastrarAsync(CadastrarAuthRequest request);
     }
 }

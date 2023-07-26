@@ -22,12 +22,13 @@ namespace CefetPark.Ioc.DependeciesInjection
             #region Services
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEstacionamentoService, EstacionamentoService>();
+            services.AddScoped<IDepartamentoService, DepartamentoService>();
+            services.AddScoped<IMarcaService, MarcaService>();
             #endregion
 
             #region Repositories
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            services.AddScoped<IEstacionamentoRepository, EstacionamentoRepository>();
             #endregion
 
             #region Models

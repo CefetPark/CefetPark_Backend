@@ -67,5 +67,31 @@ namespace CefetPark.Infra.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public async Task<IEnumerable<T>> ObterTodosAsync<T>(IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity
+        {
+            var query = _dataContext.Set<T>().AsQueryable();
+            
+            foreach (var prop in propriedadesRelacionamentos)
+            {
+                query = query.Include(prop);
+            }
+
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<T?> ObterPorIdAsync<T>(int id, IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity
+        {
+            var query = _dataContext.Set<T>().AsQueryable();
+
+            foreach (var prop in propriedadesRelacionamentos)
+            {
+                query = query.Include(prop);
+            }
+
+            var result = await query.FirstOrDefaultAsync(x => x.Id == id);
+            return result;
+        }
     }
 }

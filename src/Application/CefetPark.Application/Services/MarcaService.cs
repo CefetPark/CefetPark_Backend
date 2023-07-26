@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CefetPark.Application.Interfaces.Services;
-using CefetPark.Application.ViewModels.Request.Estacionamento.Post;
-using CefetPark.Application.ViewModels.Request.Estacionamento.Put;
-using CefetPark.Application.ViewModels.Response.Estacionamento.Get;
+using CefetPark.Application.ViewModels.Request.Common.Post;
+using CefetPark.Application.ViewModels.Request.Common.Put;
+using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
@@ -13,22 +13,21 @@ using System.Net;
 
 namespace CefetPark.Application.Services
 {
-    public class EstacionamentoService : IEstacionamentoService
+    public class MarcaService : IMarcaService
     {
         private readonly ICommonRepository _commonRepository;
-        private readonly IMapper _mapper;
         private readonly INotificador _notificador;
+        private readonly IMapper _mapper;
 
-        public EstacionamentoService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador)
+        public MarcaService(ICommonRepository commonRepository, INotificador notificador, IMapper mapper)
         {
             _commonRepository = commonRepository;
-            _mapper = mapper;
             _notificador = notificador;
+            _mapper = mapper;
         }
-
-        public async Task<bool> AtualizarAsync(AtualizarEstacionamentoRequest request)
+        public async Task<bool> AtualizarAsync(AtualizarCommonRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Id, new List<string> { "Endereco" });
+            var entidade = await _commonRepository.ObterPorIdAsync<Marca>(request.Id);
 
             if (entidade == null)
             {
@@ -45,19 +44,20 @@ namespace CefetPark.Application.Services
             return true;
         }
 
-        public async Task<bool> CadastrarAsync(CadastrarEstacionamentoRequest request)
+        public async Task<bool> CadastrarAsync(CadastrarCommonRequest request)
         {
-            var entidade = _mapper.Map<Estacionamento>(request);
+            var entidade = _mapper.Map<Marca>(request);
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
+
         }
 
         public async Task<bool> DesativarAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Estacionamento>(id);
+            var entidade = await _commonRepository.ObterPorIdAsync<Marca>(id);
 
             if (entidade == null)
             {
@@ -66,7 +66,7 @@ namespace CefetPark.Application.Services
             }
 
             _commonRepository.RastrearEntidade(entidade);
-            
+
             entidade.Desativar();
 
             await _commonRepository.SalvarAlteracoesAsync();
@@ -74,9 +74,9 @@ namespace CefetPark.Application.Services
             return true;
         }
 
-        public async Task<ObterEstacionamentoResponse?> ObterPorIdAsync(int id)
+        public async Task<ObterCommonResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Estacionamento>(id, new List<string> { "Endereco"});
+            var entidade = await _commonRepository.ObterPorIdAsync<Marca>(id);
 
             if (entidade == null)
             {
@@ -84,16 +84,16 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var response = _mapper.Map<ObterEstacionamentoResponse>(entidade);
+            var response = _mapper.Map<ObterCommonResponse>(entidade);
 
             return response;
         }
 
-        public async Task<IEnumerable<ObterEstacionamentoResponse>> ObterTodosAsync()
+        public async Task<IEnumerable<ObterCommonResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Estacionamento>(new List<string> { "Endereco"});
+            var entidades = await _commonRepository.ObterTodosAsync<Marca>(new List<string>{ "Modelos"});
 
-            var response = _mapper.Map<IEnumerable<ObterEstacionamentoResponse>>(entidades);
+            var response = _mapper.Map<IEnumerable<ObterCommonResponse>>(entidades);
 
             return response;
         }

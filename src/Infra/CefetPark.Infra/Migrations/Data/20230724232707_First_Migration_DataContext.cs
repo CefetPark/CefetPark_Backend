@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CefetPark.Infra.Migrations.Data
 {
-    public partial class Initial_Migration : Migration
+    public partial class First_Migration_DataContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace CefetPark.Infra.Migrations.Data
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Cor",
+                name: "Cores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,17 +24,17 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cor", x => x.Id);
+                    table.PrimaryKey("PK_Cores", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Departamento",
+                name: "Departamentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -44,127 +44,17 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departamento", x => x.Id);
+                    table.PrimaryKey("PK_Departamentos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Estacionamento",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    QtdVagasTotal = table.Column<int>(type: "int", nullable: false),
-                    QtdVagasLivres = table.Column<int>(type: "int", nullable: false),
-                    Endereco_Id = table.Column<int>(type: "int", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Estacionamento", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Marca",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Marca", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "TipoLogradouro",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoLogradouro", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "TipoUsuario",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoUsuario", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Modelo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Marca_Id = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Modelo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Modelo_Marca_Marca_Id",
-                        column: x => x.Marca_Id,
-                        principalTable: "Marca",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Endereco",
+                name: "Enderecos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -179,34 +69,122 @@ namespace CefetPark.Infra.Migrations.Data
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cep = table.Column<string>(type: "char(8)", fixedLength: true, maxLength: 8, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TipoLogradouro_Id = table.Column<int>(type: "int", nullable: false),
-                    Estacionamento_Id = table.Column<int>(type: "int", nullable: true),
+                    Longitude = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Latitude = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TipoLogradouro = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Endereco", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Endereco_Estacionamento_Estacionamento_Id",
-                        column: x => x.Estacionamento_Id,
-                        principalTable: "Estacionamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Endereco_TipoLogradouro_TipoLogradouro_Id",
-                        column: x => x.TipoLogradouro_Id,
-                        principalTable: "TipoLogradouro",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Enderecos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Usuario",
+                name: "Marcas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CriadoPor = table.Column<int>(type: "int", nullable: false),
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Marcas", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TiposUsuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CriadoPor = table.Column<int>(type: "int", nullable: false),
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TiposUsuarios", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Estacionamentos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    QtdVagasTotal = table.Column<int>(type: "int", nullable: false),
+                    QtdVagasLivres = table.Column<int>(type: "int", nullable: false),
+                    Endereco_Id = table.Column<int>(type: "int", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CriadoPor = table.Column<int>(type: "int", nullable: false),
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estacionamentos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Estacionamentos_Enderecos_Endereco_Id",
+                        column: x => x.Endereco_Id,
+                        principalTable: "Enderecos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Modelos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Marca_Id = table.Column<int>(type: "int", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CriadoPor = table.Column<int>(type: "int", nullable: false),
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modelos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Modelos_Marcas_Marca_Id",
+                        column: x => x.Marca_Id,
+                        principalTable: "Marcas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -232,29 +210,29 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuario_Departamento_Departamento_Id",
+                        name: "FK_Usuarios_Departamentos_Departamento_Id",
                         column: x => x.Departamento_Id,
-                        principalTable: "Departamento",
+                        principalTable: "Departamentos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Usuario_TipoUsuario_TipoUsuario_Id",
+                        name: "FK_Usuarios_TiposUsuarios_TipoUsuario_Id",
                         column: x => x.TipoUsuario_Id,
-                        principalTable: "TipoUsuario",
+                        principalTable: "TiposUsuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Carro",
+                name: "Carros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -266,29 +244,29 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carro", x => x.Id);
+                    table.PrimaryKey("PK_Carros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carro_Cor_Cor_Id",
+                        name: "FK_Carros_Cores_Cor_Id",
                         column: x => x.Cor_Id,
-                        principalTable: "Cor",
+                        principalTable: "Cores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Carro_Modelo_Modelo_Id",
+                        name: "FK_Carros_Modelos_Modelo_Id",
                         column: x => x.Modelo_Id,
-                        principalTable: "Modelo",
+                        principalTable: "Modelos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "RegistroEntradaSaida",
+                name: "RegistrosEntradasSaidas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -301,35 +279,35 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegistroEntradaSaida", x => x.Id);
+                    table.PrimaryKey("PK_RegistrosEntradasSaidas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RegistroEntradaSaida_Carro_Carro_Id",
+                        name: "FK_RegistrosEntradasSaidas_Carros_Carro_Id",
                         column: x => x.Carro_Id,
-                        principalTable: "Carro",
+                        principalTable: "Carros",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RegistroEntradaSaida_Estacionamento_Estacionamento_Id",
+                        name: "FK_RegistrosEntradasSaidas_Estacionamentos_Estacionamento_Id",
                         column: x => x.Estacionamento_Id,
-                        principalTable: "Estacionamento",
+                        principalTable: "Estacionamentos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RegistroEntradaSaida_Usuario_Usuario_Id",
+                        name: "FK_RegistrosEntradasSaidas_Usuarios_Usuario_Id",
                         column: x => x.Usuario_Id,
-                        principalTable: "Usuario",
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "UsuarioCarro",
+                name: "UsuariosCarros",
                 columns: table => new
                 {
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
@@ -338,121 +316,113 @@ namespace CefetPark.Infra.Migrations.Data
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
-                    AtualizadoPor = table.Column<int>(type: "int", nullable: false),
-                    EstaAtivo = table.Column<bool>(type: "bit", nullable: false)
+                    AtualizadoPor = table.Column<int>(type: "int", nullable: true),
+                    EstaAtivo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsuarioCarro", x => new { x.Usuario_Id, x.Carro_Id });
+                    table.PrimaryKey("PK_UsuariosCarros", x => new { x.Usuario_Id, x.Carro_Id });
                     table.ForeignKey(
-                        name: "FK_UsuarioCarro_Carro_Carro_Id",
+                        name: "FK_UsuariosCarros_Carros_Carro_Id",
                         column: x => x.Carro_Id,
-                        principalTable: "Carro",
+                        principalTable: "Carros",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsuarioCarro_Usuario_Usuario_Id",
+                        name: "FK_UsuariosCarros_Usuarios_Usuario_Id",
                         column: x => x.Usuario_Id,
-                        principalTable: "Usuario",
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carro_Cor_Id",
-                table: "Carro",
+                name: "IX_Carros_Cor_Id",
+                table: "Carros",
                 column: "Cor_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carro_Modelo_Id",
-                table: "Carro",
+                name: "IX_Carros_Modelo_Id",
+                table: "Carros",
                 column: "Modelo_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Endereco_Estacionamento_Id",
-                table: "Endereco",
-                column: "Estacionamento_Id",
+                name: "IX_Estacionamentos_Endereco_Id",
+                table: "Estacionamentos",
+                column: "Endereco_Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Endereco_TipoLogradouro_Id",
-                table: "Endereco",
-                column: "TipoLogradouro_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Modelo_Marca_Id",
-                table: "Modelo",
+                name: "IX_Modelos_Marca_Id",
+                table: "Modelos",
                 column: "Marca_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistroEntradaSaida_Carro_Id",
-                table: "RegistroEntradaSaida",
+                name: "IX_RegistrosEntradasSaidas_Carro_Id",
+                table: "RegistrosEntradasSaidas",
                 column: "Carro_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistroEntradaSaida_Estacionamento_Id",
-                table: "RegistroEntradaSaida",
+                name: "IX_RegistrosEntradasSaidas_Estacionamento_Id",
+                table: "RegistrosEntradasSaidas",
                 column: "Estacionamento_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistroEntradaSaida_Usuario_Id",
-                table: "RegistroEntradaSaida",
+                name: "IX_RegistrosEntradasSaidas_Usuario_Id",
+                table: "RegistrosEntradasSaidas",
                 column: "Usuario_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_Departamento_Id",
-                table: "Usuario",
+                name: "IX_Usuarios_Departamento_Id",
+                table: "Usuarios",
                 column: "Departamento_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_TipoUsuario_Id",
-                table: "Usuario",
+                name: "IX_Usuarios_TipoUsuario_Id",
+                table: "Usuarios",
                 column: "TipoUsuario_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsuarioCarro_Carro_Id",
-                table: "UsuarioCarro",
+                name: "IX_UsuariosCarros_Carro_Id",
+                table: "UsuariosCarros",
                 column: "Carro_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Endereco");
+                name: "RegistrosEntradasSaidas");
 
             migrationBuilder.DropTable(
-                name: "RegistroEntradaSaida");
+                name: "UsuariosCarros");
 
             migrationBuilder.DropTable(
-                name: "UsuarioCarro");
+                name: "Estacionamentos");
 
             migrationBuilder.DropTable(
-                name: "TipoLogradouro");
+                name: "Carros");
 
             migrationBuilder.DropTable(
-                name: "Estacionamento");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Carro");
+                name: "Enderecos");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Cores");
 
             migrationBuilder.DropTable(
-                name: "Cor");
+                name: "Modelos");
 
             migrationBuilder.DropTable(
-                name: "Modelo");
+                name: "Departamentos");
 
             migrationBuilder.DropTable(
-                name: "Departamento");
+                name: "TiposUsuarios");
 
             migrationBuilder.DropTable(
-                name: "TipoUsuario");
-
-            migrationBuilder.DropTable(
-                name: "Marca");
+                name: "Marcas");
         }
     }
 }

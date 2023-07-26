@@ -13,7 +13,6 @@ namespace CefetPark.Infra.Configurations
             #endregion
 
             #region Propriedades
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.Nome).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Numero).IsRequired().HasMaxLength(10);
             builder.Property(p => p.Complemento).HasMaxLength(50);

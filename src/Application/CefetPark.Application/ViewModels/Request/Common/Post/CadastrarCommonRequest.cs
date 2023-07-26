@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CefetPark.Domain.Entidades
+namespace CefetPark.Application.ViewModels.Request.Common.Post
 {
-    public class TipoLogradouro : CommonEntity
+    public class CadastrarCommonRequest
     {
         public string Nome { get; set; }
-        public ICollection<Endereco> Enderecos { get; set; }
     }
 }

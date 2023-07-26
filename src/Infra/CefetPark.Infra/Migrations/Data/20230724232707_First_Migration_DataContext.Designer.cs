@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CefetPark.Infra.Migrations.Data
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230723192810_Initial_Migration")]
-    partial class Initial_Migration
+    [Migration("20230724232707_First_Migration_DataContext")]
+    partial class First_Migration_DataContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("Cor_Id")
@@ -59,7 +59,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasIndex("Modelo_Id");
 
-                    b.ToTable("Carro", (string)null);
+                    b.ToTable("Carros");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Cor", b =>
@@ -68,7 +68,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -90,7 +90,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cor", (string)null);
+                    b.ToTable("Cores");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Departamento", b =>
@@ -99,7 +99,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -121,7 +121,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departamento", (string)null);
+                    b.ToTable("Departamentos");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Endereco", b =>
@@ -130,7 +130,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<string>("Bairro")
@@ -160,8 +160,13 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<bool>("EstaAtivo")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("Estacionamento_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -173,17 +178,13 @@ namespace CefetPark.Infra.Migrations.Data
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
 
-                    b.Property<int>("TipoLogradouro_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoLogradouro")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Estacionamento_Id")
-                        .IsUnique();
-
-                    b.HasIndex("TipoLogradouro_Id");
-
-                    b.ToTable("Endereco", (string)null);
+                    b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Estacionamento", b =>
@@ -192,7 +193,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -204,7 +205,7 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("Endereco_Id")
+                    b.Property<int>("Endereco_Id")
                         .HasColumnType("int");
 
                     b.Property<bool>("EstaAtivo")
@@ -223,7 +224,10 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estacionamento", (string)null);
+                    b.HasIndex("Endereco_Id")
+                        .IsUnique();
+
+                    b.ToTable("Estacionamentos");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Marca", b =>
@@ -232,7 +236,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -254,7 +258,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("Marca", (string)null);
+                    b.ToTable("Marcas");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Modelo", b =>
@@ -263,7 +267,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -290,7 +294,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasIndex("Marca_Id");
 
-                    b.ToTable("Modelo", (string)null);
+                    b.ToTable("Modelos");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.RegistroEntradaSaida", b =>
@@ -299,7 +303,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("Carro_Id")
@@ -337,38 +341,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasIndex("Usuario_Id");
 
-                    b.ToTable("RegistroEntradaSaida", (string)null);
-                });
-
-            modelBuilder.Entity("CefetPark.Domain.Entidades.TipoLogradouro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AtualizadoPor")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CriadoPor")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("EstaAtivo")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoLogradouro", (string)null);
+                    b.ToTable("RegistrosEntradasSaidas");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.TipoUsuario", b =>
@@ -377,7 +350,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -399,7 +372,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoUsuario", (string)null);
+                    b.ToTable("TiposUsuarios");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Usuario", b =>
@@ -412,7 +385,7 @@ namespace CefetPark.Infra.Migrations.Data
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<string>("Cpf")
@@ -473,7 +446,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasIndex("TipoUsuario_Id");
 
-                    b.ToTable("Usuario", (string)null);
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.UsuarioCarro", b =>
@@ -484,7 +457,7 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<int>("Carro_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("AtualizadoPor")
+                    b.Property<int?>("AtualizadoPor")
                         .HasColumnType("int");
 
                     b.Property<int>("CriadoPor")
@@ -506,7 +479,7 @@ namespace CefetPark.Infra.Migrations.Data
 
                     b.HasIndex("Carro_Id");
 
-                    b.ToTable("UsuarioCarro", (string)null);
+                    b.ToTable("UsuariosCarros");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Carro", b =>
@@ -514,13 +487,13 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasOne("CefetPark.Domain.Entidades.Cor", "Cor")
                         .WithMany("Carros")
                         .HasForeignKey("Cor_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CefetPark.Domain.Entidades.Modelo", "Modelo")
                         .WithMany("Carros")
                         .HasForeignKey("Modelo_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cor");
@@ -528,22 +501,15 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Navigation("Modelo");
                 });
 
-            modelBuilder.Entity("CefetPark.Domain.Entidades.Endereco", b =>
+            modelBuilder.Entity("CefetPark.Domain.Entidades.Estacionamento", b =>
                 {
-                    b.HasOne("CefetPark.Domain.Entidades.Estacionamento", "Estacionamento")
-                        .WithOne("Endereco")
-                        .HasForeignKey("CefetPark.Domain.Entidades.Endereco", "Estacionamento_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("CefetPark.Domain.Entidades.TipoLogradouro", "TipoLogradouro")
-                        .WithMany("Enderecos")
-                        .HasForeignKey("TipoLogradouro_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("CefetPark.Domain.Entidades.Endereco", "Endereco")
+                        .WithOne("Estacionamento")
+                        .HasForeignKey("CefetPark.Domain.Entidades.Estacionamento", "Endereco_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Estacionamento");
-
-                    b.Navigation("TipoLogradouro");
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.Modelo", b =>
@@ -551,7 +517,7 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasOne("CefetPark.Domain.Entidades.Marca", "Marca")
                         .WithMany("Modelos")
                         .HasForeignKey("Marca_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Marca");
@@ -562,19 +528,19 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasOne("CefetPark.Domain.Entidades.Carro", "Carro")
                         .WithMany("RegistrosEntradasSaidas")
                         .HasForeignKey("Carro_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CefetPark.Domain.Entidades.Estacionamento", "Estacionamento")
                         .WithMany("RegistrosEntradasSaidas")
                         .HasForeignKey("Estacionamento_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CefetPark.Domain.Entidades.Usuario", "Usuario")
                         .WithMany("RegistrosEntradasSaidas")
                         .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Carro");
@@ -589,13 +555,13 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasOne("CefetPark.Domain.Entidades.Departamento", "Departamento")
                         .WithMany("Usuarios")
                         .HasForeignKey("Departamento_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CefetPark.Domain.Entidades.TipoUsuario", "TipoUsuario")
                         .WithMany("Usuarios")
                         .HasForeignKey("TipoUsuario_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Departamento");
@@ -608,13 +574,13 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasOne("CefetPark.Domain.Entidades.Carro", "Carro")
                         .WithMany("UsuariosCarros")
                         .HasForeignKey("Carro_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CefetPark.Domain.Entidades.Usuario", "Usuario")
                         .WithMany("UsuariosCarros")
                         .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Carro");
@@ -639,10 +605,14 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Navigation("Usuarios");
                 });
 
+            modelBuilder.Entity("CefetPark.Domain.Entidades.Endereco", b =>
+                {
+                    b.Navigation("Estacionamento")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CefetPark.Domain.Entidades.Estacionamento", b =>
                 {
-                    b.Navigation("Endereco");
-
                     b.Navigation("RegistrosEntradasSaidas");
                 });
 
@@ -654,11 +624,6 @@ namespace CefetPark.Infra.Migrations.Data
             modelBuilder.Entity("CefetPark.Domain.Entidades.Modelo", b =>
                 {
                     b.Navigation("Carros");
-                });
-
-            modelBuilder.Entity("CefetPark.Domain.Entidades.TipoLogradouro", b =>
-                {
-                    b.Navigation("Enderecos");
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.TipoUsuario", b =>

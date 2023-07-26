@@ -1,4 +1,5 @@
 ﻿using CefetPark.Domain.Entidades;
+using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Infra.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -16,13 +17,16 @@ namespace CefetPark.Infra.Contexts
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<RegistroEntradaSaida> RegistrosEntradasSaidas { get; set; }
-        public DbSet<TipoLogradouro> TiposLogradouros { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioCarro> UsuariosCarros { get; set; }
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+
+
+        private readonly IUser _user;
+        public DataContext(DbContextOptions<DataContext> options, IUser user) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            _user = user;
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -31,9 +35,11 @@ namespace CefetPark.Infra.Contexts
                 if (entry.State == EntityState.Added)
                 {
                     this.ObterDataCriacao(entry);
+                    this.ObterCriadoPor(entry);
                 }
                 if (entry.State == EntityState.Modified)
                 {
+                    this.ObterAtualizadoPor(entry);
                     this.ObterDataAtualizacao(entry);
                 }
             }
@@ -44,6 +50,22 @@ namespace CefetPark.Infra.Contexts
             if (entry.Entity.GetType().GetProperty("DataCriacao") != null)
             {
                 entry.Property("DataCriacao").CurrentValue = DateTime.Now;
+            }
+        }
+        private void ObterCriadoPor(EntityEntry entry)
+        {
+            var propriedade = "CriadoPor";
+            if (entry.Entity.GetType().GetProperty(propriedade) != null)
+            {
+                entry.Property(propriedade).CurrentValue = _user.ObterUsuarioId();
+            }
+        }
+        private void ObterAtualizadoPor(EntityEntry entry)
+        {
+            var propriedade = "AtualizadoPor";
+            if (entry.Entity.GetType().GetProperty(propriedade) != null)
+            {
+                entry.Property(propriedade).CurrentValue = _user.ObterUsuarioId();
             }
         }
         private void ObterDataAtualizacao(EntityEntry entry)
@@ -59,64 +81,8 @@ namespace CefetPark.Infra.Contexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuração para desabilitar a pluralização
-            modelBuilder.Entity<Carro>().ToTable("Carro"); 
-            modelBuilder.Entity<Cor>().ToTable("Cor"); 
-            modelBuilder.Entity<Departamento>().ToTable("Departamento"); 
-            modelBuilder.Entity<Endereco>().ToTable("Endereco"); 
-            modelBuilder.Entity<Estacionamento>().ToTable("Estacionamento"); 
-            modelBuilder.Entity<Marca>().ToTable("Marca"); 
-            modelBuilder.Entity<Modelo>().ToTable("Modelo"); 
-            modelBuilder.Entity<RegistroEntradaSaida>().ToTable("RegistroEntradaSaida"); 
-            modelBuilder.Entity<TipoLogradouro>().ToTable("TipoLogradouro"); 
-            modelBuilder.Entity<TipoUsuario>().ToTable("TipoUsuario"); 
-            modelBuilder.Entity<Usuario>().ToTable("Usuario"); 
-            modelBuilder.Entity<UsuarioCarro>().ToTable("UsuarioCarro");
-
-            // Configuração para remover as convenções de cascata de exclusão
-            /* ao excluir um registro pai, o Entity Framework Core não excluirá automaticamente
-             * os registros filhos relacionados.Em vez disso, você precisará gerenciar manualmente
-             * a exclusão de registros dependentes.*/
-            // Para relações um-para-muitos (OneToMany)
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
-            // Para relações muitos-para-muitos (ManyToMany)
-            foreach (var entity in modelBuilder.Model.GetEntityTypes())
-            {
-                foreach (var navigation in entity.GetNavigations())
-                {
-                    navigation.ForeignKey.DeleteBehavior = DeleteBehavior.Restrict;
-                }
-            }
-
-            //modelBuilder.Entity<Carro>();
-            //modelBuilder.Entity<Cor>();
-            //modelBuilder.Entity<Departamento>();
-            //modelBuilder.Entity<Endereco>();
-            //modelBuilder.Entity<Estacionamento>();
-            //modelBuilder.Entity<Marca>();
-            //modelBuilder.Entity<Modelo>();
-            //modelBuilder.Entity<RegistroEntradaSaida>();
-            //modelBuilder.Entity<TipoLogradouro>();
-            //modelBuilder.Entity<TipoUsuario>();
-            //modelBuilder.Entity<Usuario>();
-            //modelBuilder.Entity<UsuarioCarro>();
-
-            modelBuilder.ApplyConfiguration(new CarroConfiguration());
-            modelBuilder.ApplyConfiguration(new CorConfiguration());
-            modelBuilder.ApplyConfiguration(new DepartamentoConfiguration());
-            modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
-            modelBuilder.ApplyConfiguration(new EstacionamentoConfiguration());
-            modelBuilder.ApplyConfiguration(new MarcaConfiguration());
-            modelBuilder.ApplyConfiguration(new ModeloConfiguration());
-            modelBuilder.ApplyConfiguration(new RegistroEntradaSaidaConfiguration());
-            modelBuilder.ApplyConfiguration(new TipoLogradouroConfiguration());
-            modelBuilder.ApplyConfiguration(new TipoUsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new UsuarioCarroConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

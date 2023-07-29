@@ -44,7 +44,6 @@ jobs:
     - name: Password in Repository
       run: ${{ secrets.Senha }}
       
-    steps:
     - uses: actions/checkout@v3
     - name: Stop current container
       continue-on-error: true

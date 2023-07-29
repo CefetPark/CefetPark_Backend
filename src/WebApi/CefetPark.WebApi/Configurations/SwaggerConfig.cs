@@ -51,11 +51,8 @@ namespace CefetPark.WebApi.Configurations
 
         public static IApplicationBuilder UseSwaggerConfig(this IApplicationBuilder app, WebApplication webApplication)
         {
-            if (webApplication.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             return app;
         }

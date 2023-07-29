@@ -9,19 +9,9 @@ env:
   GITHUB_PASSWORD: ${{ secrets.Senha }}
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . backend
-      
+ 
   deploy:
     runs-on: self-hosted
-    needs: build
     
     steps:
     - uses: actions/checkout@v3

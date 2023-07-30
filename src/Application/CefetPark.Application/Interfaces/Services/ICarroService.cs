@@ -1,11 +1,10 @@
-﻿
-using CefetPark.Application.ViewModels.Request.Common.Post;
+﻿using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 
 namespace CefetPark.Application.Interfaces.Services
 {
-    public interface ICorService
+    public interface ICarroService
     {
         public Task<bool> CadastrarAsync(CadastrarCommonRequest request);
         public Task<bool> AtualizarAsync(AtualizarCommonRequest request);

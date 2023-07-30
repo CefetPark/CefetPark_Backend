@@ -137,18 +137,6 @@ namespace CefetPark.Application.Services
             };
 
             var result = await _userManager.CreateAsync(user, request.Senha);
-            await _userManager.AddToRoleAsync(user, userRoleEntidade.Nome);
-            var userAspNet = await _userManager.FindByNameAsync(request.Login);
-            
-
-            var usuario = _mapper.Map<Usuario>(request.Usuario);
-            usuario.Cpf = request.Login;
-            usuario.AspNetUsers_Id = userAspNet.Id;
-
-            await _commonRepository.AdicionarEntidadeAsync(usuario);
-
-            await _commonRepository.SalvarAlteracoesAsync();
-
 
             if (!result.Succeeded)
             {
@@ -158,6 +146,33 @@ namespace CefetPark.Application.Services
                 }
                 return false;
             }
+
+            var result2 = await _userManager.AddToRoleAsync(user, userRoleEntidade.Nome);
+
+            if (!result2.Succeeded)
+            {
+                foreach (var error in result2.Errors)
+                {
+                    _notificador.Handle(new Notificacao(error.Description));
+                }
+                return false;
+            }
+
+
+            var userAspNet = await _userManager.FindByNameAsync(request.Login);
+            
+
+            var usuario = _mapper.Map<Usuario>(request.Usuario);
+            
+            usuario.Cpf = request.Login;
+            usuario.AspNetUsers_Id = userAspNet.Id;
+
+            await _commonRepository.AdicionarEntidadeAsync(usuario);
+
+            await _commonRepository.SalvarAlteracoesAsync();
+
+
+
 
             await _signInManager.SignInAsync(user, false);
 

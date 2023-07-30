@@ -21,6 +21,7 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<CadastrarUsuarioRequest, Usuario>();
             CreateMap<CadastrarCommonRequest, Departamento>();
             CreateMap<CadastrarCommonRequest, Marca>();
+            CreateMap<CadastrarCommonRequest, Cor>();
             #endregion
 
             #region Obter
@@ -28,6 +29,8 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<Estacionamento, ObterEstacionamentoResponse>();
             CreateMap<Departamento, ObterCommonResponse>();
             CreateMap<Marca, ObterCommonResponse>();
+            CreateMap<TipoUsuario, ObterCommonResponse>();
+            CreateMap<Cor, ObterCommonResponse>();
             #endregion
 
 

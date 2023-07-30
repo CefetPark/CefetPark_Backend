@@ -38,6 +38,8 @@ namespace CefetPark.Application.Models
             }
 
             var claim = principal.FindFirst("Id");
+            if(claim == null) throw new Exception("Id não Encontrado no Token");
+
             return int.Parse(claim?.Value);
         }
 
@@ -49,6 +51,9 @@ namespace CefetPark.Application.Models
             }
 
             var roles = principal.FindFirst(ClaimTypes.Role);
+            if (roles == null) throw new Exception("Role não encontrada no Token");
+
+
             return roles?.Value;
         }
     }

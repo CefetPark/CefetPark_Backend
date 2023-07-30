@@ -28,11 +28,13 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<ICorService, CorService>();
             services.AddScoped<IModeloService, ModeloService>();
             services.AddScoped<ICarroService, CarroService>();
+            services.AddScoped<IRegistroEntradaSaidaService, RegistroEntradaSaidaService>();
             #endregion
 
             #region Repositories
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IRegistroEntradaSaidaRepository, RegistroEntradaSaidaRepository>();
             #endregion
 
             #region Models

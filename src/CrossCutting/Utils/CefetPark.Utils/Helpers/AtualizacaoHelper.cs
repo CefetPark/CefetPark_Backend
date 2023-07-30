@@ -16,7 +16,7 @@ namespace CefetPark.Utils.Helpers
                     {
 
                     }
-                    if (viewModel.GetType().GetProperty(prop.Name).PropertyType == typeof(string) || viewModel.GetType().GetProperty(prop.Name).PropertyType.IsClass == false)
+                    else if (viewModel.GetType().GetProperty(prop.Name).PropertyType == typeof(string) || viewModel.GetType().GetProperty(prop.Name).PropertyType.IsClass == false)
                     {
                         var valorCampo = viewModel.GetType().GetProperty(prop.Name).GetValue(viewModel);
                         entidade.GetType().GetProperty(prop.Name).SetValue(entidade, valorCampo);

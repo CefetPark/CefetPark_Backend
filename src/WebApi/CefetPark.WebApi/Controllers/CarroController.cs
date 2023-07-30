@@ -4,10 +4,13 @@ using CefetPark.Application.ViewModels.Request.Carro.Put;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Utils.Interfaces.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace CefetPark.WebApi.Controllers
 {
+    [Authorize(Roles = "Adm")]
     [Route("[controller]")]
     public class CarroController : PrincipalController
     {

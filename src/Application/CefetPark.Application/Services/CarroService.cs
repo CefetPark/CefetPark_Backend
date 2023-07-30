@@ -43,7 +43,10 @@ namespace CefetPark.Application.Services
 
             AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
 
+            entidade.Usuarios.Clear();
+            entidade.Usuarios = _mapper.Map<ICollection<Usuario>>(request.Usuarios);
 
+            _commonRepository.RastrearEntidades(entidade.Usuarios);
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;

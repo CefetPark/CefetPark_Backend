@@ -19,7 +19,6 @@ namespace CefetPark.Infra.Contexts
         public DbSet<RegistroEntradaSaida> RegistrosEntradasSaidas { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<UsuarioCarro> UsuariosCarros { get; set; }
 
 
         private readonly IUser _user;

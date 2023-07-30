@@ -16,6 +16,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using System.Xml.Linq;
 
 namespace CefetPark.Application.Services
 {
@@ -120,6 +121,14 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastrarAuthRequest request)
         {
+            var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.Usuario.TipoUsuario_Id);
+            
+            if(userRoleEntidade == null)
+            {
+                _notificador.Handle(new Notificacao("TipoUsuario_Id não encontrado"));
+                return false;
+            }
+
             var user = new IdentityUser
             {
                 UserName = request.Login,
@@ -128,8 +137,10 @@ namespace CefetPark.Application.Services
             };
 
             var result = await _userManager.CreateAsync(user, request.Senha);
+            await _userManager.AddToRoleAsync(user, userRoleEntidade.Nome);
             var userAspNet = await _userManager.FindByNameAsync(request.Login);
             
+
             var usuario = _mapper.Map<Usuario>(request.Usuario);
             usuario.Cpf = request.Login;
             usuario.AspNetUsers_Id = userAspNet.Id;

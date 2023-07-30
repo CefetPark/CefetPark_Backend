@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CefetPark.Infra.Repositories
 {
-    public class CommonRepository  : ICommonRepository
+    public class CommonRepository  : ICommonRepository, IDisposable
     {
         private readonly DataContext _dataContext;
 
@@ -36,13 +36,13 @@ namespace CefetPark.Infra.Repositories
 
         public async Task<IEnumerable<T>> ObterTodosAsync<T>() where T : CommonEntity
         {
-            var result = await _dataContext.Set<T>().ToListAsync();
+            var result = await _dataContext.Set<T>().Where(x => x.EstaAtivo).ToListAsync();
 
             return result;
         }
         public async Task<T?> ObterPorIdAsync<T>(int id) where T : CommonEntity
         {
-            var result = await _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id) ;
+            var result = await _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id && x.EstaAtivo) ;
             return result;
         }
 
@@ -78,7 +78,7 @@ namespace CefetPark.Infra.Repositories
                 query = query.Include(prop);
             }
 
-            var result = await query.ToListAsync();
+            var result = await query.Where(x => x.EstaAtivo).ToListAsync();
             return result;
         }
 
@@ -92,7 +92,7 @@ namespace CefetPark.Infra.Repositories
                 query = query.Include(prop);
             }
 
-            var result = await query.FirstOrDefaultAsync(x => x.Id == id);
+            var result = await query.FirstOrDefaultAsync(x => x.Id == id && x.EstaAtivo);
             return result;
         }
     }

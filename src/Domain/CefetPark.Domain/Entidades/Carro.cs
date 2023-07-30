@@ -14,6 +14,6 @@ namespace CefetPark.Domain.Entidades
         public int Modelo_Id { get; set; }
         public Modelo Modelo { get; set; }
         public ICollection<RegistroEntradaSaida> RegistrosEntradasSaidas { get; set; }
-        public ICollection<UsuarioCarro> UsuariosCarros { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; }
     }
 }

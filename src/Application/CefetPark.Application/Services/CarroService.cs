@@ -4,6 +4,7 @@ using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Carro.Put;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
+using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
@@ -29,7 +30,7 @@ namespace CefetPark.Application.Services
         }
         public async Task<bool> AtualizarAsync(AtualizarCarroRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id);
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id, new List<string> { "Usuarios"});
 
             if (entidade == null)
             {
@@ -39,7 +40,9 @@ namespace CefetPark.Application.Services
 
             _commonRepository.RastrearEntidade(entidade);
 
+
             AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
+
 
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -50,6 +53,7 @@ namespace CefetPark.Application.Services
         {
             var entidade = _mapper.Map<Carro>(request);
 
+            _commonRepository.RastrearEntidades(entidade.Usuarios);
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -76,9 +80,9 @@ namespace CefetPark.Application.Services
             return true;
         }
 
-        public async Task<ObterCommonResponse?> ObterPorIdAsync(int id)
+        public async Task<ObterCarroResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Marca>(id);
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(id, new List<string> { "Usuarios", "Cor", "Modelo"});
 
             if (entidade == null)
             {
@@ -86,16 +90,16 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var response = _mapper.Map<ObterCommonResponse>(entidade);
+            var response = _mapper.Map<ObterCarroResponse>(entidade);
 
             return response;
         }
 
-        public async Task<IEnumerable<ObterCommonResponse>> ObterTodosAsync()
+        public async Task<IEnumerable<ObterCarroResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Marca>(new List<string> { "Modelos" });
+            var entidades = await _commonRepository.ObterTodosAsync<Carro>(new List<string> {"Usuarios", "Cor", "Modelo"});
 
-            var response = _mapper.Map<IEnumerable<ObterCommonResponse>>(entidades);
+            var response = _mapper.Map<IEnumerable<ObterCarroResponse>>(entidades);
 
             return response;
         }

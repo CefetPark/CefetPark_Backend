@@ -20,9 +20,8 @@ namespace CefetPark.Infra.Configurations
             builder.HasMany(r => r.RegistrosEntradasSaidas)
                     .WithOne(r => r.Carro)
                     .HasForeignKey(r => r.Carro_Id);
-            builder.HasMany(r => r.UsuariosCarros)
-                    .WithOne(r => r.Carro)
-                    .HasForeignKey(r => r.Carro_Id);
+            builder.HasMany(r => r.Usuarios)
+                    .WithMany(r => r.Carros);
             #endregion
         }
     }

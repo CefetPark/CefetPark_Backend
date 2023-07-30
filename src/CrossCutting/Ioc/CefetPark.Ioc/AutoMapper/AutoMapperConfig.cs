@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Endereco.Post;
 using CefetPark.Application.ViewModels.Request.Estacionamento.Post;
@@ -10,6 +11,7 @@ using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Endereco.Get;
 using CefetPark.Application.ViewModels.Response.Estacionamento.Get;
 using CefetPark.Application.ViewModels.Response.Modelo.Get;
+using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
 
 namespace CefetPark.Ioc.AutoMapper
@@ -26,10 +28,14 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<CadastrarCommonRequest, Marca>();
             CreateMap<CadastrarCommonRequest, Cor>();
             CreateMap<CadastrarModeloRequest, Modelo>();
+            CreateMap<CadastrarCommonRelationRequest, Usuario>();
+            CreateMap<CadastrarCarroRequest, Carro>();
             #endregion
 
             #region Obter
             CreateMap<Modelo, ObterModeloResponse>();
+            CreateMap<Modelo, ObterCommonResponse>();
+            CreateMap<Usuario, ObterUsuarioResponse>();
             CreateMap<Carro, ObterCarroResponse>();
             CreateMap<Endereco, ObterEnderecoResponse>();
             CreateMap<Estacionamento, ObterEstacionamentoResponse>();

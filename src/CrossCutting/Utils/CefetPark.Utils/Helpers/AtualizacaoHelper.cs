@@ -1,4 +1,7 @@
-﻿namespace CefetPark.Utils.Helpers
+﻿using System.Collections;
+using System.Reflection;
+
+namespace CefetPark.Utils.Helpers
 {
     public class AtualizacaoHelper
     {
@@ -9,6 +12,10 @@
             {
                 if (camposDaEntidade.Contains(prop.Name) && prop.Name != "Id")
                 {
+                    if (typeof(ICollection).IsAssignableFrom(viewModel.GetType().GetProperty(prop.Name).GetValue(viewModel).GetType()))
+                    {
+
+                    }
                     if (viewModel.GetType().GetProperty(prop.Name).PropertyType == typeof(string) || viewModel.GetType().GetProperty(prop.Name).PropertyType.IsClass == false)
                     {
                         var valorCampo = viewModel.GetType().GetProperty(prop.Name).GetValue(viewModel);

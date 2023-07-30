@@ -6,6 +6,7 @@ namespace CefetPark.Application.ViewModels.Response.Usuario.Get
 {
     public class ObterUsuarioResponse
     {
+        public int Id { get; set; }
         public string AspNetUsers_Id { get; set; }
         public string Cpf { get; set; }
         public string Matricula { get; set; }

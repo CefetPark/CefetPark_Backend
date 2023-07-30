@@ -10,6 +10,6 @@ namespace CefetPark.Application.ViewModels.Response.Carro.Get
         public string Placa { get; set; }
         public ObterCommonResponse Cor { get; set; }
         public ObterCommonResponse Modelo { get; set; }
-        public ObterUsuarioResponse Usuario { get; set; }
+        public ICollection<ObterUsuarioResponse> Usuarios { get; set; }
     }
 }

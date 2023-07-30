@@ -6,10 +6,13 @@ using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Request.Modelo.Post;
 using CefetPark.Application.ViewModels.Request.Modelo.Put;
 using CefetPark.Utils.Interfaces.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace CefetPark.WebApi.Controllers
 {
+    [Authorize(Roles = "Adm")]
     [Route("[controller]")]
     public class ModeloController : PrincipalController
     {

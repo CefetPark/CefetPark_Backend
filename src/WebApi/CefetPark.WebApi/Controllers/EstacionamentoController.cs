@@ -16,14 +16,16 @@ namespace CefetPark.WebApi.Controllers
         {
             _estacionamentoService = estacionamentoService;
         }
-
+        
+        [Authorize(Roles = "Adm")]
         [HttpPost]
         public async Task<ActionResult> CadastrarAsync(CadastrarEstacionamentoRequest request)
         {
             var result = await _estacionamentoService.CadastrarAsync(request);
             return CustomResponse(result);
         }
-
+        
+        [Authorize(Roles = "Adm")]
         [HttpPut]
         public async Task<ActionResult> AtualizarAsync(AtualizarEstacionamentoRequest request)
         {
@@ -31,6 +33,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DesativarAsync(int id)
         {

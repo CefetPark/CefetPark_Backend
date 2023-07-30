@@ -1,5 +1,6 @@
 ﻿
 using CefetPark.Application.ViewModels.Response.Common.Get;
+using CefetPark.Application.ViewModels.Response.Usuario.Get;
 
 namespace CefetPark.Application.ViewModels.Response.Carro.Get
 {
@@ -9,5 +10,6 @@ namespace CefetPark.Application.ViewModels.Response.Carro.Get
         public string Placa { get; set; }
         public ObterCommonResponse Cor { get; set; }
         public ObterCommonResponse Modelo { get; set; }
+        public ObterUsuarioResponse Usuario { get; set; }
     }
 }

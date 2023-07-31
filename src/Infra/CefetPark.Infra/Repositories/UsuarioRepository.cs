@@ -21,7 +21,12 @@ namespace CefetPark.Infra.Repositories
 
         public async Task<Usuario?> ObterPorGuidIdAsync(string id)
         {
-            var result = await _dataContext.Usuarios.FirstOrDefaultAsync(x => x.AspNetUsers_Id == id.ToString());
+            var result = await _dataContext
+                .Usuarios
+                .Include(x => x.Carros)
+                .Include(x => x.Departamento)
+                .Include(x => x.TipoUsuario)
+                .FirstOrDefaultAsync(x => x.AspNetUsers_Id == id.ToString());
             return result;
         }
     }

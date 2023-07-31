@@ -4,6 +4,7 @@ using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.Models;
 using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Application.ViewModels.Response.Auth.Post;
+using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
@@ -61,11 +62,17 @@ namespace CefetPark.Application.Services
 
 
             var user = await _userManager.FindByNameAsync(request.Login);
+
             var token = await GerarJwt(user);
+
+            var usuario = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
+
+            var usuarioPayload = _mapper.Map<ObterUsuarioResponse>(usuario);
 
             var payload = new LoginAuthResponse
             {
-                Token = token
+                Token = token,
+                Usuario = usuarioPayload
             };
 
 

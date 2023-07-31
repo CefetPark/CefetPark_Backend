@@ -1,4 +1,5 @@
 ﻿
+using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Domain.Entidades;
 
@@ -17,5 +18,6 @@ namespace CefetPark.Application.ViewModels.Response.Usuario.Get
         public string? EmailSecundario { get; set; }
         public ObterCommonResponse Departamento { get; set; }
         public ObterCommonResponse TipoUsuario { get; set; }
+        public ICollection<ObterCarroResponse> Carros { get; set; }
     }
 }

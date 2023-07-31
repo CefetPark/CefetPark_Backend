@@ -16,7 +16,6 @@ namespace CefetPark.Application.ViewModels.Request.Usuario.Post
         public string Nome { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string TelefonePrincipal { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string? TelefoneSecundario { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string EmailPrincipal { get; set; }

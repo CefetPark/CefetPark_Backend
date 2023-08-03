@@ -12,8 +12,8 @@ namespace CefetPark.Application.ViewModels.Request.Auth.Post
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
         public string ConfirmarSenha { get; set; }
-        //[Required(ErrorMessage = "O campo {0} é obrigatório")]
-        //public CadastrarUsuarioRequest Usuario { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public CadastrarUsuarioRequest Usuario { get; set; }
 
     }
 }

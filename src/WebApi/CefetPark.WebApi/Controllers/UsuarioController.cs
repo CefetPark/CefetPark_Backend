@@ -1,5 +1,4 @@
 ﻿using CefetPark.Application.Interfaces.Services;
-using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
 using CefetPark.Utils.Interfaces.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -21,14 +20,6 @@ namespace CefetPark.WebApi.Controllers
         public async Task<ActionResult> CadastrarAsync(CadastrarUsuarioRequest request)
         {
             var response = await _usuarioService.CadastrarAsync(request);
-            return CustomResponse(response);
-        }
-
-        [Authorize(Roles = "Adm")]
-        [HttpPost("cadastrarMassaTeste")]
-        public async Task<ActionResult> CadastrarMassaTeste([FromBody] List<CadastrarUsuarioRequest> listaRequest)
-        {
-            var response = await _usuarioService.CadastrarMassaTesteAsync(listaRequest);
             return CustomResponse(response);
         }
     }

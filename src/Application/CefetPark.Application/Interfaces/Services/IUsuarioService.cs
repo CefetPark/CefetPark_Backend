@@ -14,7 +14,6 @@ namespace CefetPark.Application.Interfaces.Services
     public interface IUsuarioService
     {
         public Task<bool> CadastrarAsync(CadastrarUsuarioRequest request);
-        public Task<bool> CadastrarMassaTesteAsync(List<CadastrarUsuarioRequest> listaRequest);
         public Task<bool> AtualizarAsync(AtualizarCommonRequest request);
         public Task<bool> DesativarAsync(int id);
         public Task<ObterCommonResponse?> ObterPorIdAsync(int id);

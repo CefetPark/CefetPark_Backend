@@ -54,9 +54,9 @@ namespace CefetPark.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
+        public async Task<bool> CadastrarAsync(CadastrarAuthRequest request)
         {
-            var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
+            var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.Usuario.TipoUsuario_Id);
             
             if(userRoleEntidade == null)
             {
@@ -66,12 +66,12 @@ namespace CefetPark.Application.Services
 
             var user = new IdentityUser
             {
-                UserName = request.Auth.Login,
+                UserName = request.Login,
                 EmailConfirmed = true,
                  
             };
 
-            var result = await _userManager.CreateAsync(user, request.Auth.Senha);
+            var result = await _userManager.CreateAsync(user, request.Senha);
 
             if (!result.Succeeded)
             {
@@ -94,81 +94,29 @@ namespace CefetPark.Application.Services
             }
 
 
-            var userAspNet = await _userManager.FindByNameAsync(request.Auth.Login);
+            var userAspNet = await _userManager.FindByNameAsync(request.Login);
             
 
-            var usuario = _mapper.Map<Usuario>(request);
+            var usuario = _mapper.Map<Usuario>(request.Usuario);
             
-            usuario.Cpf = request.Auth.Login;
+            usuario.Cpf = request.Login;
             usuario.AspNetUsers_Id = userAspNet.Id;
 
             await _commonRepository.AdicionarEntidadeAsync(usuario);
 
             await _commonRepository.SalvarAlteracoesAsync();
 
+
+
+
             await _signInManager.SignInAsync(user, false);
 
             return true;
         }
 
-        public async Task<bool> CadastrarMassaTesteAsync(List<CadastrarUsuarioRequest> listaRequest)
+        public Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
         {
-            foreach (CadastrarUsuarioRequest request in listaRequest)
-            {
-                var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
-
-                if (userRoleEntidade == null)
-                {
-                    _notificador.Handle(new Notificacao("TipoUsuario_Id não encontrado"));
-                    return false;
-                }
-
-                var user = new IdentityUser
-                {
-                    UserName = request.Auth.Login,
-                    EmailConfirmed = true,
-
-                };
-
-                var result = await _userManager.CreateAsync(user, request.Auth.Senha);
-
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        _notificador.Handle(new Notificacao(error.Description));
-                    }
-                    return false;
-                }
-
-                var result2 = await _userManager.AddToRoleAsync(user, userRoleEntidade.Nome);
-
-                if (!result2.Succeeded)
-                {
-                    foreach (var error in result2.Errors)
-                    {
-                        _notificador.Handle(new Notificacao(error.Description));
-                    }
-                    return false;
-                }
-
-
-                var userAspNet = await _userManager.FindByNameAsync(request.Auth.Login);
-
-
-                var usuario = _mapper.Map<Usuario>(request);
-
-                usuario.Cpf = request.Auth.Login;
-                usuario.AspNetUsers_Id = userAspNet.Id;
-
-                await _commonRepository.AdicionarEntidadeAsync(usuario);
-
-                await _commonRepository.SalvarAlteracoesAsync();
-
-                await _signInManager.SignInAsync(user, false);
-            }
-
-            return true;
+            throw new NotImplementedException();
         }
 
         public Task<bool> DesativarAsync(int id)

@@ -38,6 +38,7 @@ jobs:
     
     - uses: actions/checkout@v3
     - name: Rm current imagem
+      continue-on-error: true
       run: sudo docker rmi cefetpark-backend
     
     - uses: actions/checkout@v3

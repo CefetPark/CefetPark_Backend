@@ -91,24 +91,10 @@ namespace CefetPark.Application.Services
                 }).ToList()
             };
 
-            var usuarioPayload2 = new
-            {
-                Cpf = usuarioPayload.Cpf,
-                Matricula = usuarioPayload.Matricula,
-                Nome = usuarioPayload.Nome,
-                TelefonePrincipal = usuarioPayload.TelefonePrincipal,
-                TelefoneSecundario = usuarioPayload.TelefoneSecundario,
-                EmailPrincipal = usuarioPayload.EmailPrincipal,
-                EmailSecundario = usuarioPayload.EmailSecundario,
-                Departamento = usuarioPayload.Departamento.Nome,
-                TipoUsuario = usuarioPayload.TipoUsuario.Nome,
-                Carros = usuarioPayload.Carros
-            };
-
             var payload = new LoginAuthResponse
             {
                 Token = token,
-                Usuario = usuarioPayload2
+                Usuario = usuarioPayload
             };
 
 

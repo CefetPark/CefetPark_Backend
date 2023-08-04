@@ -23,7 +23,9 @@ namespace CefetPark.Infra.Repositories
         {
             var result = await _dataContext
                 .Usuarios
-                .Include(x => x.Carros)
+                .Include(x => x.Carros).ThenInclude(y => y.Modelo)
+                .Include(x => x.Carros).ThenInclude(y => y.Modelo).ThenInclude(y => y.Marca)
+                .Include(x => x.Carros).ThenInclude(y => y.Cor)
                 .Include(x => x.Departamento)
                 .Include(x => x.TipoUsuario)
                 .FirstOrDefaultAsync(x => x.AspNetUsers_Id == id.ToString());

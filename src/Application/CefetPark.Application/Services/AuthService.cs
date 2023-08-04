@@ -4,6 +4,8 @@ using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.Models;
 using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Application.ViewModels.Response.Auth.Post;
+using CefetPark.Application.ViewModels.Response.Carro.Get;
+using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
@@ -11,6 +13,7 @@ using CefetPark.Utils.Enums;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -88,10 +91,24 @@ namespace CefetPark.Application.Services
                 }).ToList()
             };
 
+            var usuarioPayload2 = new
+            {
+                Cpf = usuarioPayload.Cpf,
+                Matricula = usuarioPayload.Matricula,
+                Nome = usuarioPayload.Nome,
+                TelefonePrincipal = usuarioPayload.TelefonePrincipal,
+                TelefoneSecundario = usuarioPayload.TelefoneSecundario,
+                EmailPrincipal = usuarioPayload.EmailPrincipal,
+                EmailSecundario = usuarioPayload.EmailSecundario,
+                Departamento = usuarioPayload.Departamento.Nome,
+                TipoUsuario = usuarioPayload.TipoUsuario.Nome,
+                Carros = usuarioPayload.Carros
+            };
+
             var payload = new LoginAuthResponse
             {
                 Token = token,
-                Usuario = usuarioPayload
+                Usuario = usuarioPayload2
             };
 
 

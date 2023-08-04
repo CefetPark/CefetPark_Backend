@@ -67,7 +67,26 @@ namespace CefetPark.Application.Services
 
             var usuario = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
 
-            var usuarioPayload = _mapper.Map<ObterUsuarioResponse>(usuario);
+
+            var usuarioPayload = new LoginUsuarioAuthResponse
+            {
+                Cpf = usuario.Cpf,
+                Matricula = usuario.Matricula,
+                Nome = usuario.Nome,
+                TelefonePrincipal = usuario.TelefonePrincipal,
+                TelefoneSecundario = usuario.TelefoneSecundario,
+                EmailPrincipal = usuario.EmailPrincipal,
+                EmailSecundario = usuario.EmailSecundario,
+                Departamento = usuario.Departamento.Nome,
+                TipoUsuario = usuario.TipoUsuario.Nome,
+                Carros = usuario.Carros.Select(x => new ObterCarroLoginResponse
+                {
+                    Cor = x.Cor.Nome,
+                    Modelo = x.Modelo.Nome,
+                    Placa = x.Placa,
+                    Marca = x.Modelo.Marca.Nome
+                }).ToList()
+            };
 
             var payload = new LoginAuthResponse
             {
@@ -129,8 +148,8 @@ namespace CefetPark.Application.Services
         public async Task<bool> CadastrarAsync(CadastrarAuthRequest request)
         {
             var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.Usuario.TipoUsuario_Id);
-            
-            if(userRoleEntidade == null)
+
+            if (userRoleEntidade == null)
             {
                 _notificador.Handle(new Notificacao("TipoUsuario_Id não encontrado"));
                 return false;
@@ -140,7 +159,7 @@ namespace CefetPark.Application.Services
             {
                 UserName = request.Login,
                 EmailConfirmed = true,
-                 
+
             };
 
             var result = await _userManager.CreateAsync(user, request.Senha);
@@ -167,10 +186,10 @@ namespace CefetPark.Application.Services
 
 
             var userAspNet = await _userManager.FindByNameAsync(request.Login);
-            
+
 
             var usuario = _mapper.Map<Usuario>(request.Usuario);
-            
+
             usuario.Cpf = request.Login;
             usuario.AspNetUsers_Id = userAspNet.Id;
 

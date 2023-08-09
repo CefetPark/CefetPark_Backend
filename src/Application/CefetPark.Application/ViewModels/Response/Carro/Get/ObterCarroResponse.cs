@@ -8,8 +8,8 @@ namespace CefetPark.Application.ViewModels.Response.Carro.Get
     {
         public int Id { get; set; }
         public string Placa { get; set; }
-        public ObterCommonResponse Cor { get; set; }
-        public ObterCommonResponse Modelo { get; set; }
-        public ICollection<ObterUsuarioResponse> Usuarios { get; set; }
+        public string Cor { get; set; }
+        public string Modelo { get; set; }
+        public ICollection<ObterCarroUsuarioResponse> Usuarios { get; set; }
     }
 }

@@ -5,14 +5,14 @@ namespace CefetPark.Domain.Interfaces.Repositories
 {
     public interface ICommonRepository
     {
-        public bool RastrearEntidade(CommonEntity entidade);
-        public Task<bool> AdicionarEntidadeAsync(CommonEntity entidade);
-        public bool RastrearEntidades(IEnumerable<CommonEntity> entidades);
-        public Task<IEnumerable<T>> ObterTodosAsync<T>() where T : CommonEntity;
-        public Task<IEnumerable<T>> ObterTodosAsync<T>(IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity;
+        public bool RastrearEntidade<T>(T entidade) where T : CommonEntity;
+        public Task<bool> AdicionarEntidadeAsync<T>(T entidade) where T : CommonEntity;
+        public bool RastrearEntidades<T>(ICollection<T> entidades) where T : CommonEntity;
+        public Task<ICollection<T>> ObterTodosAsync<T>() where T : CommonEntity;
+        public Task<ICollection<T>> ObterTodosAsync<T>(ICollection<string> propriedadesRelacionamentos) where T : CommonEntity;
         public Task<T?> ObterPorIdAsync<T>(int id) where T : CommonEntity;
 
-        public Task<T?> ObterPorIdAsync<T>(int id, IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity;
+        public Task<T?> ObterPorIdAsync<T>(int id, ICollection<string> propriedadesRelacionamentos) where T : CommonEntity;
 
         public Task<int> SalvarAlteracoesAsync();
 

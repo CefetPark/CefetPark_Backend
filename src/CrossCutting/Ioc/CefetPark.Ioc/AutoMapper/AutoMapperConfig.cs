@@ -40,6 +40,7 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<Modelo, ObterCommonResponse>();
             CreateMap<Usuario, ObterUsuarioResponse>();
             CreateMap<Carro, ObterCarroResponse>();
+            CreateMap<Usuario, ObterCarroUsuarioResponse>();
             CreateMap<Endereco, ObterEnderecoResponse>();
             CreateMap<Estacionamento, ObterEstacionamentoResponse>();
             CreateMap<Departamento, ObterCommonResponse>();

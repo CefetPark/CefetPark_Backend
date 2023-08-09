@@ -14,5 +14,7 @@ namespace CefetPark.Application.Interfaces.Services
         public Task<bool> DesativarAsync(int id);
         public Task<ObterCarroResponse?> ObterPorIdAsync(int id);
         public Task<IEnumerable<ObterCarroResponse>> ObterTodosAsync();
+
+        public Task<ObterCarroResponse?> ObterPorPlacaAsync(string placa);
     }
 }

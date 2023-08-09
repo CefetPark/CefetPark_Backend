@@ -35,6 +35,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IRegistroEntradaSaidaRepository, RegistroEntradaSaidaRepository>();
+            services.AddScoped<ICarroRepository, CarroRepository>();
             #endregion
 
             #region Models

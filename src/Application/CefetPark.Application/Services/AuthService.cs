@@ -82,7 +82,7 @@ namespace CefetPark.Application.Services
                 EmailSecundario = usuario.EmailSecundario,
                 Departamento = usuario.Departamento.Nome,
                 TipoUsuario = usuario.TipoUsuario.Nome,
-                Carros = usuario.Carros.Select(x => new ObterCarroLoginResponse
+                Carros = usuario.Carros.Select(x => new LoginCarroAuthResponse
                 {
                     Cor = x.Cor.Nome,
                     Modelo = x.Modelo.Nome,

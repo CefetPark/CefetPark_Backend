@@ -55,5 +55,12 @@ namespace CefetPark.WebApi.Controllers
             var result = await _carroService.ObterPorIdAsync(id);
             return CustomResponse(result);
         }
+
+        [HttpGet("placa/{placa}")]
+        public async Task<ActionResult> ObterPorPlacaAsync(string placa)
+        {
+            var result = await _carroService.ObterPorPlacaAsync(placa);
+            return CustomResponse(result);
+        }
     }
 }

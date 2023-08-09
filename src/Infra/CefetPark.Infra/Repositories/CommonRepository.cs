@@ -16,25 +16,25 @@ namespace CefetPark.Infra.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<bool> AdicionarEntidadeAsync(CommonEntity entidade)
+        public async Task<bool> AdicionarEntidadeAsync<T>(T entidade) where T : CommonEntity
         {
             await _dataContext.AddAsync(entidade);
             return true;
         }
 
-        public bool RastrearEntidade(CommonEntity entidade)
+        public bool RastrearEntidade<T>(T entidade) where T : CommonEntity
         {
             _dataContext.Attach(entidade);
             return true;
         }
 
-        public bool RastrearEntidades(IEnumerable<CommonEntity> entidades)
+        public bool RastrearEntidades<T>(ICollection<T> entidades) where T : CommonEntity
         {
             _dataContext.AttachRange(entidades);
             return true;
         }
 
-        public async Task<IEnumerable<T>> ObterTodosAsync<T>() where T : CommonEntity
+        public async Task<ICollection<T>> ObterTodosAsync<T>() where T : CommonEntity
         {
             var result = await _dataContext.Set<T>().Where(x => x.EstaAtivo).ToListAsync();
 
@@ -68,8 +68,10 @@ namespace CefetPark.Infra.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public async Task<IEnumerable<T>> ObterTodosAsync<T>(IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity
+        public async Task<ICollection<T>> ObterTodosAsync<T>(ICollection<string> propriedadesRelacionamentos) where T : CommonEntity
         {
+            if (propriedadesRelacionamentos == null) throw new Exception($"propriedadesRelacionamentos não pode ser Null");
+
             var query = _dataContext.Set<T>().AsQueryable();
             
             foreach (var prop in propriedadesRelacionamentos)
@@ -82,8 +84,10 @@ namespace CefetPark.Infra.Repositories
             return result;
         }
 
-        public async Task<T?> ObterPorIdAsync<T>(int id, IEnumerable<string> propriedadesRelacionamentos) where T : CommonEntity
+        public async Task<T?> ObterPorIdAsync<T>(int id, ICollection<string> propriedadesRelacionamentos) where T : CommonEntity
         {
+            if(propriedadesRelacionamentos == null) throw new Exception($"propriedadesRelacionamentos não pode ser Null");
+
             var query = _dataContext.Set<T>().AsQueryable();
 
             foreach (var prop in propriedadesRelacionamentos)

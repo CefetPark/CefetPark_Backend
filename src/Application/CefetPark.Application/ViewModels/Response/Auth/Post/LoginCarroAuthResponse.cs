@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CefetPark.Application.ViewModels.Response.Carro.Get
+namespace CefetPark.Application.ViewModels.Response.Auth.Post
 {
-    public class ObterCarroLoginResponse
+    public class LoginCarroAuthResponse
     {
         public string Placa { get; set; }
         public string Cor { get; set; }

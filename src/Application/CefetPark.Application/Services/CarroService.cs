@@ -21,16 +21,18 @@ namespace CefetPark.Application.Services
         private readonly ICommonRepository _commonRepository;
         private readonly INotificador _notificador;
         private readonly IMapper _mapper;
+        private readonly ICarroRepository _carroRepository;
 
-        public CarroService(ICommonRepository commonRepository, INotificador notificador, IMapper mapper)
+        public CarroService(ICommonRepository commonRepository, INotificador notificador, IMapper mapper, ICarroRepository carroRepository)
         {
             _commonRepository = commonRepository;
             _notificador = notificador;
             _mapper = mapper;
+            _carroRepository = carroRepository;
         }
         public async Task<bool> AtualizarAsync(AtualizarCarroRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id, new List<string> { "Usuarios"});
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id, new List<string> { "Usuarios" });
 
             if (entidade == null)
             {
@@ -85,7 +87,7 @@ namespace CefetPark.Application.Services
 
         public async Task<ObterCarroResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(id, new List<string> { "Usuarios", "Cor", "Modelo"});
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(id, new List<string> { "Usuarios", "Cor", "Modelo" });
 
             if (entidade == null)
             {
@@ -98,13 +100,52 @@ namespace CefetPark.Application.Services
             return response;
         }
 
+        public async Task<ObterCarroResponse?> ObterPorPlacaAsync(string placa)
+        {
+            var entidade = await _carroRepository.ObterPorPlacaAsync(placa);
+
+            if (entidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return null;
+            }
+
+            var response = new ObterCarroResponse
+            {
+                Id = entidade.Id,
+                Cor = entidade.Cor.Nome,
+                Modelo = entidade.Modelo.Nome,
+                Placa = placa,
+                Usuarios = entidade.Usuarios.Select(x => new ObterCarroUsuarioResponse
+                {
+                    Id = x.Id,
+                    EmailPrincipal = x.EmailPrincipal,
+                    Cpf = x.Cpf,
+                    AspNetUsers_Id = x.AspNetUsers_Id,
+                    Departamento = x.Departamento.Nome,
+                    EmailSecundario = x.EmailSecundario,
+                    TelefonePrincipal = x.TelefonePrincipal,
+                    Nome = x.Nome,
+                    Matricula = x.Matricula,
+                    TelefoneSecundario = x.TelefoneSecundario,
+                    TipoUsuario = x.TipoUsuario.Nome
+                }).ToList()
+            };
+
+            return response;
+
+        }
+
         public async Task<IEnumerable<ObterCarroResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Carro>(new List<string> {"Usuarios", "Cor", "Modelo"});
+            var entidades = await _commonRepository.ObterTodosAsync<Carro>(new List<string> { "Usuarios", "Cor", "Modelo" });
 
             var response = _mapper.Map<IEnumerable<ObterCarroResponse>>(entidades);
 
+
             return response;
         }
+
+
     }
 }

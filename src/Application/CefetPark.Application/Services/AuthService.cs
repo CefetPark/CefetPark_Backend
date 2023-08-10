@@ -73,6 +73,7 @@ namespace CefetPark.Application.Services
 
             var usuarioPayload = new LoginUsuarioAuthResponse
             {
+                AspNetUsers_Id = usuario.AspNetUsers_Id,
                 Cpf = usuario.Cpf,
                 Matricula = usuario.Matricula,
                 Nome = usuario.Nome,

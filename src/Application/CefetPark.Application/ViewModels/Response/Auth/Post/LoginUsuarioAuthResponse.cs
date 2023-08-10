@@ -8,6 +8,7 @@ namespace CefetPark.Application.ViewModels.Response.Auth.Post
 {
     public class LoginUsuarioAuthResponse
     {
+        public string AspNetUsers_Id { get; set; }
         public string Cpf { get; set; }
         public string Matricula { get; set; }
         public string Nome { get; set; }

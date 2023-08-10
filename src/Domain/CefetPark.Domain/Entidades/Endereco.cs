@@ -9,7 +9,6 @@
         public string Cep { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }
-        public string TipoLogradouro { get; set; }
         public Estacionamento Estacionamento { get; set; }
     }
 }

@@ -16,6 +16,10 @@ namespace CefetPark.Infra.Configurations
             builder.Property(p => p.Placa).IsRequired().HasMaxLength(10);
             #endregion
 
+            #region Índice Único
+            builder.HasIndex(c => c.Placa).IsUnique();
+            #endregion
+
             #region Relacionamentos
             builder.HasMany(r => r.RegistrosEntradasSaidas)
                     .WithOne(r => r.Carro)

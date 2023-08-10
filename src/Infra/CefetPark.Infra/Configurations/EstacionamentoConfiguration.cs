@@ -24,6 +24,10 @@ namespace CefetPark.Infra.Configurations
             builder.Property(p => p.QtdVagasLivres).IsRequired();
             #endregion
 
+            #region Índice Único
+            builder.HasIndex(c => c.Nome).IsUnique();
+            #endregion
+
             #region Relacionamentos
             builder.HasOne(r => r.Endereco)
                     .WithOne(r => r.Estacionamento)

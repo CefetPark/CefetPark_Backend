@@ -28,6 +28,11 @@ namespace CefetPark.Infra.Configurations
             builder.Property(p => p.EmailSecundario).HasMaxLength(50);
             #endregion
 
+            #region Índice Único
+            builder.HasIndex(c => c.Cpf).IsUnique();
+            builder.HasIndex(c => c.Matricula).IsUnique();
+            #endregion
+
             #region Relacionamentos
             builder.HasMany(r => r.RegistrosEntradasSaidas)
                     .WithOne(r => r.Usuario)

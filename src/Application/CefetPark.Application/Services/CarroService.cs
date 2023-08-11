@@ -118,16 +118,15 @@ namespace CefetPark.Application.Services
                 Placa = placa,
                 Usuarios = entidade.Usuarios.Select(x => new ObterCarroUsuarioResponse
                 {
-                    Id = x.Id,
-                    EmailPrincipal = x.EmailPrincipal,
-                    Cpf = x.Cpf,
                     AspNetUsers_Id = x.AspNetUsers_Id,
-                    Departamento = x.Departamento.Nome,
-                    EmailSecundario = x.EmailSecundario,
-                    TelefonePrincipal = x.TelefonePrincipal,
-                    Nome = x.Nome,
+                    Cpf = x.Cpf,
                     Matricula = x.Matricula,
+                    Nome = x.Nome,
+                    TelefonePrincipal = x.TelefonePrincipal,
                     TelefoneSecundario = x.TelefoneSecundario,
+                    EmailPrincipal = x.EmailPrincipal,
+                    EmailSecundario = x.EmailSecundario,
+                    Departamento = x.Departamento.Nome,
                     TipoUsuario = x.TipoUsuario.Nome
                 }).ToList()
             };

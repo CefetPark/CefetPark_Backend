@@ -85,10 +85,10 @@ namespace CefetPark.Application.Services
                 TipoUsuario = usuario.TipoUsuario.Nome,
                 Carros = usuario.Carros.Select(x => new LoginCarroAuthResponse
                 {
+                    Id = x.Id,
                     Cor = x.Cor.Nome,
                     Modelo = x.Modelo.Nome,
-                    Placa = x.Placa,
-                    Marca = x.Modelo.Marca.Nome
+                    Placa = x.Placa                    
                 }).ToList()
             };
 

@@ -10,7 +10,6 @@ using System.Data;
 
 namespace CefetPark.WebApi.Controllers
 {
-    [Authorize(Roles = "Adm")]
     [Route("[controller]")]
     public class CarroController : PrincipalController
     {
@@ -21,6 +20,7 @@ namespace CefetPark.WebApi.Controllers
             _carroService = carroService;
         }
 
+        [Authorize(Roles = "Adm")]
         [HttpPost]
         public async Task<ActionResult> CadastrarAsync(CadastrarCarroRequest request)
         {
@@ -28,6 +28,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm")]
         [HttpPut]
         public async Task<ActionResult> AtualizarAsync(AtualizarCarroRequest request)
         {
@@ -35,6 +36,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DesativarAsync(int id)
         {
@@ -42,6 +44,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca, Condutor")]
         [HttpGet]
         public async Task<ActionResult> ObterTodosAsync()
         {
@@ -49,6 +52,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca, Condutor")]
         [HttpGet("{id}")]
         public async Task<ActionResult> ObterPorIdAsync(int id)
         {
@@ -56,6 +60,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca, Condutor")]
         [HttpGet("placa/{placa}")]
         public async Task<ActionResult> ObterPorPlacaAsync(string placa)
         {

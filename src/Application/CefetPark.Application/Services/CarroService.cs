@@ -119,7 +119,6 @@ namespace CefetPark.Application.Services
                 Usuarios = entidade.Usuarios.Select(x => new ObterCarroUsuarioResponse
                 {
                     Id = x.Id,
-                    AspNetUsers_Id = x.AspNetUsers_Id,
                     Cpf = x.Cpf,
                     Matricula = x.Matricula,
                     Nome = x.Nome,

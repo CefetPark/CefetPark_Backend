@@ -91,9 +91,7 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
-
             var userAspNet = await _userManager.FindByNameAsync(request.Login);
-
 
             var usuario = _mapper.Map<Usuario>(request);
 
@@ -104,42 +102,79 @@ namespace CefetPark.Application.Services
 
             await _commonRepository.SalvarAlteracoesAsync();
 
-
-
-
             await _signInManager.SignInAsync(user, false);
 
             return true;
         }
 
-        Task<bool> IUsuarioService.AtualizarAsync(AtualizarCommonRequest request)
+        public async Task<ObterUsuarioResponse?> ObterPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id, new List<string> { "Carros", "TiposUsuarios", "Departamentos" });
+
+            if (entidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return null;
+            }
+
+            var response = _mapper.Map<ObterUsuarioResponse>(entidade);
+
+            return response;
         }
 
-        Task<bool> IUsuarioService.CadastrarAsync(CadastrarUsuarioRequest request)
+        public async Task<ObterUsuarioSegurancaResponse?> ObterPorGuidIdAsync(string aspNetUser_Id)
         {
-            throw new NotImplementedException();
+            var entidade = await _usuarioRepository.ObterPorGuidIdAsync(aspNetUser_Id);
+
+            if (entidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return null;
+            }
+
+            var response = _mapper.Map<ObterUsuarioResponse>(entidade);
+
+            var usuarioPayload = new ObterUsuarioSegurancaResponse
+            {
+                Id = response.Id,
+                Cpf = response.Cpf,
+                Matricula = response.Matricula,
+                Nome = response.Nome,
+                TelefonePrincipal = response.TelefonePrincipal,
+                TelefoneSecundario = response.TelefoneSecundario,
+                EmailPrincipal = response.EmailPrincipal,
+                EmailSecundario = response.EmailSecundario,
+                Departamento = response.Departamento.Nome,
+                TipoUsuario = response.TipoUsuario.Nome,
+                Carros = response.Carros.Select(x => new LoginCarroAuthResponse
+                {
+                    Id = x.Id,
+                    Cor = x.Cor,
+                    Modelo = x.Modelo,
+                    Placa = x.Placa
+                }).ToList()
+            };
+
+            return usuarioPayload;
         }
 
-        Task<bool> IUsuarioService.DesativarAsync(int id)
+        public async Task<IEnumerable<ObterUsuarioResponse>> ObterTodosAsync()
         {
-            throw new NotImplementedException();
+            var entidades = await _commonRepository.ObterTodosAsync<Usuario>(new List<string> { "Departamento", "TipoUsuario", "Carros" });
+
+            var response = _mapper.Map<IEnumerable<ObterUsuarioResponse>>(entidades);
+
+            return response;
         }
 
-        Task<ObterCommonResponse?> IUsuarioService.ObterPorAspNetUserIdAsync(string aspNetUser_Id)
-        {
-            throw new NotImplementedException();
-        }
+        //Task<bool> AtualizarAsync(AtualizarCommonRequest request)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        Task<ObterCommonResponse?> IUsuarioService.ObterPorIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<ObterCommonResponse>> IUsuarioService.ObterTodosAsync()
-        {
-            throw new NotImplementedException();
-        }
+        //Task<bool> DesativarAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

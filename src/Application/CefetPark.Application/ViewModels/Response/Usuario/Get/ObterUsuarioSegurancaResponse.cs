@@ -1,14 +1,15 @@
-﻿using System;
+﻿using CefetPark.Application.ViewModels.Response.Auth.Post;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CefetPark.Application.ViewModels.Response.Auth.Post
+namespace CefetPark.Application.ViewModels.Response.Usuario.Get
 {
-    public class LoginUsuarioAuthResponse
+    public class ObterUsuarioSegurancaResponse
     {
-        public string AspNetUsers_Id { get; set; }
+        public int Id { get; set; }
         public string Cpf { get; set; }
         public string Matricula { get; set; }
         public string Nome { get; set; }

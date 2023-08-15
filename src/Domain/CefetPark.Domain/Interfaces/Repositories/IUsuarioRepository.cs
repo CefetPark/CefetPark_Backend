@@ -6,5 +6,6 @@ namespace CefetPark.Domain.Interfaces.Repositories
     public interface IUsuarioRepository
     {
         public Task<Usuario?> ObterPorGuidIdAsync(string id);
+        public Task<Usuario?> ObterPorGuidAspNetUserIdAsync(string aspNetUser_Id);
     }
 }

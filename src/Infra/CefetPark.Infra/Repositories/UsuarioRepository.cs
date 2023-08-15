@@ -19,7 +19,7 @@ namespace CefetPark.Infra.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<Usuario?> ObterPorGuidIdAsync(string id)
+        public async Task<Usuario?> ObterPorIdAsync(int id)
         {
             var result = await _dataContext
                 .Usuarios
@@ -28,7 +28,20 @@ namespace CefetPark.Infra.Repositories
                 .Include(x => x.Carros).ThenInclude(y => y.Cor)
                 .Include(x => x.Departamento)
                 .Include(x => x.TipoUsuario)
-                .FirstOrDefaultAsync(x => x.AspNetUsers_Id == id.ToString());
+                .FirstOrDefaultAsync(x => x.Id == id);
+            return result;
+        }
+
+        public async Task<Usuario?> ObterPorGuidIdAsync(string aspNetUser_Id)
+        {
+            var result = await _dataContext
+                .Usuarios
+                .Include(x => x.Carros).ThenInclude(y => y.Modelo)
+                .Include(x => x.Carros).ThenInclude(y => y.Modelo).ThenInclude(y => y.Marca)
+                .Include(x => x.Carros).ThenInclude(y => y.Cor)
+                .Include(x => x.Departamento)
+                .Include(x => x.TipoUsuario)
+                .FirstOrDefaultAsync(x => x.AspNetUsers_Id == aspNetUser_Id);
             return result;
         }
     }

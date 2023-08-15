@@ -44,7 +44,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
-        [Authorize(Roles = "Adm, Seguranca, Condutor")]
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet]
         public async Task<ActionResult> ObterTodosAsync()
         {
@@ -52,7 +52,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
-        [Authorize(Roles = "Adm, Seguranca, Condutor")]
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet("{id}")]
         public async Task<ActionResult> ObterPorIdAsync(int id)
         {
@@ -60,7 +60,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
-        [Authorize(Roles = "Adm, Seguranca, Condutor")]
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet("placa/{placa}")]
         public async Task<ActionResult> ObterPorPlacaAsync(string placa)
         {

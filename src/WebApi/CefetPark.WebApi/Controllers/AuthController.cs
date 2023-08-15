@@ -21,13 +21,5 @@ namespace CefetPark.WebApi.Controllers
             var response = await _authService.LoginAsync(request);
             return CustomResponse(response);
         }
-
-        [Authorize(Roles = "Adm")]
-        [HttpPost("cadastrar")]
-        public async Task<ActionResult> CadastrarAsync(CadastrarAuthRequest request)
-        {
-            var response = await _authService.CadastrarAsync(request);
-            return CustomResponse(response);
-        }
     }
 }

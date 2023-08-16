@@ -42,7 +42,7 @@ namespace CefetPark.WebApi.Controllers
 
         [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet("/AspnetUserId{aspNetUser_Id}")]
-        public async Task<ActionResult> ObterPorAspNetUserIdAsync(string aspNetUser_Id)
+        public async Task<ActionResult> ObterPorGuidIdAsync(string aspNetUser_Id)
         {
             var result = await _usuarioService.ObterPorGuidIdAsync(aspNetUser_Id);
             return CustomResponse(result);

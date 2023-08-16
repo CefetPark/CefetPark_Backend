@@ -76,7 +76,7 @@ namespace CefetPark.Infra.Repositories
             
             foreach (var prop in propriedadesRelacionamentos)
             {
-                if (typeof(T).GetProperty(prop) == null) throw new Exception($"Propriedade {prop} não existente na Entidade");
+                if (typeof(T).GetProperty(prop) == null) throw new Exception($"Propriedade {prop} não existente na Entidade {typeof(T).Name}");
                 query = query.Include(prop);
             }
 
@@ -92,7 +92,7 @@ namespace CefetPark.Infra.Repositories
 
             foreach (var prop in propriedadesRelacionamentos)
             {
-                if (typeof(T).GetProperty(prop) == null) throw new Exception($"Propriedade {prop} não existente na Entidade");
+                if (typeof(T).GetProperty(prop) == null) throw new Exception($"Propriedade {prop} não existente na Entidade {typeof(T).Name}");
                 query = query.Include(prop);
             }
 

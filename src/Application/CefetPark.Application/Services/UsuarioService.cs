@@ -54,6 +54,8 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
         {
+
+            
             var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
 
             if (userRoleEntidade == null)
@@ -109,7 +111,7 @@ namespace CefetPark.Application.Services
 
         public async Task<ObterUsuarioResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id, new List<string> { "Carros", "TiposUsuarios", "Departamentos" });
+            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id, new List<string> { "Carros", "TipoUsuario", "Departamentos" });
 
             if (entidade == null)
             {
@@ -132,25 +134,25 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var response = _mapper.Map<ObterUsuarioResponse>(entidade);
+           
 
             var usuarioPayload = new ObterUsuarioSegurancaResponse
             {
-                Id = response.Id,
-                Cpf = response.Cpf,
-                Matricula = response.Matricula,
-                Nome = response.Nome,
-                TelefonePrincipal = response.TelefonePrincipal,
-                TelefoneSecundario = response.TelefoneSecundario,
-                EmailPrincipal = response.EmailPrincipal,
-                EmailSecundario = response.EmailSecundario,
-                Departamento = response.Departamento.Nome,
-                TipoUsuario = response.TipoUsuario.Nome,
-                Carros = response.Carros.Select(x => new LoginCarroAuthResponse
+                Id = entidade.Id,
+                Cpf = entidade.Cpf,
+                Matricula = entidade.Matricula,
+                Nome = entidade.Nome,
+                TelefonePrincipal = entidade.TelefonePrincipal,
+                TelefoneSecundario = entidade.TelefoneSecundario,
+                EmailPrincipal = entidade.EmailPrincipal,
+                EmailSecundario = entidade.EmailSecundario,
+                Departamento = entidade.Departamento.Nome,
+                TipoUsuario = entidade.TipoUsuario.Nome,
+                Carros = entidade.Carros.Select(x => new LoginCarroAuthResponse
                 {
                     Id = x.Id,
-                    Cor = x.Cor,
-                    Modelo = x.Modelo,
+                    Cor = x.Cor.Nome,
+                    Modelo = x.Modelo.Nome,
                     Placa = x.Placa
                 }).ToList()
             };

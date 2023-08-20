@@ -12,6 +12,7 @@ using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
+using Microsoft.Win32;
 using System.Net;
 
 namespace CefetPark.Application.Services
@@ -62,7 +63,7 @@ namespace CefetPark.Application.Services
 
         }
 
-        public async Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request)
+        public async Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request)
         {
             var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Estacionamento_Id);
 
@@ -73,7 +74,27 @@ namespace CefetPark.Application.Services
             }
 
             var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(request.Estacionamento_Id);
-            var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaResponse>>(entidades);
+            //var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>>(entidades);
+
+            var response = entidades.Select(registro =>
+            {
+                var carroResponse = new ObterRegistroEntradaSaidaCarroResponse
+                {
+                    Id = registro.Carro.Id,
+                    Placa = registro.Carro.Placa,
+                    Cor = registro.Carro.Cor.Nome,
+                    Modelo = registro.Carro.Modelo.Nome
+                };
+
+                return new ObterRegistroEntradaSaidaSemSaidaResponse
+                {
+                    Id = registro.Id,
+                    DataEntrada = registro.DataEntrada,
+                    Estacionamento_Id = registro.Estacionamento_Id,
+                    Carro = carroResponse
+                    // Mapeie outras propriedades conforme necessário
+                };
+            });
             return response;
         }
     }

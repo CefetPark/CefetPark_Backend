@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get
 {
-    public class ObterRegistroEntradaSaidaResponse
+    public class ObterRegistroEntradaSaidaSemSaidaResponse
     {
         public int Id { get; set; }
         public DateTime DataEntrada { get; set; }
         public int Estacionamento_Id { get; set; }
-        public ObterUsuarioResponse Usuario { get; set; }
-        public ObterCarroResponse Carro { get; set; }
+        public ObterRegistroEntradaSaidaCarroResponse Carro { get; set; }
     }
 }

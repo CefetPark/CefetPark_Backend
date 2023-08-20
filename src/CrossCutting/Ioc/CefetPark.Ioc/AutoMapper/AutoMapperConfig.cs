@@ -47,7 +47,7 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<Marca, ObterCommonResponse>();
             CreateMap<TipoUsuario, ObterCommonResponse>();
             CreateMap<Cor, ObterCommonResponse>();
-            CreateMap<RegistroEntradaSaida, ObterRegistroEntradaSaidaResponse>();
+            CreateMap<RegistroEntradaSaida, ObterRegistroEntradaSaidaSemSaidaResponse>();
             #endregion
 
 

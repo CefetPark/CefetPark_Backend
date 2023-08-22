@@ -55,6 +55,20 @@ namespace CefetPark.Application.Services
         {
             var entidade = _mapper.Map<RegistroEntradaSaida>(request);
 
+            var usuarioJaEstacionado = await _registroEntradaSaidaRepository.UsuarioJaEstacionadoAsync(request.Usuario_Id);
+            if (usuarioJaEstacionado)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.USUARIO_JA_ESTACIONADO));
+                return false;
+            }
+
+            var carroJaEstacionado = await _registroEntradaSaidaRepository.CarroJaEstacionadoAsync(request.Carro_Id);
+            if (carroJaEstacionado)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.CARRO_JA_ESTACIONADO));
+                return false;
+            }
+
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 

@@ -23,5 +23,17 @@ namespace CefetPark.Infra.Repositories
                 .ToListAsync();
             return result;
         }
+
+        public async Task<bool> UsuarioJaEstacionadoAsync(int usuarioId)
+        {
+            var result = await _dataContext.RegistrosEntradasSaidas.Where(x => x.Usuario_Id == usuarioId && x.DataSaida == null).AnyAsync();
+            return result;
+        }
+
+        public async Task<bool> CarroJaEstacionadoAsync(int carroId)
+        {
+            var result = await _dataContext.RegistrosEntradasSaidas.Where(x => x.Carro_Id == carroId && x.DataSaida == null).AnyAsync();
+            return result;
+        }
     }
 }

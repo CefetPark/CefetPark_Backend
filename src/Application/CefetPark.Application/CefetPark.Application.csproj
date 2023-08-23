@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\Domain\CefetPark.Domain\CefetPark.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Request\RegistroEntradaSaida\Get\" />
+  </ItemGroup>
+
 </Project>

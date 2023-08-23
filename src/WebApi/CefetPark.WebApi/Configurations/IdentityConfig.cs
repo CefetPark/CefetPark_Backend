@@ -20,8 +20,8 @@ namespace CefetPark.WebApi.Configurations
 
                 options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
             });
-                
-            
+
+
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()

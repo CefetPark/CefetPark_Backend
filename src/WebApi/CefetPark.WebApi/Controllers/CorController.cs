@@ -1,5 +1,4 @@
 ﻿using CefetPark.Application.Interfaces.Services;
-using CefetPark.Application.Services;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Utils.Interfaces.Models;

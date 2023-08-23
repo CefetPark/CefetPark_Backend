@@ -1,7 +1,4 @@
-﻿using CefetPark.Application.ViewModels.Request.Common.Put;
-using CefetPark.Application.ViewModels.Request.Usuario.Post;
-using CefetPark.Application.ViewModels.Response.Auth.Post;
-using CefetPark.Application.ViewModels.Response.Common.Get;
+﻿using CefetPark.Application.ViewModels.Request.Usuario.Post;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 
 namespace CefetPark.Application.Interfaces.Services

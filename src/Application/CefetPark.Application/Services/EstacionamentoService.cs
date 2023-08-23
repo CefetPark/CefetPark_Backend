@@ -66,7 +66,7 @@ namespace CefetPark.Application.Services
             }
 
             _commonRepository.RastrearEntidade(entidade);
-            
+
             entidade.Desativar();
 
             await _commonRepository.SalvarAlteracoesAsync();
@@ -76,7 +76,7 @@ namespace CefetPark.Application.Services
 
         public async Task<ObterEstacionamentoResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Estacionamento>(id, new List<string> { "Endereco"});
+            var entidade = await _commonRepository.ObterPorIdAsync<Estacionamento>(id, new List<string> { "Endereco" });
 
             if (entidade == null)
             {
@@ -91,7 +91,7 @@ namespace CefetPark.Application.Services
 
         public async Task<IEnumerable<ObterEstacionamentoResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Estacionamento>(new List<string> { "Endereco"});
+            var entidades = await _commonRepository.ObterTodosAsync<Estacionamento>(new List<string> { "Endereco" });
 
             var response = _mapper.Map<IEnumerable<ObterEstacionamentoResponse>>(entidades);
 

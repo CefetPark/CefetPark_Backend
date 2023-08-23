@@ -2,10 +2,7 @@
 using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Carro.Put;
-using CefetPark.Application.ViewModels.Request.Common.Post;
-using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Response.Carro.Get;
-using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;

@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using CefetPark.Application.Interfaces.Services;
-using CefetPark.Application.ViewModels.Request.Common.Post;
-using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Request.Modelo.Post;
 using CefetPark.Application.ViewModels.Request.Modelo.Put;
-using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Modelo.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
@@ -12,12 +9,7 @@ using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CefetPark.Application.Services
 {
@@ -99,7 +91,7 @@ namespace CefetPark.Application.Services
 
         public async Task<IEnumerable<ObterModeloResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Modelo>(new List<string> { "Marca"});
+            var entidades = await _commonRepository.ObterTodosAsync<Modelo>(new List<string> { "Marca" });
 
             var response = _mapper.Map<IEnumerable<ObterModeloResponse>>(entidades);
 

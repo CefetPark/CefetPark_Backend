@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CefetPark.Infra.Repositories
 {
-    public class CommonRepository : ICommonRepository, IDisposable
+    public class CommonRepository  : ICommonRepository, IDisposable
     {
         private readonly DataContext _dataContext;
 
@@ -42,7 +42,7 @@ namespace CefetPark.Infra.Repositories
         }
         public async Task<T?> ObterPorIdAsync<T>(int id) where T : CommonEntity
         {
-            var result = await _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id && x.EstaAtivo);
+            var result = await _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id && x.EstaAtivo) ;
             return result;
         }
 
@@ -73,7 +73,7 @@ namespace CefetPark.Infra.Repositories
             if (propriedadesRelacionamentos == null) throw new Exception($"propriedadesRelacionamentos não pode ser Null");
 
             var query = _dataContext.Set<T>().AsQueryable();
-
+            
             foreach (var prop in propriedadesRelacionamentos)
             {
                 if (typeof(T).GetProperty(prop) == null) throw new Exception($"Propriedade {prop} não existente na Entidade {typeof(T).Name}");
@@ -86,7 +86,7 @@ namespace CefetPark.Infra.Repositories
 
         public async Task<T?> ObterPorIdAsync<T>(int id, ICollection<string> propriedadesRelacionamentos) where T : CommonEntity
         {
-            if (propriedadesRelacionamentos == null) throw new Exception($"propriedadesRelacionamentos não pode ser Null");
+            if(propriedadesRelacionamentos == null) throw new Exception($"propriedadesRelacionamentos não pode ser Null");
 
             var query = _dataContext.Set<T>().AsQueryable();
 

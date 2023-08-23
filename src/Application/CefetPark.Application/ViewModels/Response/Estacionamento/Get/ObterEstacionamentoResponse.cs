@@ -1,4 +1,9 @@
 ﻿using CefetPark.Application.ViewModels.Response.Endereco.Get;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CefetPark.Application.ViewModels.Response.Estacionamento.Get
 {

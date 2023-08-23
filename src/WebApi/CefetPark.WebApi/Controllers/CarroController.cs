@@ -1,9 +1,12 @@
 ﻿using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Carro.Put;
+using CefetPark.Application.ViewModels.Request.Common.Post;
+using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Utils.Interfaces.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace CefetPark.WebApi.Controllers
 {
@@ -12,7 +15,7 @@ namespace CefetPark.WebApi.Controllers
     {
         private readonly ICarroService _carroService;
 
-        public CarroController(ICarroService carroService, INotificador notificador) : base(notificador)
+        public CarroController(ICarroService carroService, INotificador notificador): base(notificador)
         {
             _carroService = carroService;
         }

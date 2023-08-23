@@ -1,5 +1,8 @@
 ﻿using CefetPark.Domain.Interfaces.Models;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace CefetPark.Application.Models
@@ -35,7 +38,7 @@ namespace CefetPark.Application.Models
             }
 
             var claim = principal.FindFirst("Id");
-            if (claim == null) throw new Exception("Id não Encontrado no Token");
+            if(claim == null) throw new Exception("Id não Encontrado no Token");
 
             return int.Parse(claim?.Value);
         }

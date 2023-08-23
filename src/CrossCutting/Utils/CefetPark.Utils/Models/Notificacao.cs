@@ -1,6 +1,7 @@
 ﻿
 using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
+using System.ComponentModel;
 using System.Net;
 
 namespace CefetPark.Utils.Models
@@ -21,7 +22,7 @@ namespace CefetPark.Utils.Models
             HttpStatusCode = (int)httpStatusCode;
 
         }
-
+        
     }
-
+    
 }

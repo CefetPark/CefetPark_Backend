@@ -2,6 +2,11 @@
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CefetPark.Infra.Repositories
 {

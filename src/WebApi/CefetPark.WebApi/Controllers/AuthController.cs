@@ -1,6 +1,7 @@
 ﻿using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Utils.Interfaces.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CefetPark.WebApi.Controllers

@@ -1,4 +1,8 @@
-﻿namespace CefetPark.Application.ViewModels.Response.Carro.Get
+﻿
+using CefetPark.Application.ViewModels.Response.Common.Get;
+using CefetPark.Application.ViewModels.Response.Usuario.Get;
+
+namespace CefetPark.Application.ViewModels.Response.Carro.Get
 {
     public class ObterCarroResponse
     {

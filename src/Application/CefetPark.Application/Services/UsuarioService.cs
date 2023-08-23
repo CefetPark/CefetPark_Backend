@@ -2,8 +2,13 @@
 using AutoMapper;
 using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.Models;
+using CefetPark.Application.ViewModels.Request.Auth.Post;
+using CefetPark.Application.ViewModels.Request.Common.Post;
+using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
 using CefetPark.Application.ViewModels.Response.Auth.Post;
+using CefetPark.Application.ViewModels.Response.Carro.Get;
+using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
@@ -11,8 +16,14 @@ using CefetPark.Utils.Enums;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
+using System.Xml.Linq;
 
 namespace CefetPark.Application.Services
 {
@@ -44,7 +55,7 @@ namespace CefetPark.Application.Services
         public async Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
         {
 
-
+            
             var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
 
             if (userRoleEntidade == null)
@@ -123,7 +134,7 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-
+           
 
             var usuarioPayload = new ObterUsuarioSegurancaResponse
             {

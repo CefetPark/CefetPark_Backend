@@ -26,5 +26,5 @@ namespace CefetPark.Infra.Configurations
                     .HasForeignKey(r => r.Cor_Id);
             #endregion
         }
-    }
+    }    
 }

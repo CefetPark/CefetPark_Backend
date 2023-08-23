@@ -1,6 +1,7 @@
 ﻿
 using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
+using CefetPark.Domain.Entidades;
 
 namespace CefetPark.Application.ViewModels.Response.Usuario.Get
 {

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using CefetPark.Application.Interfaces.Services;
+using CefetPark.Application.ViewModels.Request.Common.Post;
+using CefetPark.Application.ViewModels.Request.Common.Put;
+using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Get;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Put;
 using CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get;
@@ -74,9 +77,9 @@ namespace CefetPark.Application.Services
 
         }
 
-        public async Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id)
+        public async Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request)
         {
-            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(estacionamento_Id);
+            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Estacionamento_Id);
 
             if (estacionamento == null)
             {
@@ -84,8 +87,28 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(estacionamento_Id);
-            var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaResponse>>(entidades);
+            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(request.Estacionamento_Id);
+            //var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>>(entidades);
+
+            var response = entidades.Select(registro =>
+            {
+                var carroResponse = new ObterRegistroEntradaSaidaCarroResponse
+                {
+                    Id = registro.Carro.Id,
+                    Placa = registro.Carro.Placa,
+                    Cor = registro.Carro.Cor.Nome,
+                    Modelo = registro.Carro.Modelo.Nome
+                };
+
+                return new ObterRegistroEntradaSaidaSemSaidaResponse
+                {
+                    Id = registro.Id,
+                    DataEntrada = registro.DataEntrada,
+                    Estacionamento_Id = registro.Estacionamento_Id,
+                    Carro = carroResponse
+                    // Mapeie outras propriedades conforme necessário
+                };
+            });
             return response;
         }
     }

@@ -12,11 +12,11 @@ namespace CefetPark.WebApi.Controllers
     public class EstacionamentoController : PrincipalController
     {
         private readonly IEstacionamentoService _estacionamentoService;
-        public EstacionamentoController(IEstacionamentoService estacionamentoService, INotificador notificador) : base(notificador)
+        public EstacionamentoController(IEstacionamentoService estacionamentoService,INotificador notificador) : base(notificador)
         {
             _estacionamentoService = estacionamentoService;
         }
-
+        
         [Authorize(Roles = "Adm")]
         [HttpPost]
         public async Task<ActionResult> CadastrarAsync(CadastrarEstacionamentoRequest request)
@@ -24,7 +24,7 @@ namespace CefetPark.WebApi.Controllers
             var result = await _estacionamentoService.CadastrarAsync(request);
             return CustomResponse(result);
         }
-
+        
         [Authorize(Roles = "Adm")]
         [HttpPut]
         public async Task<ActionResult> AtualizarAsync(AtualizarEstacionamentoRequest request)

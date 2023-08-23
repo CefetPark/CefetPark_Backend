@@ -18,8 +18,8 @@ namespace CefetPark.Infra.Repositories
         {
             var result = await _dataContext.RegistrosEntradasSaidas
                 .Where(x => x.Estacionamento_Id == estacionamento_id && x.DataSaida == null)
-                .Include(x => x.Carro)
-                .Include(x => x.Usuario)
+                .Include(x => x.Carro).ThenInclude(x => x.Cor)
+                .Include(x => x.Carro).ThenInclude(x => x.Modelo)
                 .ToListAsync();
             return result;
         }

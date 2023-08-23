@@ -9,6 +9,7 @@ using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
+using Microsoft.Win32;
 using System.Net;
 
 namespace CefetPark.Application.Services

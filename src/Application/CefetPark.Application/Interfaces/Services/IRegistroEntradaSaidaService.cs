@@ -1,5 +1,4 @@
-﻿using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Get;
-using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
+﻿using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Put;
 using CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get;
 using System;
@@ -14,6 +13,6 @@ namespace CefetPark.Application.Interfaces.Services
     {
         public Task<bool> CadastrarAsync(CadastrarRegistroEntradaSaidaRequest request);
         public Task<bool> AtualizarAsync(AtualizarRegistroEntradaSaidaRequest request);
-        public Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request);
+        public Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id);
     }
 }

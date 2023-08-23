@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using CefetPark.Application.Interfaces.Services;
-using CefetPark.Application.ViewModels.Request.Common.Post;
-using CefetPark.Application.ViewModels.Request.Common.Put;
-using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Get;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Put;
 using CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get;
@@ -76,9 +73,9 @@ namespace CefetPark.Application.Services
 
         }
 
-        public async Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request)
+        public async Task<IEnumerable<ObterRegistroEntradaSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id)
         {
-            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Estacionamento_Id);
+            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(estacionamento_Id);
 
             if (estacionamento == null)
             {
@@ -86,7 +83,7 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(request.Estacionamento_Id);
+            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(estacionamento_Id);
             var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaResponse>>(entidades);
             return response;
         }

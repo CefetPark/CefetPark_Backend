@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using System.ComponentModel;
-using System.Runtime.Intrinsics.X86;
+﻿using System.ComponentModel;
 
 
 namespace CefetPark.Utils.Enums

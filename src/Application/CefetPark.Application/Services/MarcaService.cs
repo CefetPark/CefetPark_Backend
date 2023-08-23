@@ -91,7 +91,7 @@ namespace CefetPark.Application.Services
 
         public async Task<IEnumerable<ObterCommonResponse>> ObterTodosAsync()
         {
-            var entidades = await _commonRepository.ObterTodosAsync<Marca>(new List<string>{ "Modelos"});
+            var entidades = await _commonRepository.ObterTodosAsync<Marca>(new List<string> { "Modelos" });
 
             var response = _mapper.Map<IEnumerable<ObterCommonResponse>>(entidades);
 

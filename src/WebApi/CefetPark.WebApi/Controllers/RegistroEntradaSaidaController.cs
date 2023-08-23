@@ -13,7 +13,7 @@ namespace CefetPark.WebApi.Controllers
     {
         private readonly IRegistroEntradaSaidaService _registroEntradaSaidaService;
 
-        public RegistroEntradaSaidaController(IRegistroEntradaSaidaService registroEntradaSaidaService, INotificador notificador): base(notificador)
+        public RegistroEntradaSaidaController(IRegistroEntradaSaidaService registroEntradaSaidaService, INotificador notificador) : base(notificador)
         {
             _registroEntradaSaidaService = registroEntradaSaidaService;
         }

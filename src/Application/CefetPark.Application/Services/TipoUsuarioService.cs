@@ -3,11 +3,6 @@ using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CefetPark.Application.Services
 {
@@ -26,7 +21,7 @@ namespace CefetPark.Application.Services
         {
             var entidades = await _commonRepository.ObterTodosAsync<TipoUsuario>();
 
-            var response  = _mapper.Map<IEnumerable<ObterCommonResponse>>(entidades);
+            var response = _mapper.Map<IEnumerable<ObterCommonResponse>>(entidades);
 
             return response;
         }

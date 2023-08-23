@@ -1,6 +1,5 @@
 ﻿using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Models;
-using CefetPark.Infra.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 

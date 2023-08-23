@@ -17,7 +17,7 @@ namespace CefetPark.Ioc.DependeciesInjection
         {
 
             services.AddScoped<DataContext>();
-           
+
 
             #region Services
             services.AddScoped<IAuthService, AuthService>();

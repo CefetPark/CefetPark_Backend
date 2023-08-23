@@ -1,8 +1,4 @@
-﻿using CefetPark.Application.ViewModels.Request.Common.Put;
-using CefetPark.Application.ViewModels.Request.Endereco.Post;
-using CefetPark.Application.ViewModels.Request.Endereco.Put;
-using System;
-using System.Collections.Generic;
+﻿using CefetPark.Application.ViewModels.Request.Endereco.Put;
 using System.ComponentModel.DataAnnotations;
 
 

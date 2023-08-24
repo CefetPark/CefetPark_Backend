@@ -7,5 +7,7 @@ namespace CefetPark.Domain.Interfaces.Repositories
     {
         public Task<Usuario?> ObterPorIdAsync(int id);
         public Task<Usuario?> ObterPorGuidIdAsync(string aspNetUser_Id);
+        public  Task<bool> MatriculaExisteAsync(string matricula);
+        public Task<bool> CpfExisteAsync(string cpf);
     }
 }

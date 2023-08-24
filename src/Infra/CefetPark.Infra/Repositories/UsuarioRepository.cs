@@ -44,5 +44,18 @@ namespace CefetPark.Infra.Repositories
                 .FirstOrDefaultAsync(x => x.AspNetUsers_Id == aspNetUser_Id);
             return result;
         }
+
+        public async Task<bool> MatriculaExisteAsync(string matricula)
+        {
+            var result = await _dataContext.Usuarios.Where(x => x.Matricula.Equals(matricula)).AnyAsync();
+
+            return result;
+        }
+        public async Task<bool> CpfExisteAsync(string cpf)
+        {
+            var result = await _dataContext.Usuarios.Where(x => x.Cpf.Equals(cpf)).AnyAsync();
+
+            return result;
+        }
     }
 }

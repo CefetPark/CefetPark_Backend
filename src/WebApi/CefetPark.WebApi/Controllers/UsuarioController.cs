@@ -25,6 +25,14 @@ namespace CefetPark.WebApi.Controllers
         }
 
         [Authorize(Roles = "Adm")]
+        [HttpPost("cadastrarLista")]
+        public async Task<ActionResult> CadastrarListaAsync(List<CadastrarUsuarioRequest> request)
+        {
+            var response = await _usuarioService.CadastrarListaAsync(request);
+            return CustomResponse(response);
+        }
+
+        [Authorize(Roles = "Adm")]
         [HttpGet]
         public async Task<ActionResult> ObterTodosAsync()
         {

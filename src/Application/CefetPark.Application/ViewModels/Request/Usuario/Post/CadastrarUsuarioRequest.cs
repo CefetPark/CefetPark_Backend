@@ -11,7 +11,7 @@ namespace CefetPark.Application.ViewModels.Request.Usuario.Post
     public class CadastrarUsuarioRequest
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Login { get; set; }
+        public string Cpf { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Senha { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

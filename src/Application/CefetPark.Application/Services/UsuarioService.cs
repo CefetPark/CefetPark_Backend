@@ -62,6 +62,22 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
+            var matriculaExiste = await _usuarioRepository.MatriculaExisteAsync(request.Matricula);
+
+            if (matriculaExiste)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.MATRICULA_JA_EXISTENTE));
+                return false;
+            }
+
+            var cpfExiste = await _usuarioRepository.CpfExisteAsync(request.Login);
+
+            if (cpfExiste)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.CPF_JA_EXISTENTE));
+                return false;
+            }
+
             var user = new IdentityUser
             {
                 UserName = request.Cpf,

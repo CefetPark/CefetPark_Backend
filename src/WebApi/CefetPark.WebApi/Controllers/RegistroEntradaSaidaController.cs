@@ -37,10 +37,10 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
-        [HttpGet("obter-estacionados")]
-        public async Task<ActionResult> ObterEstacionadosAsync([FromQuery] ObterEstacionadosRequest request)
+        [HttpGet("obter-estacionados/{estacionamento_Id}")]
+        public async Task<ActionResult> ObterEstacionadosAsync(int estacionamento_Id)
         {
-            var result = await _registroEntradaSaidaService.ObterEstacionadosAsync(request);
+            var result = await _registroEntradaSaidaService.ObterEstacionadosAsync(estacionamento_Id);
             return CustomResponse(result);
         }
     }

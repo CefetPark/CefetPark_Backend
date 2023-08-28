@@ -14,6 +14,6 @@ namespace CefetPark.Application.Interfaces.Services
     {
         public Task<bool> CadastrarAsync(CadastrarRegistroEntradaSaidaRequest request);
         public Task<bool> AtualizarAsync(AtualizarRegistroEntradaSaidaRequest request);
-        public Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request);
+        public Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id);
     }
 }

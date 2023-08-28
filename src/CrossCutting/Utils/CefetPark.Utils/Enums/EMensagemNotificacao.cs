@@ -12,7 +12,11 @@ namespace CefetPark.Utils.Enums
         [Description("Esse Usuario possui um registro de entrada no estacionamento e a sua data de saida não foi registrada")]
         USUARIO_JA_ESTACIONADO,
         [Description("Esse Carro possui um registro de entrada no estacionamento e a sua data de saida não foi registrada")]
-        CARRO_JA_ESTACIONADO
+        CARRO_JA_ESTACIONADO,
+        [Description("Já existe um usuario com essa matricula!")]
+        MATRICULA_JA_EXISTENTE,
+        [Description("Já existe um usuario com esse cpf")]
+        CPF_JA_EXISTENTE
 
     }
 }

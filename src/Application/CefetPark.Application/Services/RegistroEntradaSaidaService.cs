@@ -76,9 +76,9 @@ namespace CefetPark.Application.Services
             return true;
         }
 
-        public async Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(ObterEstacionadosRequest request)
+        public async Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id)
         {
-            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Estacionamento_Id);
+            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(estacionamento_Id);
 
             if (estacionamento == null)
             {
@@ -86,7 +86,7 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(request.Estacionamento_Id);
+            var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(estacionamento_Id);
             //var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>>(entidades);
 
             var response = entidades.Select(registro =>

@@ -54,7 +54,7 @@ namespace CefetPark.Application.Services
             var result = await _signInManager.PasswordSignInAsync(request.Login, request.Senha, false, true);
             if (!result.Succeeded)
             {
-                _notificador.Handle(new Notificacao("Usuario ou Senha Incorreto", HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao("Usuario ou Senha Incorreto", HttpStatusCode.Unauthorized));
                 return null;
             }
             if (result.IsLockedOut)

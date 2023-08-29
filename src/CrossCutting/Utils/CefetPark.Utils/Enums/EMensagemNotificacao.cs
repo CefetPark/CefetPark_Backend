@@ -16,7 +16,10 @@ namespace CefetPark.Utils.Enums
         [Description("Já existe um usuario com essa matricula!")]
         MATRICULA_JA_EXISTENTE,
         [Description("Já existe um usuario com esse cpf")]
-        CPF_JA_EXISTENTE
+        CPF_JA_EXISTENTE,
+        [Description("Estacionamento Lotado")]
+        ESTACIONAMENTO_LOTADO,
+
 
     }
 }

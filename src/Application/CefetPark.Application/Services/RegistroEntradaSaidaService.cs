@@ -43,9 +43,20 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
+            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(entidade.Estacionamento_Id);
+
+            if (estacionamento == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return false;
+            }
+
             _commonRepository.RastrearEntidade(entidade);
+            _commonRepository.RastrearEntidade(estacionamento);
 
             AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
+
+            estacionamento.QtdVagasLivres++;
 
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -69,6 +80,26 @@ namespace CefetPark.Application.Services
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.CARRO_JA_ESTACIONADO));
                 return false;
             }
+
+            var estacionamento = await _commonRepository.ObterPorIdAsync<Estacionamento>(request.Estacionamento_Id);
+
+            if (estacionamento == null)
+            {
+
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return false;
+
+            }
+
+            if(estacionamento.QtdVagasLivres <= 0)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ESTACIONAMENTO_LOTADO));
+                return false;
+            }
+
+            _commonRepository.RastrearEntidade(estacionamento);
+
+            estacionamento.QtdVagasLivres--;
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();

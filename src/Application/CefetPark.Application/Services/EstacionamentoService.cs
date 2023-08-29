@@ -48,7 +48,7 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastrarEstacionamentoRequest request)
         {
-            var entidade = _mapper.Map<Estacionamento>(request);
+            var entidade = _mapper.Map<>(request);
 
             entidade.QtdVagasLivres = entidade.QtdVagasTotal;
             await _commonRepository.AdicionarEntidadeAsync(entidade);

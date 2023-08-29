@@ -70,7 +70,7 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
-            var cpfExiste = await _usuarioRepository.CpfExisteAsync(request.Login);
+            var cpfExiste = await _usuarioRepository.CpfExisteAsync(request.Cpf);
 
             if (cpfExiste)
             {

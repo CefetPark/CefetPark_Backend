@@ -19,6 +19,9 @@ namespace CefetPark.Utils.Enums
         CPF_JA_EXISTENTE,
         [Description("Estacionamento Lotado")]
         ESTACIONAMENTO_LOTADO,
+        [Description("Tipo usuario não encontrado!")]
+        TIPO_USUARIO_NAO_ENCONTRADO,
+
 
 
     }

@@ -105,7 +105,6 @@ namespace CefetPark.Application.Services
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
-
         }
 
         public async Task<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>> ObterEstacionadosAsync(int estacionamento_Id)

@@ -53,9 +53,7 @@ namespace CefetPark.Application.Services
         }
 
         public async Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
-        {
-
-            
+        {            
             var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
 
             if (userRoleEntidade == null)
@@ -72,7 +70,7 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
-            var cpfExiste = await _usuarioRepository.CpfExisteAsync(request.Login);
+            var cpfExiste = await _usuarioRepository.CpfExisteAsync(request.Cpf);
 
             if (cpfExiste)
             {
@@ -82,7 +80,7 @@ namespace CefetPark.Application.Services
 
             var user = new IdentityUser
             {
-                UserName = request.Login,
+                UserName = request.Cpf,
                 EmailConfirmed = true,
 
             };
@@ -109,11 +107,11 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
-            var userAspNet = await _userManager.FindByNameAsync(request.Login);
+            var userAspNet = await _userManager.FindByNameAsync(request.Cpf);
 
             var usuario = _mapper.Map<Usuario>(request);
 
-            usuario.Cpf = request.Login;
+            usuario.Cpf = request.Cpf;
             usuario.AspNetUsers_Id = userAspNet.Id;
 
             await _commonRepository.AdicionarEntidadeAsync(usuario);
@@ -121,6 +119,24 @@ namespace CefetPark.Application.Services
             await _commonRepository.SalvarAlteracoesAsync();
 
             await _signInManager.SignInAsync(user, false);
+
+            return true;
+        }
+
+        public async Task<bool> CadastrarListaAsync(List<CadastrarUsuarioRequest> usuarios)
+        {
+            var successCount = 0;
+
+            foreach (var usuario in usuarios)
+            {
+                var cadastrado = await CadastrarAsync(usuario);
+                if (cadastrado)
+                {
+                    successCount++;
+                }
+            }
+
+            _notificador.Handle(new Notificacao($"Foram cadastrados com sucesso {successCount} usuários."));
 
             return true;
         }

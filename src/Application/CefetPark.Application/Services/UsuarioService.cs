@@ -53,12 +53,12 @@ namespace CefetPark.Application.Services
         }
 
         public async Task<bool> CadastrarAsync(CadastrarUsuarioRequest request)
-        {            
+        {
             var userRoleEntidade = await _commonRepository.ObterPorIdAsync<TipoUsuario>(request.TipoUsuario_Id);
 
             if (userRoleEntidade == null)
             {
-                _notificador.Handle(new Notificacao("TipoUsuario_Id não encontrado"));
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.TIPO_USUARIO_NAO_ENCONTRADO));
                 return false;
             }
 
@@ -123,7 +123,7 @@ namespace CefetPark.Application.Services
             return true;
         }
 
-        public async Task<bool> CadastrarListaAsync(List<CadastrarUsuarioRequest> usuarios)
+        public async Task<string> CadastrarListaAsync(List<CadastrarUsuarioRequest> usuarios)
         {
             var successCount = 0;
 
@@ -136,9 +136,9 @@ namespace CefetPark.Application.Services
                 }
             }
 
-            _notificador.Handle(new Notificacao($"Foram cadastrados com sucesso {successCount} usuários."));
+            string result = $"Foram cadastrados com sucesso {successCount} usuários.";
 
-            return true;
+            return result;
         }
 
         public async Task<ObterUsuarioResponse?> ObterPorIdAsync(int id)
@@ -166,7 +166,7 @@ namespace CefetPark.Application.Services
                 return null;
             }
 
-           
+
 
             var usuarioPayload = new ObterUsuarioSegurancaResponse
             {

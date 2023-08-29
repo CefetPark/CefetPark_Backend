@@ -10,8 +10,6 @@ namespace CefetPark.Application.ViewModels.Request.Estacionamento.Post
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int QtdVagasTotal { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public int QtdVagasLivres { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public CadastrarEnderecoRequest Endereco { get; set; }
     }
 }

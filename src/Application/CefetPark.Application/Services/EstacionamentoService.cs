@@ -39,6 +39,7 @@ namespace CefetPark.Application.Services
             _commonRepository.RastrearEntidade(entidade);
 
             AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
+            entidade.QtdVagasLivres = entidade.QtdVagasTotal;
 
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -49,6 +50,7 @@ namespace CefetPark.Application.Services
         {
             var entidade = _mapper.Map<Estacionamento>(request);
 
+            entidade.QtdVagasLivres = entidade.QtdVagasTotal;
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 

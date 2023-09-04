@@ -7,6 +7,7 @@ using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Put;
 using CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get;
 using CefetPark.Domain.Entidades;
+using CefetPark.Domain.Interfaces.Caching;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
@@ -23,13 +24,15 @@ namespace CefetPark.Application.Services
         private readonly IMapper _mapper;
         private readonly INotificador _notificador;
         private readonly IRegistroEntradaSaidaRepository _registroEntradaSaidaRepository;
+        private readonly IFilaEstacionamentoCaching _filaEstacionamentoCaching;
 
-        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository)
+        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository, IFilaEstacionamentoCaching filaEstacionamentoCaching)
         {
             _commonRepository = commonRepository;
             _mapper = mapper;
             _notificador = notificador;
             _registroEntradaSaidaRepository = registroEntradaSaidaRepository;
+            _filaEstacionamentoCaching = filaEstacionamentoCaching;
         }
 
 
@@ -58,6 +61,13 @@ namespace CefetPark.Application.Services
 
             estacionamento.QtdVagasLivres++;
 
+            var fila = await _filaEstacionamentoCaching.ObterFilaAsync(entidade.Estacionamento_Id);
+
+            if(fila != null)
+            {
+                await _filaEstacionamentoCaching.ChamarProximoDaFilaAsync(entidade.Estacionamento_Id);
+            }
+
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
@@ -65,7 +75,7 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastrarRegistroEntradaSaidaRequest request)
         {
-            var entidade = _mapper.Map<RegistroEntradaSaida>(request);
+
 
             var usuarioJaEstacionado = await _registroEntradaSaidaRepository.UsuarioJaEstacionadoAsync(request.Usuario_Id);
             if (usuarioJaEstacionado)
@@ -91,15 +101,38 @@ namespace CefetPark.Application.Services
 
             }
 
-            if(estacionamento.QtdVagasLivres <= 0)
+            if (estacionamento.QtdVagasLivres <= 0)
             {
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.ESTACIONAMENTO_LOTADO));
                 return false;
             }
 
+            var filaEstacionamento = await _filaEstacionamentoCaching.ObterFilaAsync(request.Estacionamento_Id);
+
+            if (filaEstacionamento != null)
+            {
+                if (filaEstacionamento.ChamadoParaEstacionar == null)
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.FILA_NINGUEM_FOI_CHAMADO));
+                    return false;
+                }
+
+                if (filaEstacionamento.ChamadoParaEstacionar.Usuario_Id != request.Usuario_Id || filaEstacionamento.ChamadoParaEstacionar.Carro_Id != request.Carro_Id)
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.RESPEITE_A_FILA_DO_ESTACIONAMENTO));
+                    return false;
+                }
+                else
+                {
+                    await _filaEstacionamentoCaching.LimparChamadoParaEstacionarAsync(request.Estacionamento_Id);
+                }
+            }
+
             _commonRepository.RastrearEntidade(estacionamento);
 
             estacionamento.QtdVagasLivres--;
+
+            var entidade = _mapper.Map<RegistroEntradaSaida>(request);
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();

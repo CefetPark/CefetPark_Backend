@@ -1,0 +1,22 @@
+﻿
+using CefetPark.Domain.Models;
+
+namespace CefetPark.Domain.Interfaces.Caching
+{
+    public interface IFilaEstacionamentoCaching
+    {
+        public Task<bool> EntrarFilaAsync(EntrarFilaEstacionamento model);
+        public Task<bool> DesistirFilaAsync(int estacionamentoId);
+        public Task<bool> ChamarProximoDaFilaAsync(int estacionamentoId);
+        public Task<FilaEstacionamento?> ObterFilaAsync(int estacionamentoId);
+
+        public Task<bool> LimparChamadoParaEstacionarAsync(int estacionamentoId);
+
+        public Task<bool> ExisteIntegrantesNaFilaAsync(int estacionamentoId);
+
+        public Task<bool> UsuarioEstaNaFilaAsync(int estacionamentoId);
+
+
+
+    }
+}

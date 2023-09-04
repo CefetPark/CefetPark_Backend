@@ -19,6 +19,12 @@ namespace CefetPark.WebApi.Configurations
                 options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
             });
 
+            services.AddStackExchangeRedisCache(o =>
+            {
+                o.InstanceName = "instance";
+                o.Configuration = "localhost:6379";
+            });
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = false;

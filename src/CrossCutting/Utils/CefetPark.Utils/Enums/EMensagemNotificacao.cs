@@ -21,6 +21,14 @@ namespace CefetPark.Utils.Enums
         ESTACIONAMENTO_LOTADO,
         [Description("Tipo usuario não encontrado!")]
         TIPO_USUARIO_NAO_ENCONTRADO,
+        [Description("Esse Estacionamento Possui uma fila e ela deve ser respeitada!")]
+        RESPEITE_A_FILA_DO_ESTACIONAMENTO,
+        [Description("Esse Estacionamento Possui uma fila e ninguem foi chamado!")]
+        FILA_NINGUEM_FOI_CHAMADO,
+        [Description("Esse Estacionamento não está cheio, portanto não é necessário entrar na fila!")]
+        SEM_NECESSIDADE_DE_FILA,
+        [Description("Usuario já está na fila para esse estacionamento!")]
+        USUARIO_JA_ESTA_NA_FILA
 
 
 

@@ -4,6 +4,7 @@ using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Endereco.Post;
 using CefetPark.Application.ViewModels.Request.Estacionamento.Post;
+using CefetPark.Application.ViewModels.Request.FilaEstacionamento.Post;
 using CefetPark.Application.ViewModels.Request.Modelo.Post;
 using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
@@ -11,10 +12,12 @@ using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Endereco.Get;
 using CefetPark.Application.ViewModels.Response.Estacionamento.Get;
+using CefetPark.Application.ViewModels.Response.FilaEstacionamento.Get;
 using CefetPark.Application.ViewModels.Response.Modelo.Get;
 using CefetPark.Application.ViewModels.Response.RegistroEntradaSaida.Get;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
+using CefetPark.Domain.Models;
 
 namespace CefetPark.Ioc.AutoMapper
 {
@@ -48,6 +51,10 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<TipoUsuario, ObterCommonResponse>();
             CreateMap<Cor, ObterCommonResponse>();
             CreateMap<RegistroEntradaSaida, ObterRegistroEntradaSaidaSemSaidaResponse>();
+
+            CreateMap<EntrarFilaEstacionamentoRequest, EntrarFilaEstacionamento>();
+            CreateMap<FilaEstacionamento, ObterFilaEstacionamentoResponse>();
+            CreateMap<IntegranteFilaEstacionamento, ObterIntegrantesFilaEstacionamentoResponse>();
             #endregion
 
 

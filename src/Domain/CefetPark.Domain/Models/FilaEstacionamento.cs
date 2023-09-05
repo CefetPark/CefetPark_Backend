@@ -42,9 +42,19 @@ namespace CefetPark.Domain.Models
         {
             var integranteDesistente = Integrantes.FirstOrDefault(x => x.Usuario_Id == usuarioId);
 
-            if (integranteDesistente == null) throw new Exception("usuarioId não encontrado na fila");
-
-            Integrantes.Remove(integranteDesistente);
+            if(integranteDesistente != null)
+            {
+                Integrantes.Remove(integranteDesistente);
+            }
+            else if(ChamadoParaEstacionar != null && ChamadoParaEstacionar.Usuario_Id == usuarioId)
+            {
+                LimparChamadoParaEstacionar();
+            }
+            else
+            {
+                throw new Exception("usuarioId não encontrado na fila");
+            }
+           
             return true;
         }
 

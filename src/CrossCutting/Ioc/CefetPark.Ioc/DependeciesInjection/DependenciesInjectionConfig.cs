@@ -1,4 +1,6 @@
-﻿using CefetPark.Application.Interfaces.Services;
+﻿using CefetPark.Application.Interfaces.Jobs;
+using CefetPark.Application.Interfaces.Services;
+using CefetPark.Application.Jobs;
 using CefetPark.Application.Models;
 using CefetPark.Application.Services;
 using CefetPark.Domain.Interfaces.Caching;
@@ -44,6 +46,10 @@ namespace CefetPark.Ioc.DependeciesInjection
 
             #region Cachings
             services.AddScoped<IFilaEstacionamentoCaching, FilaEstacionamentoCaching>();
+            #endregion
+
+            #region Jobs
+            services.AddScoped<IFilaEstacionamentoJob, FilaEstacionamentoJob>();
             #endregion
 
             #region Models

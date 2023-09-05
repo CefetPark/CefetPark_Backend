@@ -28,7 +28,9 @@ namespace CefetPark.Utils.Enums
         [Description("Esse Estacionamento não está cheio, portanto não é necessário entrar na fila!")]
         SEM_NECESSIDADE_DE_FILA,
         [Description("Usuario já está na fila para esse estacionamento!")]
-        USUARIO_JA_ESTA_NA_FILA
+        USUARIO_JA_ESTA_NA_FILA,
+        [Description("Usuario não está na fila para esse estacionamento!")]
+        USUARIO_NAO_ESTA_NA_FILA
 
 
 

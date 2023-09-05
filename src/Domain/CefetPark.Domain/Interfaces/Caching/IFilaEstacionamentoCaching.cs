@@ -16,6 +16,8 @@ namespace CefetPark.Domain.Interfaces.Caching
 
         public Task<bool> UsuarioEstaNaFilaAsync(int estacionamentoId);
 
+        public Task<bool> SalvarFilaAsync(FilaEstacionamento fila);
+
 
 
     }

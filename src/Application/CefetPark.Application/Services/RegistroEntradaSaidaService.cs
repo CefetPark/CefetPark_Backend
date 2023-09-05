@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CefetPark.Application.Interfaces.Jobs;
 using CefetPark.Application.Interfaces.Services;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
@@ -25,14 +26,15 @@ namespace CefetPark.Application.Services
         private readonly INotificador _notificador;
         private readonly IRegistroEntradaSaidaRepository _registroEntradaSaidaRepository;
         private readonly IFilaEstacionamentoCaching _filaEstacionamentoCaching;
-
-        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository, IFilaEstacionamentoCaching filaEstacionamentoCaching)
+        private readonly IFilaEstacionamentoJob _filaEstacionamentoJob;
+        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository, IFilaEstacionamentoCaching filaEstacionamentoCaching, IFilaEstacionamentoJob filaEstacionamentoJob)
         {
             _commonRepository = commonRepository;
             _mapper = mapper;
             _notificador = notificador;
             _registroEntradaSaidaRepository = registroEntradaSaidaRepository;
             _filaEstacionamentoCaching = filaEstacionamentoCaching;
+            _filaEstacionamentoJob = filaEstacionamentoJob;
         }
 
 
@@ -66,6 +68,10 @@ namespace CefetPark.Application.Services
             if(fila != null)
             {
                 await _filaEstacionamentoCaching.ChamarProximoDaFilaAsync(entidade.Estacionamento_Id);
+                var timer = new System.Timers.Timer(500000);
+
+                timer.Elapsed +=  (sender, e) =>  _filaEstacionamentoJob.TempoEsgotadoRetirarChamadoParaEstacionarAsync(entidade.Estacionamento_Id, timer);
+                timer.Start();
             }
 
             await _commonRepository.SalvarAlteracoesAsync();
@@ -151,7 +157,6 @@ namespace CefetPark.Application.Services
             }
 
             var entidades = await _registroEntradaSaidaRepository.ObterEstacionadosAsync(estacionamento_Id);
-            //var response = _mapper.Map<IEnumerable<ObterRegistroEntradaSaidaSemSaidaResponse>>(entidades);
 
             var response = entidades.Select(registro =>
             {

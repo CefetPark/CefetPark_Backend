@@ -19,7 +19,6 @@ namespace CefetPark.Infra.Caching
         {
             var fila = await ObterFilaAsync(estacionamentoId);
 
-
             fila.DesistirFila(_user.ObterUsuarioId());
 
             if (fila.ExisteIntegrantesNaFila() == true)
@@ -111,7 +110,14 @@ namespace CefetPark.Infra.Caching
 
             if (fila == null) return false;
 
-            return fila.Integrantes.Any(x => x.Usuario_Id == _user.ObterUsuarioId());
+            return fila.Integrantes.Any(x => x.Usuario_Id == _user.ObterUsuarioId()) || (fila.ChamadoParaEstacionar != null && fila.ChamadoParaEstacionar.Usuario_Id == _user.ObterUsuarioId()) ;
+        }
+
+        public async Task<bool> SalvarFilaAsync(FilaEstacionamento fila)
+        {
+            await SetAsync(fila.ObterKey(), fila);
+
+            return true;
         }
     }
 }

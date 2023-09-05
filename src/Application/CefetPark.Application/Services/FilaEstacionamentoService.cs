@@ -58,6 +58,14 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
+            var usuarioEstaNaFila = await _filaEstacionamentoCaching.UsuarioEstaNaFilaAsync(estacionamentoId);
+
+            if (!usuarioEstaNaFila)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.USUARIO_NAO_ESTA_NA_FILA));
+                return false;
+            }
+
             await _filaEstacionamentoCaching.DesistirFilaAsync(estacionamentoId);
 
             return true;

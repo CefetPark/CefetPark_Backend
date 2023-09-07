@@ -27,24 +27,14 @@ jobs:
       run: git pull origin main
       
     - uses: actions/checkout@v3
-    - name: Stop current container
+    - name: Docker compose down
       continue-on-error: true
-      run: sudo docker stop backend
+      run: sudo docker-compose down
       
     - uses: actions/checkout@v3
-    - name: Rm current container
-      continue-on-error: true
-      run: sudo docker rm backend
+    - name: Docker system prune
+      run: sudo docker system prune --all --force --volumes
     
     - uses: actions/checkout@v3
-    - name: Rm current imagem
-      continue-on-error: true
-      run: sudo docker rmi cefetpark-backend
-    
-    - uses: actions/checkout@v3
-    - name: Build imagem
-      run: sudo docker build -t cefetpark-backend .
-    
-    - uses: actions/checkout@v3
-    - name: Run image
-      run: sudo docker run -d --name backend -p 8080:80 cefetpark-backend
+    - name: Docker compose up
+      run: sudo docker-compose up

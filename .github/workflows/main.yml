@@ -4,10 +4,6 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  GITHUB_USER: ${{ secrets.Login }}
-  GITHUB_PASSWORD: ${{ secrets.Senha }}
-
 jobs:
   build:
 
@@ -57,4 +53,4 @@ jobs:
     
     - uses: actions/checkout@v3
     - name: Docker compose up
-      run: sudo docker-compose up
+      run: sudo docker-compose up -d

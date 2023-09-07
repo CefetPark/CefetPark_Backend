@@ -99,5 +99,12 @@ namespace CefetPark.Infra.Repositories
             var result = await query.FirstOrDefaultAsync(x => x.Id == id && x.EstaAtivo);
             return result;
         }
+
+        public async Task<bool> EntidadeExisteAsync<T>(int id) where T : CommonEntity
+        {
+            var result = await _dataContext.Set<T>().AnyAsync(x => x.Id == id);
+
+            return result;
+        }
     }
 }

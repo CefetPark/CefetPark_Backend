@@ -1,8 +1,12 @@
-﻿using CefetPark.Application.Interfaces.Services;
+﻿using CefetPark.Application.Interfaces.Jobs;
+using CefetPark.Application.Interfaces.Services;
+using CefetPark.Application.Jobs;
 using CefetPark.Application.Models;
 using CefetPark.Application.Services;
+using CefetPark.Domain.Interfaces.Caching;
 using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Domain.Interfaces.Repositories;
+using CefetPark.Infra.Caching;
 using CefetPark.Infra.Contexts;
 using CefetPark.Infra.Repositories;
 using CefetPark.Utils.Interfaces.Models;
@@ -30,6 +34,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<ICarroService, CarroService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IRegistroEntradaSaidaService, RegistroEntradaSaidaService>();
+            services.AddScoped<IFilaEstacionamentoService, FilaEstacionamentoService>();
             #endregion
 
             #region Repositories
@@ -37,6 +42,14 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IRegistroEntradaSaidaRepository, RegistroEntradaSaidaRepository>();
             services.AddScoped<ICarroRepository, CarroRepository>();
+            #endregion
+
+            #region Cachings
+            services.AddScoped<IFilaEstacionamentoCaching, FilaEstacionamentoCaching>();
+            #endregion
+
+            #region Jobs
+            services.AddScoped<IFilaEstacionamentoJob, FilaEstacionamentoJob>();
             #endregion
 
             #region Models

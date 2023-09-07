@@ -11,6 +11,7 @@ namespace CefetPark.Domain.Interfaces.Repositories
         public Task<ICollection<T>> ObterTodosAsync<T>() where T : CommonEntity;
         public Task<ICollection<T>> ObterTodosAsync<T>(ICollection<string> propriedadesRelacionamentos) where T : CommonEntity;
         public Task<T?> ObterPorIdAsync<T>(int id) where T : CommonEntity;
+        public Task<bool> EntidadeExisteAsync<T>(int id) where T : CommonEntity;
 
         public Task<T?> ObterPorIdAsync<T>(int id, ICollection<string> propriedadesRelacionamentos) where T : CommonEntity;
 

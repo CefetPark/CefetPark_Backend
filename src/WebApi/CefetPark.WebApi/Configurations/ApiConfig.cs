@@ -1,4 +1,5 @@
-﻿using CefetPark.Infra.Contexts;
+﻿using CefetPark.Application.Models;
+using CefetPark.Infra.Contexts;
 using CefetPark.WebApi.Extensions;
 using CefetPark.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,16 @@ namespace CefetPark.WebApi.Configurations
                 string defaultConnection = configuration.GetConnectionString("DefaultConnection");
 
                 options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
+            });
+
+            var redisConnectionSection = configuration.GetSection("RedisConnection");
+            services.Configure<RedisConnection>(redisConnectionSection);
+
+            var redisConnection = redisConnectionSection.Get<RedisConnection>();
+            services.AddStackExchangeRedisCache(o =>
+            {
+                o.InstanceName = redisConnection.InstanceName;
+                o.Configuration = redisConnection.Configuration;
             });
 
             services.Configure<ApiBehaviorOptions>(options =>

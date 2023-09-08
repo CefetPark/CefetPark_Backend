@@ -15,12 +15,12 @@ namespace CefetPark.Application.Services
 {
     public class FilaEstacionamentoService : IFilaEstacionamentoService
     {
-        private readonly IFilaEstacionamentoCaching _filaEstacionamentoCaching;
+        private readonly IFilaEstacionamentoRepositoryCaching _filaEstacionamentoCaching;
         private readonly ICommonRepository _commonRepository;
         private readonly INotificador _notificador;
         private readonly IMapper _mapper;
 
-        public FilaEstacionamentoService(IFilaEstacionamentoCaching filaEstacionamentoCaching, ICommonRepository commonRepository, INotificador notificador, IMapper mapper)
+        public FilaEstacionamentoService(IFilaEstacionamentoRepositoryCaching filaEstacionamentoCaching, ICommonRepository commonRepository, INotificador notificador, IMapper mapper)
         {
             _filaEstacionamentoCaching = filaEstacionamentoCaching;
             _commonRepository = commonRepository;

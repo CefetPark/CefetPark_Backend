@@ -1,15 +1,13 @@
-﻿using CefetPark.Domain.Interfaces.Models;
-
-namespace CefetPark.Domain.Models
+﻿namespace CefetPark.Domain.Models
 {
-    public class FilaEstacionamento : IModelCaching
+    public class FilaEstacionamento : CommonModelCaching
     {
         public int Estacionamento_Id { get; set; }
         public ICollection<IntegranteFilaEstacionamento> Integrantes { get; private set; }
 
         public IntegranteFilaEstacionamento? ChamadoParaEstacionar { get; set; }
 
-        public FilaEstacionamento(int estacionamentoId)
+        public FilaEstacionamento(int estacionamentoId) : base(estacionamentoId)
         {
             Estacionamento_Id = estacionamentoId;
             Integrantes = new List<IntegranteFilaEstacionamento>();
@@ -69,11 +67,6 @@ namespace CefetPark.Domain.Models
             Integrantes.Remove(primeiroDaFila);
 
             return true;
-        }
-
-        public int ObterKey()
-        {
-            return Estacionamento_Id;
         }
 
         public bool LimparChamadoParaEstacionar()

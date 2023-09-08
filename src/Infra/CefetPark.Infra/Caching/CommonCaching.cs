@@ -15,14 +15,13 @@ namespace CefetPark.Infra.Caching
             _cache = cache;
             _options = options;
         }
-        public async Task<T?> GetAsync<T>(int chavePrimaria) where T : IModelCaching
+        public async Task<T?> GetAsync<T>(string key) where T : IModelCaching
         {
-            var key = chavePrimaria.ToString();
-            var resultString = await _cache.GetStringAsync(key);
+            var resultString = await _cache.GetStringAsync(key.ToString());
 
             if (resultString == null)
             {
-                return default(T);
+                return default;
             }
 
             var resultModel = JsonConvert.DeserializeObject<T>(resultString);
@@ -31,21 +30,18 @@ namespace CefetPark.Infra.Caching
             return resultModel;
         }
 
-        public async Task<bool> SetAsync<T>(int chavePrimaria, T value) where T : IModelCaching
+        public async Task<bool> SetAsync<T>(T value) where T : IModelCaching
         {
-            string key = chavePrimaria.ToString();
             var stringValue = JsonConvert.SerializeObject(value);
 
-            await _cache.SetStringAsync(key, stringValue, _options);
+            await _cache.SetStringAsync(value.ObterKey(), stringValue, _options);
 
             return true;
         }
 
         public async Task<bool> RemoveAsync<T>(T value) where T : IModelCaching
         {
-            var key = value.ObterKey();
-
-            await _cache.RemoveAsync(key.ToString());
+            await _cache.RemoveAsync(value.ObterKey());
 
             return true;
         }

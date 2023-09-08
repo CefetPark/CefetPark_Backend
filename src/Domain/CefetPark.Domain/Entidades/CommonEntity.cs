@@ -21,5 +21,12 @@ namespace CefetPark.Domain.Entidades
         {
             EstaAtivo = false;
         }
+
+
+        protected string ObterKey()
+        {
+            string key = $"{GetType().Name}-{Id}";
+            return key;
+        }
     }
 }

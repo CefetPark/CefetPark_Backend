@@ -3,6 +3,7 @@ namespace CefetPark.Domain.Interfaces.Models
 {
     public interface IModelCaching
     {
-        public int ObterKey();
+        int Id { get; set; }
+        public string ObterKey();
     }
 }

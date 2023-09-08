@@ -9,7 +9,7 @@
         "DefaultConnection": "Server=cefet-park.cb3uo8evogqk.us-east-1.rds.amazonaws.com;Database=sys;Uid=admin;Pwd=Cefet123!;"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7198;http://localhost:5198"
+      "applicationUrl": "https://localhost:8080;http://localhost:5198"
     },
     "IIS Express": {
       "commandName": "IISExpress",

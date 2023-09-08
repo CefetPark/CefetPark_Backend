@@ -23,7 +23,7 @@ namespace CefetPark.Infra.Caching
 
             if (fila.ExisteIntegrantesNaFila() == true)
             {
-                await SetAsync(fila.ObterKey(), fila);
+                await SetAsync(fila);
             }
             else
             {
@@ -51,14 +51,14 @@ namespace CefetPark.Infra.Caching
             fila.EntrarFila(integrante);
 
 
-            await SetAsync(model.Estacionamento_Id, fila);
+            await SetAsync(fila);
 
             return true;
         }
 
         public async Task<FilaEstacionamento?> ObterFilaAsync(int estacionamentoId)
         {
-            var fila = await GetAsync<FilaEstacionamento>(estacionamentoId);
+            var fila = await GetAsync<FilaEstacionamento>(new FilaEstacionamento(estacionamentoId).ObterKey());
 
             if (fila == null) return null;
 
@@ -73,7 +73,7 @@ namespace CefetPark.Infra.Caching
 
             fila.ChamarProximoDaFila();
 
-            await SetAsync(fila.ObterKey(), fila);
+            await SetAsync(fila);
 
 
             return true;
@@ -87,7 +87,7 @@ namespace CefetPark.Infra.Caching
 
             if (fila.ExisteIntegrantesNaFila() == true)
             {
-                await SetAsync(fila.ObterKey(), fila);
+                await SetAsync(fila);
             }
             else
             {
@@ -115,7 +115,7 @@ namespace CefetPark.Infra.Caching
 
         public async Task<bool> SalvarFilaAsync(FilaEstacionamento fila)
         {
-            await SetAsync(fila.ObterKey(), fila);
+            await SetAsync(fila);
 
             return true;
         }

@@ -77,7 +77,14 @@ namespace CefetPark.Application.Services
             var estacionamentoExiste = await _commonRepository.EntidadeExisteAsync<Estacionamento>(request.Estacionamento_Id);
             if (estacionamentoExiste == false)
             {
-                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, System.Net.HttpStatusCode.NotFound));
+                _notificador.Handle(new Notificacao("EstacionamentoId não encontrado", System.Net.HttpStatusCode.NotFound));
+                return false;
+            }
+
+            var carroExiste = await _commonRepository.EntidadeExisteAsync<Carro>(request.Carro_Id);
+            if (carroExiste == false)
+            {
+                _notificador.Handle(new Notificacao("CarroId não encontrado", System.Net.HttpStatusCode.NotFound));
                 return false;
             }
 

@@ -65,10 +65,16 @@ namespace CefetPark.Application.Services
 
 
             var user = await _userManager.FindByNameAsync(request.Login);
-
-            var token = await GerarJwt(user);
-
             var usuario = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
+
+            if (usuario == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return null;
+            }
+
+            var token = await GerarJwt(user, usuario);
+
 
 
             var usuarioPayload = new LoginUsuarioAuthResponse
@@ -103,17 +109,10 @@ namespace CefetPark.Application.Services
         }
 
 
-        private async Task<string?> GerarJwt(IdentityUser user)
+        private async Task<string?> GerarJwt(IdentityUser user, Usuario usuario)
         {
             var claims = await _userManager.GetClaimsAsync(user);
             var userRoles = await _userManager.GetRolesAsync(user);
-            var usuario = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
-
-            if (usuario == null)
-            {
-                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
-                return null;
-            }
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));

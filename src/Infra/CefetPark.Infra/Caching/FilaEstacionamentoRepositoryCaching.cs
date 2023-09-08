@@ -6,10 +6,10 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace CefetPark.Infra.Caching
 {
-    public class FilaEstacionamentoCaching : CommonCaching, IFilaEstacionamentoCaching
+    public class FilaEstacionamentoRepositoryCaching : CommonRepositoryCaching, IFilaEstacionamentoRepositoryCaching
     {
         private readonly IUser _user;
-        public FilaEstacionamentoCaching(IDistributedCache cache, IUser user) : base(cache, new DistributedCacheEntryOptions())
+        public FilaEstacionamentoRepositoryCaching(IDistributedCache cache, IUser user) : base(cache, new DistributedCacheEntryOptions())
         {
             _user = user;
 

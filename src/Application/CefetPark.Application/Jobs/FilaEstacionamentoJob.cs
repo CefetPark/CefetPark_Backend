@@ -7,9 +7,9 @@ namespace CefetPark.Application.Jobs
 {
     public class FilaEstacionamentoJob : IFilaEstacionamentoJob
     {
-        private readonly IFilaEstacionamentoCaching _filaEstacionamentoCaching;
+        private readonly IFilaEstacionamentoRepositoryCaching _filaEstacionamentoCaching;
 
-        public FilaEstacionamentoJob(IFilaEstacionamentoCaching filaEstacionamentoCaching)
+        public FilaEstacionamentoJob(IFilaEstacionamentoRepositoryCaching filaEstacionamentoCaching)
         {
             _filaEstacionamentoCaching = filaEstacionamentoCaching;
         }

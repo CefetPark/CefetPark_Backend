@@ -25,9 +25,9 @@ namespace CefetPark.Application.Services
         private readonly IMapper _mapper;
         private readonly INotificador _notificador;
         private readonly IRegistroEntradaSaidaRepository _registroEntradaSaidaRepository;
-        private readonly IFilaEstacionamentoCaching _filaEstacionamentoCaching;
+        private readonly IFilaEstacionamentoRepositoryCaching _filaEstacionamentoCaching;
         private readonly IFilaEstacionamentoJob _filaEstacionamentoJob;
-        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository, IFilaEstacionamentoCaching filaEstacionamentoCaching, IFilaEstacionamentoJob filaEstacionamentoJob)
+        public RegistroEntradaSaidaService(ICommonRepository commonRepository, IMapper mapper, INotificador notificador, IRegistroEntradaSaidaRepository registroEntradaSaidaRepository, IFilaEstacionamentoRepositoryCaching filaEstacionamentoCaching, IFilaEstacionamentoJob filaEstacionamentoJob)
         {
             _commonRepository = commonRepository;
             _mapper = mapper;

@@ -1,21 +1,22 @@
 ﻿using CefetPark.Domain.Interfaces.Caching;
 using CefetPark.Domain.Interfaces.Models;
+using CefetPark.Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
 namespace CefetPark.Infra.Caching
 {
-    public class CommonCaching : ICommonCaching
+    public class CommonRepositoryCaching : ICommonRepositoryCaching
     {
         private readonly IDistributedCache _cache;
         private readonly DistributedCacheEntryOptions _options;
 
-        public CommonCaching(IDistributedCache cache, DistributedCacheEntryOptions options)
+        public CommonRepositoryCaching(IDistributedCache cache, DistributedCacheEntryOptions options)
         {
             _cache = cache;
             _options = options;
         }
-        public async Task<T?> GetAsync<T>(string key) where T : IModelCaching
+        public async Task<T?> GetAsync<T>(string key) where T : CommonModelCaching
         {
             var resultString = await _cache.GetStringAsync(key.ToString());
 
@@ -30,7 +31,7 @@ namespace CefetPark.Infra.Caching
             return resultModel;
         }
 
-        public async Task<bool> SetAsync<T>(T value) where T : IModelCaching
+        public async Task<bool> SetAsync<T>(T value) where T : CommonModelCaching
         {
             var stringValue = JsonConvert.SerializeObject(value);
 
@@ -39,7 +40,7 @@ namespace CefetPark.Infra.Caching
             return true;
         }
 
-        public async Task<bool> RemoveAsync<T>(T value) where T : IModelCaching
+        public async Task<bool> RemoveAsync<T>(T value) where T : CommonModelCaching
         {
             await _cache.RemoveAsync(value.ObterKey());
 

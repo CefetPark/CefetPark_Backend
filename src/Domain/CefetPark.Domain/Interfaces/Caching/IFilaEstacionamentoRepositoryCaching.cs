@@ -3,7 +3,7 @@ using CefetPark.Domain.Models;
 
 namespace CefetPark.Domain.Interfaces.Caching
 {
-    public interface IFilaEstacionamentoCaching
+    public interface IFilaEstacionamentoRepositoryCaching
     {
         public Task<bool> EntrarFilaAsync(EntrarFilaEstacionamento model);
         public Task<bool> DesistirFilaAsync(int estacionamentoId);

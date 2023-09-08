@@ -45,7 +45,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             #endregion
 
             #region Cachings
-            services.AddScoped<IFilaEstacionamentoCaching, FilaEstacionamentoCaching>();
+            services.AddScoped<IFilaEstacionamentoRepositoryCaching, FilaEstacionamentoRepositoryCaching>();
             #endregion
 
             #region Jobs

@@ -18,10 +18,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Set ASPNETCORE_ENVIRONMENT
+        run: echo "ASPNETCORE_ENVIRONMENT=Production" >> $GITHUB_ENV
       - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore --environment "Production"
+        run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-restore --verbosity normal
  

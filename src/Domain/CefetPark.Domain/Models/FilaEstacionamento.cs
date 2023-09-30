@@ -32,6 +32,7 @@
         
         public bool EntrarFila(IntegranteFilaEstacionamento integrante)
         {
+            integrante.Posicao = Integrantes.Count() + 1;
             Integrantes.Add(integrante);
             return true;
         }

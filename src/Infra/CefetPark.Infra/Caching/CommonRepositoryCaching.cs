@@ -1,5 +1,6 @@
 ﻿using CefetPark.Domain.Interfaces.Caching;
 using CefetPark.Domain.Interfaces.Models;
+using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -10,11 +11,13 @@ namespace CefetPark.Infra.Caching
     {
         private readonly IDistributedCache _cache;
         private readonly DistributedCacheEntryOptions _options;
+        private readonly ICommonRepository _commonRepository;
 
-        public CommonRepositoryCaching(IDistributedCache cache, DistributedCacheEntryOptions options)
+        public CommonRepositoryCaching(IDistributedCache cache, DistributedCacheEntryOptions options, ICommonRepository commonRepository)
         {
             _cache = cache;
             _options = options;
+            _commonRepository = commonRepository;
         }
         public async Task<T?> GetAsync<T>(string key) where T : CommonModelCaching
         {

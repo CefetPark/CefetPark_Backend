@@ -12,5 +12,6 @@ namespace CefetPark.Application.ViewModels.Response.FilaEstacionamento.Get
         public int Usuario_Id { get; set; }
         public DateTime DataEntrada { get; set; }
         public int Posicao { get; set; }
+        public string NomeUsuario { get; set; }
     }
 }

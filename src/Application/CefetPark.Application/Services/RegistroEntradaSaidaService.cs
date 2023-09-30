@@ -81,7 +81,37 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> CadastrarAsync(CadastrarRegistroEntradaSaidaRequest request)
         {
+            
+            if(request.Usuario_Id != 0)
+            {
+                var usuario = await _commonRepository.ObterPorIdAsync<Usuario>(request.Usuario_Id, new List<string> { "Carros" });
+                if (usuario == null)
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                    return false;
+                }
 
+                if (!usuario.Carros.Any(x => x.Id == request.Carro_Id))
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.ESSE_CARRO_NAO_PERTENCE_A_ESSA_ENTIDADE));
+                    return false;
+                }
+            }
+            else
+            {
+                var convidado = await _commonRepository.ObterPorIdAsync<Convidado>(request.Convidado_Id, new List<string> { "Carros"});
+                if(convidado == null)
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                    return false;
+                }
+
+                if(!convidado.Carros.Any(x => x.Id == request.Carro_Id))
+                {
+                    _notificador.Handle(new Notificacao(EMensagemNotificacao.ESSE_CARRO_NAO_PERTENCE_A_ESSA_ENTIDADE));
+                    return false;
+                }
+            }
 
             var usuarioJaEstacionado = await _registroEntradaSaidaRepository.UsuarioJaEstacionadoAsync(request.Usuario_Id);
             if (usuarioJaEstacionado)
@@ -139,6 +169,9 @@ namespace CefetPark.Application.Services
             estacionamento.QtdVagasLivres--;
 
             var entidade = _mapper.Map<RegistroEntradaSaida>(request);
+
+            if (entidade.Usuario_Id == 0) entidade.Usuario_Id = null;
+            else entidade.Convidado_Id = null;
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();

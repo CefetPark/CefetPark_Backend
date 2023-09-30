@@ -1,6 +1,7 @@
 ﻿using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Caching;
 using CefetPark.Domain.Interfaces.Models;
+using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -9,9 +10,11 @@ namespace CefetPark.Infra.Caching
     public class FilaEstacionamentoRepositoryCaching : CommonRepositoryCaching, IFilaEstacionamentoRepositoryCaching
     {
         private readonly IUser _user;
-        public FilaEstacionamentoRepositoryCaching(IDistributedCache cache, IUser user) : base(cache, new DistributedCacheEntryOptions())
+        private readonly ICommonRepository _commonRepository;
+        public FilaEstacionamentoRepositoryCaching(IDistributedCache cache, IUser user, ICommonRepository commonRepository) : base(cache, new DistributedCacheEntryOptions(), commonRepository)
         {
             _user = user;
+            _commonRepository = commonRepository;
 
         }
 
@@ -42,10 +45,20 @@ namespace CefetPark.Infra.Caching
                 fila = new FilaEstacionamento(model.Estacionamento_Id);
             }
 
+            int usuarioId = _user.ObterUsuarioId();
+
+            var usuario = await _commonRepository.ObterPorIdAsync<Usuario>(usuarioId);
+            if(usuario == null)
+            {
+                return false;
+            }
+
             var integrante = new IntegranteFilaEstacionamento()
             {
-                Usuario_Id = _user.ObterUsuarioId(),
-                Carro_Id = model.Carro_Id
+                Usuario_Id = usuarioId,
+                Carro_Id = model.Carro_Id,
+                NomeUsuario = usuario.Nome,
+                 
             };
 
             fila.EntrarFila(integrante);
@@ -61,8 +74,6 @@ namespace CefetPark.Infra.Caching
             var fila = await GetAsync<FilaEstacionamento>(new FilaEstacionamento(estacionamentoId).ObterKey());
 
             if (fila == null) return null;
-
-            fila.PreencherPosicoesIntegrantes();
 
             return fila;
         }

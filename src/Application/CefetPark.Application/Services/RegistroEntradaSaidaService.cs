@@ -143,6 +143,7 @@ namespace CefetPark.Application.Services
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 
+
             return true;
         }
 

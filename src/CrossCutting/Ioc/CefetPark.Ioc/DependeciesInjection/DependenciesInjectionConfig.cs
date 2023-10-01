@@ -35,6 +35,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IRegistroEntradaSaidaService, RegistroEntradaSaidaService>();
             services.AddScoped<IFilaEstacionamentoService, FilaEstacionamentoService>();
+            services.AddScoped<IConvidadoService, ConvidadoService>();
             #endregion
 
             #region Repositories

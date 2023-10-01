@@ -30,7 +30,9 @@ namespace CefetPark.Utils.Enums
         [Description("Usuario já está na fila para esse estacionamento!")]
         USUARIO_JA_ESTA_NA_FILA,
         [Description("Usuario não está na fila para esse estacionamento!")]
-        USUARIO_NAO_ESTA_NA_FILA
+        USUARIO_NAO_ESTA_NA_FILA,
+        [Description("Esse carro não pertence a essa entidade")]
+        ESSE_CARRO_NAO_PERTENCE_A_ESSA_ENTIDADE
 
 
 

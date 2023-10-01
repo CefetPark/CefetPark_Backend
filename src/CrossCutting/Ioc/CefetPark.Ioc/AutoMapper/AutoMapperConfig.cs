@@ -2,6 +2,7 @@
 using AutoMapper;
 using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Application.ViewModels.Request.Common.Post;
+using CefetPark.Application.ViewModels.Request.Convidado.Post;
 using CefetPark.Application.ViewModels.Request.Endereco.Post;
 using CefetPark.Application.ViewModels.Request.Estacionamento.Post;
 using CefetPark.Application.ViewModels.Request.FilaEstacionamento.Post;
@@ -10,6 +11,7 @@ using CefetPark.Application.ViewModels.Request.RegistroEntradaSaida.Post;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
 using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
+using CefetPark.Application.ViewModels.Response.Convidado.Get;
 using CefetPark.Application.ViewModels.Response.Endereco.Get;
 using CefetPark.Application.ViewModels.Response.Estacionamento.Get;
 using CefetPark.Application.ViewModels.Response.FilaEstacionamento.Get;
@@ -36,6 +38,8 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<CadastrarCommonRelationRequest, Usuario>();
             CreateMap<CadastrarCarroRequest, Carro>();
             CreateMap<CadastrarRegistroEntradaSaidaRequest, RegistroEntradaSaida>();
+            CreateMap<CadastrarConvidadoRequest, Convidado>();
+            CreateMap<CadastrarConvidadoCarroRequest, Carro>();
             #endregion
 
             #region Obter
@@ -51,10 +55,11 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<TipoUsuario, ObterCommonResponse>();
             CreateMap<Cor, ObterCommonResponse>();
             CreateMap<RegistroEntradaSaida, ObterRegistroEntradaSaidaSemSaidaResponse>();
-
+            CreateMap<Carro, ObterConvidadoCarroResponse>();
             CreateMap<EntrarFilaEstacionamentoRequest, EntrarFilaEstacionamento>();
             CreateMap<FilaEstacionamento, ObterFilaEstacionamentoResponse>();
             CreateMap<IntegranteFilaEstacionamento, ObterIntegrantesFilaEstacionamentoResponse>();
+            CreateMap<Convidado, ObterConvidadoResponse>();
             #endregion
 
 

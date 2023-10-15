@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CefetPark.WebApi.Controllers
 {
-    [Authorize(Roles = "Adm, Seguranca")]
     [Route("[controller]")]
     public class ConvidadoController : PrincipalController
     {
@@ -20,6 +19,7 @@ namespace CefetPark.WebApi.Controllers
             _convidadoService = convidadoService;
         }
 
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpPost]
         public async Task<ActionResult> CadastrarAsync(CadastrarConvidadoRequest request)
         {
@@ -27,6 +27,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpPut]
         public async Task<ActionResult> AtualizarAsync(AtualizarConvidadoRequest request)
         {
@@ -34,6 +35,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DesativarAsync(int id)
         {
@@ -41,6 +43,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet]
         public async Task<ActionResult> ObterTodosAsync()
         {
@@ -48,6 +51,7 @@ namespace CefetPark.WebApi.Controllers
             return CustomResponse(result);
         }
 
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpGet("{id}")]
         public async Task<ActionResult> ObterPorIdAsync(int id)
         {

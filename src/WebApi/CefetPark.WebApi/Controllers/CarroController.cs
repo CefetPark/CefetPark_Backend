@@ -20,7 +20,7 @@ namespace CefetPark.WebApi.Controllers
             _carroService = carroService;
         }
 
-        [Authorize(Roles = "Adm")]
+        [Authorize(Roles = "Adm, Seguranca")]
         [HttpPost]
         public async Task<ActionResult> CadastrarAsync(CadastrarCarroRequest request)
         {

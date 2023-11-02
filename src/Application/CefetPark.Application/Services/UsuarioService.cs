@@ -6,24 +6,20 @@ using CefetPark.Application.ViewModels.Request.Auth.Post;
 using CefetPark.Application.ViewModels.Request.Common.Post;
 using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
+using CefetPark.Application.ViewModels.Request.Usuario.Put;
 using CefetPark.Application.ViewModels.Response.Auth.Post;
-using CefetPark.Application.ViewModels.Response.Carro.Get;
-using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
+using CefetPark.Utils.Helpers;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Security.Claims;
-using System.Text;
-using System.Xml.Linq;
+
 
 namespace CefetPark.Application.Services
 {
@@ -85,7 +81,7 @@ namespace CefetPark.Application.Services
 
             };
 
-            var result = await _userManager.CreateAsync(user, request.Senha);
+            var result = await _userManager.CreateAsync(user, request.Cpf);
 
             if (!result.Succeeded)
             {
@@ -143,7 +139,7 @@ namespace CefetPark.Application.Services
 
         public async Task<ObterUsuarioResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id, new List<string> { "Carros", "TipoUsuario", "Departamentos" });
+            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id, new List<string> { "Carros", "TipoUsuario", "Departamento" });
 
             if (entidade == null)
             {
@@ -201,14 +197,43 @@ namespace CefetPark.Application.Services
             return response;
         }
 
-        //Task<bool> AtualizarAsync(AtualizarCommonRequest request)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<bool> AtualizarAsync(AtualizarUsuarioRequest request)
+        {
+            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(request.Id);
 
-        //Task<bool> DesativarAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            if (entidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return false;
+            }
+
+            _commonRepository.RastrearEntidade(entidade);
+
+            AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
+
+            await _commonRepository.SalvarAlteracoesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DesativarAsync(int id)
+        {
+            var entidade = await _commonRepository.ObterPorIdAsync<Usuario>(id);
+
+            if (entidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return false;
+            }
+
+            _commonRepository.RastrearEntidade(entidade);
+
+            entidade.Desativar();
+
+            await _commonRepository.SalvarAlteracoesAsync();
+
+            return true;
+        }
+
     }
 }

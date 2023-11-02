@@ -9,6 +9,8 @@ using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Infra.Caching;
 using CefetPark.Infra.Contexts;
 using CefetPark.Infra.Repositories;
+using CefetPark.Utils.External_Apis;
+using CefetPark.Utils.Interfaces.External_Apis;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +38,10 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<IRegistroEntradaSaidaService, RegistroEntradaSaidaService>();
             services.AddScoped<IFilaEstacionamentoService, FilaEstacionamentoService>();
             services.AddScoped<IConvidadoService, ConvidadoService>();
+            #endregion
+
+            #region External Apis
+            services.AddScoped<IGoogleGeoApi, GoogleGeoApi>();
             #endregion
 
             #region Repositories

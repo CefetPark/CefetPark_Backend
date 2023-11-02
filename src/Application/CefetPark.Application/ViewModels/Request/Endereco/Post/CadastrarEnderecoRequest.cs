@@ -12,6 +12,8 @@ namespace CefetPark.Application.ViewModels.Request.Endereco.Post
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Bairro { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Rua { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Cep { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Longitude { get; set; }

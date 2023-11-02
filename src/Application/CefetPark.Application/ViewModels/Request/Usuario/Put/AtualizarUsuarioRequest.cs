@@ -1,12 +1,17 @@
-﻿using CefetPark.Domain.Entidades;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CefetPark.Application.ViewModels.Request.Usuario.Post
+namespace CefetPark.Application.ViewModels.Request.Usuario.Put
 {
-    public class CadastrarUsuarioRequest
+    public class AtualizarUsuarioRequest
     {
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public int Id { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Cpf { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

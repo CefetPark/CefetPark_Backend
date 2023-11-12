@@ -32,7 +32,7 @@ namespace CefetPark.Application.Services
         }
         public async Task<bool> AtualizarAsync(AtualizarCarroRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id, new List<string> { "Usuarios" });
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(request.Id, new List<string> { "Convidados", "Usuarios"});
 
             if (entidade == null)
             {
@@ -42,13 +42,44 @@ namespace CefetPark.Application.Services
 
             _commonRepository.RastrearEntidade(entidade);
 
-
             AtualizacaoHelper.AtualizarCamposEntidadeComBaseNaViewModel(request, entidade);
 
-            entidade.Usuarios.Clear();
-            entidade.Usuarios = _mapper.Map<ICollection<Usuario>>(request.Usuarios);
+            var usuarios = await _commonRepository.ObterPorIdsAsync<Usuario>(request.Usuarios.Select(x => x.Id).ToList());
+            var convidados = await _commonRepository.ObterPorIdsAsync<Convidado>(request.Convidados.Select(x => x.Id).ToList());
 
-            _commonRepository.RastrearEntidades(entidade.Usuarios);
+
+            foreach(var usuario in usuarios)
+            {
+                if(entidade.Usuarios.FirstOrDefault(x => x.Id == usuario.Id) == null)
+                {
+                    entidade.Usuarios.Add(usuario);
+                }
+            }
+
+            foreach (var usuario in convidados)
+            {
+                if (entidade.Convidados.FirstOrDefault(x => x.Id == usuario.Id) == null)
+                {
+                    entidade.Convidados.Add(usuario);
+                }
+            }
+
+            foreach(var usuarioEntidade in entidade.Usuarios)
+            {
+                if(usuarios.FirstOrDefault(x => x.Id == usuarioEntidade.Id) == null)
+                {
+                    entidade.Usuarios.Remove(usuarioEntidade);
+                }
+            }
+
+            foreach (var convidadoEntidade in entidade.Convidados)
+            {
+                if (convidados.FirstOrDefault(x => x.Id == convidadoEntidade.Id) == null)
+                {
+                    entidade.Convidados.Remove(convidadoEntidade);
+                }
+            }
+
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
@@ -59,6 +90,7 @@ namespace CefetPark.Application.Services
             var entidade = _mapper.Map<Carro>(request);
 
             _commonRepository.RastrearEntidades(entidade.Usuarios);
+            _commonRepository.RastrearEntidades(entidade.Convidados);
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();
 
@@ -87,7 +119,7 @@ namespace CefetPark.Application.Services
 
         public async Task<ObterCarroResponse?> ObterPorIdAsync(int id)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(id, new List<string> { "Usuarios", "Cor", "Modelo" });
+            var entidade = await _commonRepository.ObterPorIdAsync<Carro>(id, new List<string> { "Usuarios", "Cor", "Modelo" , "Convidados"});
 
             if (entidade == null)
             {
@@ -96,6 +128,8 @@ namespace CefetPark.Application.Services
             }
 
             var response = _mapper.Map<ObterCarroResponse>(entidade);
+            response.Cor = entidade.Cor.Nome;
+            response.Modelo = entidade.Modelo.Nome;
 
             return response;
         }

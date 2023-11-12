@@ -7,6 +7,7 @@ using CefetPark.Domain.Entidades;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
 using CefetPark.Utils.Helpers;
+using CefetPark.Utils.Interfaces.External_Apis;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using System.Net;

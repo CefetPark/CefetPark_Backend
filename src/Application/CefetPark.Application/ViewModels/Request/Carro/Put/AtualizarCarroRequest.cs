@@ -19,7 +19,7 @@ namespace CefetPark.Application.ViewModels.Request.Carro.Put
         public int Cor_Id { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int Modelo_Id { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public ICollection<CadastrarCommonRelationRequest> Usuarios { get; set; }
+        public ICollection<CadastrarCommonRelationRequest> Convidados { get; set; }
     }
 }

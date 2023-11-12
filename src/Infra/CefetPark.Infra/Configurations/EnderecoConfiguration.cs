@@ -15,8 +15,10 @@ namespace CefetPark.Infra.Configurations
             #region Propriedades
             builder.Property(p => p.Nome).IsRequired().HasMaxLength(100);
             builder.Property(p => p.Numero).IsRequired().HasMaxLength(10);
+            builder.Property(p => p.TipoLogradouro).IsRequired().HasMaxLength(50);
             builder.Property(p => p.Complemento).HasMaxLength(50);
             builder.Property(p => p.Bairro).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.Rua).IsRequired().HasMaxLength(50);
             builder.Property(p => p.Cep).IsRequired().HasMaxLength(8).IsFixedLength();
             #endregion
         }

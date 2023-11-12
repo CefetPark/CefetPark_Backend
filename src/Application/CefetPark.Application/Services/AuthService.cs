@@ -119,6 +119,7 @@ namespace CefetPark.Application.Services
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
             claims.Add(new("Id", usuario.Id.ToString()));
+            claims.Add(new("Nome", usuario.Nome));
 
 
             foreach (var userRole in userRoles)

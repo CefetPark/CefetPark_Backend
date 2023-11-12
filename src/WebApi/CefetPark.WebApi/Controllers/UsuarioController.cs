@@ -1,5 +1,8 @@
 ﻿using CefetPark.Application.Interfaces.Services;
+using CefetPark.Application.Services;
+using CefetPark.Application.ViewModels.Request.Common.Put;
 using CefetPark.Application.ViewModels.Request.Usuario.Post;
+using CefetPark.Application.ViewModels.Request.Usuario.Put;
 using CefetPark.Utils.Interfaces.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +19,8 @@ namespace CefetPark.WebApi.Controllers
             _usuarioService = usuarioService;
         }
 
-        [Authorize(Roles = "Adm")]
-        [HttpPost("cadastrar")]
+        [AllowAnonymous]
+        [HttpPost()]
         public async Task<ActionResult> CadastrarAsync(CadastrarUsuarioRequest request)
         {
             var response = await _usuarioService.CadastrarAsync(request);
@@ -53,6 +56,20 @@ namespace CefetPark.WebApi.Controllers
         public async Task<ActionResult> ObterPorGuidIdAsync(string aspNetUser_Id)
         {
             var result = await _usuarioService.ObterPorGuidIdAsync(aspNetUser_Id);
+            return CustomResponse(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> AtualizarAsync(AtualizarUsuarioRequest request)
+        {
+            var result = await _usuarioService.AtualizarAsync(request);
+            return CustomResponse(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DesativarAsync(int id)
+        {
+            var result = await _usuarioService.DesativarAsync(id);
             return CustomResponse(result);
         }
     }

@@ -62,6 +62,11 @@ namespace CefetPark.WebApi.Configurations
                             .AllowAnyHeader());
             });
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443; // Porta HTTPS padrão
+            });
+
             return services;
         }
 

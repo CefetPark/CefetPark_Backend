@@ -40,6 +40,7 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<CadastrarRegistroEntradaSaidaRequest, RegistroEntradaSaida>();
             CreateMap<CadastrarConvidadoRequest, Convidado>();
             CreateMap<CadastrarConvidadoCarroRequest, Carro>();
+            CreateMap<CadastrarCommonRelationRequest, Convidado>();
             #endregion
 
             #region Obter
@@ -60,6 +61,7 @@ namespace CefetPark.Ioc.AutoMapper
             CreateMap<FilaEstacionamento, ObterFilaEstacionamentoResponse>();
             CreateMap<IntegranteFilaEstacionamento, ObterIntegrantesFilaEstacionamentoResponse>();
             CreateMap<Convidado, ObterConvidadoResponse>();
+            CreateMap<Convidado, ObterCarroConvidadoResponse>();
             #endregion
 
 

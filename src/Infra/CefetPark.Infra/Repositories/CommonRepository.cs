@@ -106,5 +106,11 @@ namespace CefetPark.Infra.Repositories
 
             return result;
         }
+
+        public async Task<ICollection<T>> ObterPorIdsAsync<T>(ICollection<int> ids) where T : CommonEntity
+        {
+            var result = await _dataContext.Set<T>().Where(x => ids.Contains(x.Id) && x.EstaAtivo).ToListAsync();
+            return result;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace CefetPark.Domain.Entidades
         public string? TelefoneSecundario { get; set; }
         public string EmailPrincipal { get; set; }
         public string? EmailSecundario { get; set; }
+        public bool TrocarSenha { get; set; }
         public int Departamento_Id { get; set; }
         public Departamento Departamento { get; set; }
         public int TipoUsuario_Id { get; set; }

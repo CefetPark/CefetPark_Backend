@@ -26,6 +26,7 @@ namespace CefetPark.Infra.Configurations
             builder.Property(p => p.TelefoneSecundario).HasMaxLength(15);
             builder.Property(p => p.EmailPrincipal).IsRequired().HasMaxLength(50);
             builder.Property(p => p.EmailSecundario).HasMaxLength(50);
+            builder.Property(p => p.TrocarSenha).IsRequired().HasDefaultValue(true);
             #endregion
 
             #region Índice Único

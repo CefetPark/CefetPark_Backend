@@ -21,5 +21,20 @@ namespace CefetPark.WebApi.Controllers
             var response = await _authService.LoginAsync(request);
             return CustomResponse(response);
         }
+
+        [HttpPost("esqueci-minha-senha")]
+        public async Task<ActionResult> EsqueciMinhaSenhaAsync(EsqueciMinhaSenhaRequest request)
+        {
+            var response = await _authService.EsqueciMinhaSenhaAsync(request);
+            return CustomResponse(response);
+        }
+
+        [Authorize]
+        [HttpPost("redefinir-minha-senha")]
+        public async Task<ActionResult> RedefinirMinhaSenhaAsync(RedefinirMinhaSenhaRequest request)
+        {
+            var response = await _authService.RedefinirMinhaSenhaAsync(request);
+            return CustomResponse(response);
+        }
     }
 }

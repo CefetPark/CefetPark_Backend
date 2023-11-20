@@ -49,7 +49,7 @@ namespace CefetPark.WebApi.Configurations
                 options.AddPolicy("Development",
                     builder =>
                         builder
-                        .AllowAnyOrigin()
+                        .WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 
@@ -58,7 +58,7 @@ namespace CefetPark.WebApi.Configurations
                     builder =>
                         builder
                             .AllowAnyMethod()
-                            .AllowAnyOrigin()
+                            .WithOrigins("http://cefet-park-site.vercel.app")
                             .AllowAnyHeader());
             });
 

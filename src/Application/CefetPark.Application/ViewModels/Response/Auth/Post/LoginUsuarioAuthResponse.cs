@@ -18,6 +18,7 @@ namespace CefetPark.Application.ViewModels.Response.Auth.Post
         public string EmailSecundario { get; set; }
         public string Departamento { get; set; }
         public string TipoUsuario { get; set; }
+        public bool TrocarSenha { get; set; }
         public ICollection<LoginCarroAuthResponse> Carros { get; set; }
     }
 }

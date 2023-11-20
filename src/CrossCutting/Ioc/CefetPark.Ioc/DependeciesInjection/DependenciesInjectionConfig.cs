@@ -42,6 +42,7 @@ namespace CefetPark.Ioc.DependeciesInjection
 
             #region External Apis
             services.AddScoped<IGoogleGeoApi, GoogleGeoApi>();
+            services.AddScoped<IEmailService, EmailService>();
             #endregion
 
             #region Repositories

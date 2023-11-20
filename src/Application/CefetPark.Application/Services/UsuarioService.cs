@@ -78,6 +78,7 @@ namespace CefetPark.Application.Services
             {
                 UserName = request.Cpf,
                 EmailConfirmed = true,
+                Email = request.EmailPrincipal,
 
             };
 

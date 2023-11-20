@@ -8,8 +8,11 @@ using CefetPark.Application.ViewModels.Response.Carro.Get;
 using CefetPark.Application.ViewModels.Response.Common.Get;
 using CefetPark.Application.ViewModels.Response.Usuario.Get;
 using CefetPark.Domain.Entidades;
+using CefetPark.Domain.Interfaces.Models;
 using CefetPark.Domain.Interfaces.Repositories;
 using CefetPark.Utils.Enums;
+using CefetPark.Utils.Helpers;
+using CefetPark.Utils.Interfaces.External_Apis;
 using CefetPark.Utils.Interfaces.Models;
 using CefetPark.Utils.Models;
 using Microsoft.AspNetCore.Identity;
@@ -32,12 +35,14 @@ namespace CefetPark.Application.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUser _user;
 
         private readonly ICommonRepository _commonRepository;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
-        public AuthService(INotificador notificador, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, RoleManager<IdentityRole> roleManager, ICommonRepository commonRepository, IUsuarioRepository usuarioRepository, IMapper mapper)
+        public AuthService(INotificador notificador, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, RoleManager<IdentityRole> roleManager, ICommonRepository commonRepository, IUsuarioRepository usuarioRepository, IMapper mapper, IEmailService emailService, IUser user)
         {
             _notificador = notificador;
             _signInManager = signInManager;
@@ -47,6 +52,8 @@ namespace CefetPark.Application.Services
             _commonRepository = commonRepository;
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _emailService = emailService;
+            _user = user;
         }
 
         public async Task<LoginAuthResponse> LoginAsync(LoginAuthRequest request)
@@ -89,12 +96,13 @@ namespace CefetPark.Application.Services
                 EmailSecundario = usuario.EmailSecundario,
                 Departamento = usuario.Departamento.Nome,
                 TipoUsuario = usuario.TipoUsuario.Nome,
+                TrocarSenha = usuario.TrocarSenha,
                 Carros = usuario.Carros.Select(x => new LoginCarroAuthResponse
                 {
                     Id = x.Id,
                     Cor = x.Cor.Nome,
                     Modelo = x.Modelo.Nome,
-                    Placa = x.Placa                    
+                    Placa = x.Placa
                 }).ToList()
             };
 
@@ -148,5 +156,90 @@ namespace CefetPark.Application.Services
 
         private static long ToUnixEpochDate(DateTime date)
             => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+
+        public async Task<bool> EsqueciMinhaSenhaAsync(EsqueciMinhaSenhaRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                return false;
+            }
+
+            var usuarioEntidade = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
+
+            if (usuarioEntidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                return false;
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var senha = SenhaHelper.GerarSenha(8);
+            var result = await _userManager.ResetPasswordAsync(user, token, senha);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _notificador.Handle(new Notificacao(error.Description));
+                }
+                return false;
+            }
+
+            await _emailService.EnviarEmailAsync(new EnviarEmailRequest { Senha = senha, Email = request.Email, NomeUsuario = usuarioEntidade.Nome });
+
+            _commonRepository.RastrearEntidade(usuarioEntidade);
+
+            usuarioEntidade.TrocarSenha = true;
+
+            await _commonRepository.SalvarAlteracoesAsync();
+
+
+            return true;
+
+
+
+        }
+
+        public async Task<bool> RedefinirMinhaSenhaAsync(RedefinirMinhaSenhaRequest request)
+        {
+
+            var usuarioEntidade = await _usuarioRepository.ObterPorIdAsync(_user.ObterUsuarioId());
+
+            if (usuarioEntidade == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                return false;
+            }
+
+            var user = await _userManager.FindByIdAsync(usuarioEntidade.AspNetUsers_Id);
+            if (user == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                return false;
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, request.Senha, request.NovaSenha);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _notificador.Handle(new Notificacao(error.Description));
+                }
+                return false;
+            }
+
+            _commonRepository.RastrearEntidade(usuarioEntidade);
+
+            usuarioEntidade.TrocarSenha = false;
+
+            await _commonRepository.SalvarAlteracoesAsync();
+
+            return true;
+
+        }
     }
 }

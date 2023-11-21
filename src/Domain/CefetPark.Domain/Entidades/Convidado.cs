@@ -4,6 +4,7 @@
     {
         public string Nome { get; set; }
         public string Cpf { get; set; }
+        public string Sicap { get; set; }
 
         public ICollection<RegistroEntradaSaida> RegistroEntradaSaidas { get; set; }
         public ICollection<Carro> Carros { get; set; }

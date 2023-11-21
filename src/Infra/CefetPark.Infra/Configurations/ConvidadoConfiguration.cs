@@ -11,6 +11,8 @@ namespace CefetPark.Infra.Configurations
         public void Configure(EntityTypeBuilder<Convidado> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Cpf);
+            builder.Property(x => x.Sicap);
             builder.HasMany(r => r.Carros).WithMany(c => c.Convidados);
             builder.HasMany(x => x.RegistroEntradaSaidas).WithOne(c => c.Convidado).HasForeignKey(x => x.Convidado_Id);
         }

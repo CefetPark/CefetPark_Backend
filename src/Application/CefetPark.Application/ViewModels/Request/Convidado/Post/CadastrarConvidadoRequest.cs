@@ -8,6 +8,8 @@ namespace CefetPark.Application.ViewModels.Request.Convidado.Post
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Cpf { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Sicap { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public ICollection<CadastrarConvidadoCarroRequest> Carros { get; set; }
     }
 }

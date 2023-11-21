@@ -8,6 +8,6 @@ namespace CefetPark.Application.ViewModels.Request.Auth.Post
 {
     public class EsqueciMinhaSenhaRequest
     {
-        public string Email { get; set; }
+        public string Cpf { get; set; }
     }
 }

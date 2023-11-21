@@ -38,7 +38,7 @@ namespace CefetPark.Application.Models
             }
 
             var claim = principal.FindFirst("Id");
-            if(claim == null) throw new Exception("Id não Encontrado no Token");
+            if (claim == null) return 0;
 
             return int.Parse(claim?.Value);
         }

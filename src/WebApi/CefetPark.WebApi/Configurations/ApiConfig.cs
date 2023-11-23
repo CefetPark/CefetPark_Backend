@@ -58,7 +58,7 @@ namespace CefetPark.WebApi.Configurations
                     builder =>
                         builder
                             .AllowAnyMethod()
-                            .WithOrigins("http://cefet-park-site.vercel.app")
+                            .AllowAnyOrigin()
                             .AllowAnyHeader());
             });
 

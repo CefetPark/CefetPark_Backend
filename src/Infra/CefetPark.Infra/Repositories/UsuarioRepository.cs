@@ -32,6 +32,14 @@ namespace CefetPark.Infra.Repositories
             return result;
         }
 
+        public async Task<Usuario?> ObterPorIdSemRelacionamentoAsync(int id)
+        {
+            var result = await _dataContext
+                .Usuarios
+                .FirstOrDefaultAsync(x => x.Id == id);
+            return result;
+        }
+
         public async Task<Usuario?> ObterPorGuidIdAsync(string aspNetUser_Id)
         {
             var result = await _dataContext

@@ -159,20 +159,23 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> EsqueciMinhaSenhaAsync(EsqueciMinhaSenhaRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null)
-            {
-                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
-                return false;
-            }
 
-            var usuarioEntidade = await _usuarioRepository.ObterPorGuidIdAsync(user.Id);
+            var usuarioEntidade = await _usuarioRepository.ObterPorCpfAsync(request.Cpf);
 
             if (usuarioEntidade == null)
             {
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
                 return false;
             }
+
+            var user = await _userManager.FindByIdAsync(usuarioEntidade.AspNetUsers_Id);
+            if (user == null)
+            {
+                _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
+                return false;
+            }
+
+            
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -188,7 +191,7 @@ namespace CefetPark.Application.Services
                 return false;
             }
 
-            await _emailService.EnviarEmailAsync(new EnviarEmailRequest { Senha = senha, Email = request.Email, NomeUsuario = usuarioEntidade.Nome });
+            await _emailService.EnviarEmailAsync(new EnviarEmailRequest { Senha = senha, Email = usuarioEntidade.EmailPrincipal, NomeUsuario = usuarioEntidade.Nome });
 
             _commonRepository.RastrearEntidade(usuarioEntidade);
 
@@ -220,8 +223,12 @@ namespace CefetPark.Application.Services
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA));
                 return false;
             }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var result = await _userManager.ChangePasswordAsync(user, request.Senha, request.NovaSenha);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, request.NovaSenha);
+
+
 
             if (!result.Succeeded)
             {

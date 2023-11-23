@@ -45,6 +45,14 @@ namespace CefetPark.Infra.Repositories
             return result;
         }
 
+        public async Task<Usuario?> ObterPorCpfAsync(string cpf)
+        {
+            var result = await _dataContext
+                .Usuarios
+                .FirstOrDefaultAsync(x => x.Cpf == cpf);
+            return result;
+        }
+
         public async Task<bool> MatriculaExisteAsync(string matricula)
         {
             var result = await _dataContext.Usuarios.Where(x => x.Matricula.Equals(matricula)).AnyAsync();

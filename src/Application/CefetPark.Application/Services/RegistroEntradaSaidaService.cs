@@ -63,17 +63,6 @@ namespace CefetPark.Application.Services
 
             estacionamento.QtdVagasLivres++;
 
-            var fila = await _filaEstacionamentoCaching.ObterFilaAsync(entidade.Estacionamento_Id);
-
-            if(fila != null)
-            {
-                await _filaEstacionamentoCaching.ChamarProximoDaFilaAsync(entidade.Estacionamento_Id);
-                var timer = new System.Timers.Timer(500000);
-
-                timer.Elapsed +=  (sender, e) =>  _filaEstacionamentoJob.TempoEsgotadoRetirarChamadoParaEstacionarAsync(entidade.Estacionamento_Id, timer);
-                timer.Start();
-            }
-
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
@@ -141,27 +130,6 @@ namespace CefetPark.Application.Services
             {
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.ESTACIONAMENTO_LOTADO));
                 return false;
-            }
-
-            var filaEstacionamento = await _filaEstacionamentoCaching.ObterFilaAsync(request.Estacionamento_Id);
-
-            if (filaEstacionamento != null)
-            {
-                if (filaEstacionamento.ChamadoParaEstacionar == null)
-                {
-                    _notificador.Handle(new Notificacao(EMensagemNotificacao.FILA_NINGUEM_FOI_CHAMADO));
-                    return false;
-                }
-
-                if (filaEstacionamento.ChamadoParaEstacionar.Usuario_Id != request.Usuario_Id || filaEstacionamento.ChamadoParaEstacionar.Carro_Id != request.Carro_Id)
-                {
-                    _notificador.Handle(new Notificacao(EMensagemNotificacao.RESPEITE_A_FILA_DO_ESTACIONAMENTO));
-                    return false;
-                }
-                else
-                {
-                    await _filaEstacionamentoCaching.LimparChamadoParaEstacionarAsync(request.Estacionamento_Id);
-                }
             }
 
             _commonRepository.RastrearEntidade(estacionamento);

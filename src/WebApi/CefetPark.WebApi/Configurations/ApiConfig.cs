@@ -79,8 +79,6 @@ namespace CefetPark.WebApi.Configurations
 
             app.UseMiddleware<ExceptionMiddleware>();
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();

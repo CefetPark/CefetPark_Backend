@@ -209,7 +209,7 @@ namespace CefetPark.Application.Services
         public async Task<bool> RedefinirMinhaSenhaAsync(RedefinirMinhaSenhaRequest request)
         {
 
-            var usuarioEntidade = await _usuarioRepository.ObterPorIdAsync(_user.ObterUsuarioId());
+            var usuarioEntidade = await _usuarioRepository.ObterPorIdSemRelacionamentoAsync(_user.ObterUsuarioId());
 
             if (usuarioEntidade == null)
             {

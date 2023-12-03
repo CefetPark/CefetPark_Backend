@@ -18,17 +18,19 @@ namespace CefetPark.Infra.Repositories
             _context = dataContext;
         }
 
-        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DateTime dia, ICollection<TimeSpan> horarios)
+        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DateTime dia, ICollection<TimeSpan> horarios, int? estacionamentoId)
         {
 
             
             var mediasQtdLivresPorHorario = new List<int>();
+            var query = _context.RegistrosEntradasSaidas.Include(x => x.RegistroOcupacao).AsQueryable();
 
+            if(estacionamentoId != null) query = query.Where(x => x.Estacionamento_Id == estacionamentoId);
             foreach (var horario in horarios)
             {
                 var horarioInicio = horario.Subtract(TimeSpan.FromHours(2));
 
-                var registrosNoHorario = await _context.RegistrosEntradasSaidas.Include(x => x.RegistroOcupacao)
+                var registrosNoHorario = await query
                     .Where(r => r.DataEntrada.Date == dia.Date &&
                                 r.DataEntrada.TimeOfDay >= horarioInicio &&
                                 r.DataEntrada.TimeOfDay <= horario &&

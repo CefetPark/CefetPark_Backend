@@ -17,10 +17,10 @@ namespace CefetPark.WebApi.Controllers
         }
 
         [Authorize()]
-        [HttpGet]
-        public async Task<ActionResult> ObterGraficoHojeAsync()
+        [HttpGet("obter-grafico-hoje")]
+        public async Task<ActionResult> ObterGraficoHojeAsync(int? estacionamentoId)
         {
-            var result = await _registroOcupacaoService.ObterGraficoHojeAsync();
+            var result = await _registroOcupacaoService.ObterGraficoHojeAsync(estacionamentoId);
             return CustomResponse(result);
         }
     }

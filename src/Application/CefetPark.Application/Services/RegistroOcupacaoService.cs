@@ -11,7 +11,7 @@ namespace CefetPark.Application.Services
         {
                 _registroOcupacaoRepository = registroOcupacaoRepository;
         }
-        public async Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHojeAsync()
+        public async Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHojeAsync(int? estacionamentoId)
         {
             var horarios = new List<TimeSpan>()
             {
@@ -24,7 +24,7 @@ namespace CefetPark.Application.Services
                 new TimeSpan(19, 0, 0),
                 new TimeSpan(21, 0, 0),
             };
-            var medias = await _registroOcupacaoRepository.ObterMediasQtdLivresPorHorarioAsync(DateTime.Now, horarios);
+            var medias = await _registroOcupacaoRepository.ObterMediasQtdLivresPorHorarioAsync(DateTime.Now, horarios, estacionamentoId);
 
 
             var response = new ObterGraficoHojeRegistroOcupacaoRequest

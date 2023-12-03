@@ -8,5 +8,6 @@
         public int Endereco_Id { get; set; }
         public Endereco Endereco { get; set; }
         public ICollection<RegistroEntradaSaida> RegistrosEntradasSaidas { get; set; }
+        public ICollection<RegistroOcupacao> RegistrosOcupacoes { get; set; }
     }
 }

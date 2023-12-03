@@ -26,6 +26,7 @@ namespace CefetPark.Ioc.DependeciesInjection
            
 
             #region Services
+            services.AddScoped<IRegistroOcupacaoService, RegistroOcupacaoService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEstacionamentoService, EstacionamentoService>();
             services.AddScoped<IDepartamentoService, DepartamentoService>();
@@ -50,6 +51,7 @@ namespace CefetPark.Ioc.DependeciesInjection
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IRegistroEntradaSaidaRepository, RegistroEntradaSaidaRepository>();
             services.AddScoped<ICarroRepository, CarroRepository>();
+            services.AddScoped<IRegistroOcupacaoRepository, RegistroOcupacaoRepository>();
             #endregion
 
             #region Cachings

@@ -20,15 +20,15 @@ namespace CefetPark.WebApi.Configurations
                 options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
             });
 
-            var redisConnectionSection = configuration.GetSection("RedisConnection");
-            services.Configure<RedisConnection>(redisConnectionSection);
+            //var redisConnectionSection = configuration.GetSection("RedisConnection");
+            //services.Configure<RedisConnection>(redisConnectionSection);
 
-            var redisConnection = redisConnectionSection.Get<RedisConnection>();
-            services.AddStackExchangeRedisCache(o =>
-            {
-                o.InstanceName = redisConnection.InstanceName;
-                o.Configuration = redisConnection.Configuration;
-            });
+            //var redisConnection = redisConnectionSection.Get<RedisConnection>();
+            //services.AddStackExchangeRedisCache(o =>
+            //{
+            //    o.InstanceName = redisConnection.InstanceName;
+            //    o.Configuration = redisConnection.Configuration;
+            //});
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

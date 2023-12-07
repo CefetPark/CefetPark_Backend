@@ -12,5 +12,7 @@
         public Carro Carro { get; set; }
         public int? Convidado_Id { get; set; }
         public Convidado Convidado { get; set; }
+        public RegistroOcupacao RegistroOcupacao { get; set; }
+        public int RegistroOcupacao_Id { get; set; }
     }
 }

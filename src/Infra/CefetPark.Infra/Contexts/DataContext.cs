@@ -10,6 +10,8 @@ namespace CefetPark.Infra.Contexts
     public class DataContext : DbContext
     {
         public DbSet<Carro> Carros { get; set; }
+        public DbSet<RegistroOcupacao> RegistrosOcupacoes { get; set; }
+
         public DbSet<Cor> Cores { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }

@@ -179,7 +179,7 @@ namespace CefetPark.Application.Services
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var senha = SenhaHelper.GerarSenha(8);
+            var senha  = $"Cefet{request.Cpf.Substring(0, 3)}!";
             var result = await _userManager.ResetPasswordAsync(user, token, senha);
 
             if (!result.Succeeded)

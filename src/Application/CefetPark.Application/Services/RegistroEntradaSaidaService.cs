@@ -40,7 +40,7 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> AtualizarAsync(AtualizarRegistroEntradaSaidaRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<RegistroEntradaSaida>(request.Id, new List<string>() { "RegistroOcupacao"});
+            var entidade = await _commonRepository.ObterPorIdAsync<RegistroEntradaSaida>(request.Id);
 
             if (entidade == null)
             {
@@ -63,8 +63,9 @@ namespace CefetPark.Application.Services
 
             estacionamento.QtdVagasLivres++;
 
-            entidade.RegistroOcupacao.QuantidadeVagasLivreSaida = estacionamento.QtdVagasLivres;
+            var registro = new RegistroOcupacao { QuantidadeVagasLivresEntrada = estacionamento.QtdVagasLivres, Estacionamento_Id = estacionamento.Id, DataEntrada = entidade.DataEntrada, DataSaida = entidade.DataSaida  };
 
+            await _commonRepository.AdicionarEntidadeAsync(registro);
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
@@ -143,7 +144,7 @@ namespace CefetPark.Application.Services
             if (entidade.Usuario_Id == 0) entidade.Usuario_Id = null;
             else entidade.Convidado_Id = null;
 
-            entidade.RegistroOcupacao = new RegistroOcupacao { QuantidadeVagasLivresEntrada = estacionamento.QtdVagasLivres, Estacionamento_Id = estacionamento.Id };
+            
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();

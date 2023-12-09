@@ -29,6 +29,7 @@ namespace CefetPark.WebApi.Configurations
                 options.Password.RequireLowercase = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()

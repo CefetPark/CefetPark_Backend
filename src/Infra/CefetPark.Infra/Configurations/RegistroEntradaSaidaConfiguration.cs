@@ -16,7 +16,7 @@ namespace CefetPark.Infra.Configurations
             builder.Property(p => p.DataSaida);
             #endregion
 
-            builder.HasOne(x => x.RegistroOcupacao).WithOne(y => y.RegistroEntradaSaida).HasForeignKey<RegistroEntradaSaida>(x => x.RegistroOcupacao_Id);
+
         }
     }
 }

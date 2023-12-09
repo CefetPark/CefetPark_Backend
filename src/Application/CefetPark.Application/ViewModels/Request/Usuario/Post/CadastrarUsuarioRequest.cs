@@ -8,6 +8,7 @@ namespace CefetPark.Application.ViewModels.Request.Usuario.Post
     public class CadastrarUsuarioRequest
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "O CPF deve ter exatamente 11 dígitos")]
         public string Cpf { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Matricula { get; set; }

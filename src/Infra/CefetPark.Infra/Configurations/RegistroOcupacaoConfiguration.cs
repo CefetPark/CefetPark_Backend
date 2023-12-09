@@ -14,7 +14,9 @@ namespace CefetPark.Infra.Configurations
 
             #region Propriedades
             builder.Property(x => x.QuantidadeVagasLivresEntrada);
-            builder.Property(x => x.QuantidadeVagasLivreSaida);
+            builder.Property(x => x.DataEntrada);
+            builder.Property(x => x.DataSaida);
+
             #endregion
             builder.HasOne(x => x.Estacionamento).WithMany(y => y.RegistrosOcupacoes).HasForeignKey(x => x.Estacionamento_Id);
             

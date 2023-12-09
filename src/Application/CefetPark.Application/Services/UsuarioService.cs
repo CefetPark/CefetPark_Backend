@@ -81,8 +81,8 @@ namespace CefetPark.Application.Services
                 Email = request.EmailPrincipal,
 
             };
-
-            var result = await _userManager.CreateAsync(user, request.Cpf);
+            var senha = $"Cefet{request.Cpf.Substring(0, 3)}!";
+            var result = await _userManager.CreateAsync(user, senha);
 
             if (!result.Succeeded)
             {

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CefetPark.Infra.Migrations.Data
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231203194130_registro-ocupacao-add")]
-    partial class registroocupacaoadd
+    [Migration("20231209022431_add-registro-ocupacao")]
+    partial class addregistroocupacao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -425,9 +425,6 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<int>("Estacionamento_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("RegistroOcupacao_Id")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Usuario_Id")
                         .HasColumnType("int");
 
@@ -438,9 +435,6 @@ namespace CefetPark.Infra.Migrations.Data
                     b.HasIndex("Convidado_Id");
 
                     b.HasIndex("Estacionamento_Id");
-
-                    b.HasIndex("RegistroOcupacao_Id")
-                        .IsUnique();
 
                     b.HasIndex("Usuario_Id");
 
@@ -465,19 +459,19 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<DateTime>("DataEntrada")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DataSaida")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("EstaAtivo")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Estacionamento_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QuantidadeVagasLivreSaida")
-                        .HasColumnType("int");
-
                     b.Property<int>("QuantidadeVagasLivresEntrada")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RegistroEntradaSaida_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -689,12 +683,6 @@ namespace CefetPark.Infra.Migrations.Data
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CefetPark.Domain.Entidades.RegistroOcupacao", "RegistroOcupacao")
-                        .WithOne("RegistroEntradaSaida")
-                        .HasForeignKey("CefetPark.Domain.Entidades.RegistroEntradaSaida", "RegistroOcupacao_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CefetPark.Domain.Entidades.Usuario", "Usuario")
                         .WithMany("RegistrosEntradasSaidas")
                         .HasForeignKey("Usuario_Id");
@@ -704,8 +692,6 @@ namespace CefetPark.Infra.Migrations.Data
                     b.Navigation("Convidado");
 
                     b.Navigation("Estacionamento");
-
-                    b.Navigation("RegistroOcupacao");
 
                     b.Navigation("Usuario");
                 });
@@ -781,12 +767,6 @@ namespace CefetPark.Infra.Migrations.Data
             modelBuilder.Entity("CefetPark.Domain.Entidades.Modelo", b =>
                 {
                     b.Navigation("Carros");
-                });
-
-            modelBuilder.Entity("CefetPark.Domain.Entidades.RegistroOcupacao", b =>
-                {
-                    b.Navigation("RegistroEntradaSaida")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CefetPark.Domain.Entidades.TipoUsuario", b =>

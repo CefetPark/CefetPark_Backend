@@ -23,7 +23,7 @@ namespace CefetPark.Infra.Repositories
 
             
             var mediasQtdLivresPorHorario = new List<int>();
-            var query = _context.RegistrosEntradasSaidas.Include(x => x.RegistroOcupacao).AsQueryable();
+            var query = _context.RegistrosOcupacoes.AsQueryable();
 
             if(estacionamentoId != null) query = query.Where(x => x.Estacionamento_Id == estacionamentoId);
             foreach (var horario in horarios)
@@ -41,7 +41,7 @@ namespace CefetPark.Infra.Repositories
                 if (registrosNoHorario.Any())
                 {
                     mediaQtdLivres = (int)registrosNoHorario
-                    .Average(r => r.RegistroOcupacao.QuantidadeVagasLivresEntrada);
+                    .Average(r => r.QuantidadeVagasLivresEntrada);
                 }
                 else
                 {

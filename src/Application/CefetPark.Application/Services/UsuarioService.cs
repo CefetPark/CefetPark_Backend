@@ -236,5 +236,44 @@ namespace CefetPark.Application.Services
             return true;
         }
 
+
+        public List<RegistroOcupacao> CriarRegistrosAleatorios(int quantidade)
+        {
+            Random rand = new Random();
+            var registros = new List<RegistroOcupacao>();
+
+            for (int i = 0; i < quantidade; i++)
+            {
+                DateTime data = GerarDataAleatoria(7, 22);
+
+                var registro= new RegistroOcupacao
+                {
+                    QuantidadeVagasLivres = rand.Next(1, 20), // Quantidade entre 1 e 9
+                    Data = data,
+                    RegistroEntradaSaida_Id = rand.Next(1, 4) // Id entre 1 e 3
+                };
+
+                registros.Add(registro);
+            }
+
+            return registros;
+        }
+
+        public DateTime GerarDataAleatoria(int horaInicial, int horaFinal)
+        {
+            Random rand = new Random();
+            DateTime dataAleatoria = DateTime.Now.Date; // Inicializa com a data atual
+
+            // Gera hora aleatória entre horaInicial e horaFinal
+            int hora = rand.Next(horaInicial, horaFinal + 1);
+            dataAleatoria = dataAleatoria.AddHours(hora);
+
+            // Gera minutos e segundos aleatórios
+            dataAleatoria = dataAleatoria.AddMinutes(rand.Next(0, 60));
+            dataAleatoria = dataAleatoria.AddSeconds(rand.Next(0, 60));
+
+            return dataAleatoria;
+        }
+
     }
 }

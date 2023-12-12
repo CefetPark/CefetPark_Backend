@@ -3,9 +3,11 @@ using CefetPark.Application.ViewModels.Request.Carro.Post;
 using CefetPark.Utils.Interfaces.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace CefetPark.WebApi.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class RegistroOcupacaoController : PrincipalController
     {
@@ -16,11 +18,11 @@ namespace CefetPark.WebApi.Controllers
             _registroOcupacaoService = registroOcupacaoService;
         }
 
-        [Authorize()]
-        [HttpGet("obter-grafico-hoje")]
-        public async Task<ActionResult> ObterGraficoHojeAsync(int? estacionamentoId)
+        
+        [HttpGet("obter-grafico-historico-ocupacao")]
+        public async Task<ActionResult> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, [EnumDataType(typeof(DayOfWeek))]  DayOfWeek dia)
         {
-            var result = await _registroOcupacaoService.ObterGraficoHojeAsync(estacionamentoId);
+            var result = await _registroOcupacaoService.ObterGraficoHistoricoOcupacaoAsync(estacionamentoId, dia);
             return CustomResponse(result);
         }
     }

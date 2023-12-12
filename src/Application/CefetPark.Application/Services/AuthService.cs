@@ -246,7 +246,6 @@ namespace CefetPark.Application.Services
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
-
         }
     }
 }

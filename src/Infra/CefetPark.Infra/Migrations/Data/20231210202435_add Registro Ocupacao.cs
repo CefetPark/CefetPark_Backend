@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CefetPark.Infra.Migrations.Data
 {
-    public partial class addregistroocupacao : Migration
+    public partial class addRegistroOcupacao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,10 +16,10 @@ namespace CefetPark.Infra.Migrations.Data
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    QuantidadeVagasLivresEntrada = table.Column<int>(type: "int", nullable: false),
-                    DataEntrada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataSaida = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Estacionamento_Id = table.Column<int>(type: "int", nullable: false),
+                    QuantidadeVagasLivres = table.Column<int>(type: "int", nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    RegistroEntradaSaida_Id = table.Column<int>(type: "int", nullable: false),
+                    EstacionamentoId = table.Column<int>(type: "int", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CriadoPor = table.Column<int>(type: "int", nullable: false),
@@ -30,18 +30,28 @@ namespace CefetPark.Infra.Migrations.Data
                 {
                     table.PrimaryKey("PK_RegistrosOcupacoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RegistrosOcupacoes_Estacionamentos_Estacionamento_Id",
-                        column: x => x.Estacionamento_Id,
+                        name: "FK_RegistrosOcupacoes_Estacionamentos_EstacionamentoId",
+                        column: x => x.EstacionamentoId,
                         principalTable: "Estacionamentos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RegistrosOcupacoes_RegistrosEntradasSaidas_RegistroEntradaSa~",
+                        column: x => x.RegistroEntradaSaida_Id,
+                        principalTable: "RegistrosEntradasSaidas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistrosOcupacoes_Estacionamento_Id",
+                name: "IX_RegistrosOcupacoes_EstacionamentoId",
                 table: "RegistrosOcupacoes",
-                column: "Estacionamento_Id");
+                column: "EstacionamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegistrosOcupacoes_RegistroEntradaSaida_Id",
+                table: "RegistrosOcupacoes",
+                column: "RegistroEntradaSaida_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

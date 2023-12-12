@@ -21,6 +21,11 @@ namespace CefetPark.Infra.Repositories
             await _dataContext.AddAsync(entidade);
             return true;
         }
+        public async Task<bool> AdicionarEntidadesAsync<T>(List<T> entidades) where T : CommonEntity
+        {
+            await _dataContext.AddRangeAsync(entidades);
+            return true;
+        }
 
         public bool RastrearEntidade<T>(T entidade) where T : CommonEntity
         {

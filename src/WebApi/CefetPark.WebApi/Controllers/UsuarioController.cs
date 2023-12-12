@@ -18,8 +18,6 @@ namespace CefetPark.WebApi.Controllers
         {
             _usuarioService = usuarioService;
         }
-
-        [AllowAnonymous]
         [HttpPost()]
         public async Task<ActionResult> CadastrarAsync(CadastrarUsuarioRequest request)
         {

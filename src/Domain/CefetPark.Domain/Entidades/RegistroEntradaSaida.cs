@@ -12,5 +12,6 @@
         public Carro Carro { get; set; }
         public int? Convidado_Id { get; set; }
         public Convidado Convidado { get; set; }
+        public ICollection<RegistroOcupacao> RegistrosOcupacao { get; set; } = new List<RegistroOcupacao>();
     }
 }

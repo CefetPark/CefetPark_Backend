@@ -1,4 +1,5 @@
 ﻿using CefetPark.Domain.Interfaces.Repositories;
+using CefetPark.Domain.Models;
 using CefetPark.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,38 +19,47 @@ namespace CefetPark.Infra.Repositories
             _context = dataContext;
         }
 
-        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DateTime dia, ICollection<TimeSpan> horarios, int? estacionamentoId)
+        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DayOfWeek dia, ICollection<HorariosGraficoModel> horarios, int? estacionamentoId)
         {
 
-            
+
             var mediasQtdLivresPorHorario = new List<int>();
             var query = _context.RegistrosOcupacoes.AsQueryable();
+            int quantidadeTotalVagas;
 
-            if(estacionamentoId != null) query = query.Where(x => x.Estacionamento_Id == estacionamentoId);
+            if (estacionamentoId != null)
+            {
+                query = query.Where(x => x.RegistroEntradaSaida.Estacionamento_Id == estacionamentoId);
+                quantidadeTotalVagas = (await _context.Estacionamentos.FirstAsync(x => x.Id == estacionamentoId)).QtdVagasTotal;
+            }
+            else
+            {
+                quantidadeTotalVagas = (int)await _context.Estacionamentos.AverageAsync(x => x.QtdVagasTotal);
+            }
+
+            var dataLimite = DateTime.Now.AddMonths(-3);
             foreach (var horario in horarios)
             {
-                var horarioInicio = horario.Subtract(TimeSpan.FromHours(2));
 
-                var registrosNoHorario = await query
-                    .Where(r => r.DataEntrada.Date == dia.Date &&
-                                r.DataEntrada.TimeOfDay >= horarioInicio &&
-                                r.DataEntrada.TimeOfDay <= horario &&
-                                (!r.DataSaida.HasValue || r.DataSaida.Value.TimeOfDay >= horarioInicio))
-                    .ToListAsync();
+                var quantidadeTotalLivres = await query
+     .Where(r => r.Data >= dataLimite &&
+                 r.Data.Hour >= horario.Inicial.Hours &&
+                 r.Data.Hour < horario.Final.Hours &&
+                 r.Data.DayOfWeek == dia)
+     .SumAsync(r => r.QuantidadeVagasLivres);
 
-                int mediaQtdLivres;
-                if (registrosNoHorario.Any())
-                {
-                    mediaQtdLivres = (int)registrosNoHorario
-                    .Average(r => r.QuantidadeVagasLivresEntrada);
-                }
-                else
-                {
-                    mediaQtdLivres = 0;
-                }
-                
+                var quantidadeRegistros = await query
+                    .CountAsync(r => r.Data >= dataLimite &&
+                                     r.Data.Hour >= horario.Inicial.Hours &&
+                                     r.Data.Hour < horario.Final.Hours &&
+                                     r.Data.DayOfWeek == dia);
 
-                mediasQtdLivresPorHorario.Add(mediaQtdLivres);
+                var mediaVagasLivres = quantidadeRegistros > 0 ? (quantidadeTotalLivres / quantidadeRegistros) : 0;
+                var porcentagemVagasLivres = (((double)mediaVagasLivres / quantidadeTotalVagas)) * 100;
+
+                double porcentagemVagasOcupadas = porcentagemVagasLivres != 0 ? 100 - porcentagemVagasLivres : 0;
+
+                mediasQtdLivresPorHorario.Add((int)porcentagemVagasOcupadas);
             }
 
             return mediasQtdLivresPorHorario;

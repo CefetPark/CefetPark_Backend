@@ -44,9 +44,6 @@ namespace CefetPark.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> ObterTodosAsync()
         {
-            var client = new HttpClient();
-          var result2 = await client.GetAsync("https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:20775020&key=AIzaSyCHgKH-eygqNT50LdgzEuT6ssaTkDq9y80");
-            string content = await result2.Content.ReadAsStringAsync();
             var result = await _marcaService.ObterTodosAsync();
             return CustomResponse(result);
         }

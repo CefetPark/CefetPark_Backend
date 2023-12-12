@@ -40,11 +40,17 @@ namespace CefetPark.Application.Services
 
         public async Task<bool> AtualizarAsync(AtualizarRegistroEntradaSaidaRequest request)
         {
-            var entidade = await _commonRepository.ObterPorIdAsync<RegistroEntradaSaida>(request.Id);
+            var entidade = await _commonRepository.ObterPorIdAsync<RegistroEntradaSaida>(request.Id, new List<string> { "RegistrosOcupacao"});
 
             if (entidade == null)
             {
                 _notificador.Handle(new Notificacao(EMensagemNotificacao.ENTIDADE_NAO_ENCONTRADA, HttpStatusCode.NotFound));
+                return false;
+            }
+
+            if(entidade.DataSaida != null)
+            {
+                _notificador.Handle(new Notificacao("Esse carro não se encontra no estacionamento"));
                 return false;
             }
 
@@ -63,9 +69,10 @@ namespace CefetPark.Application.Services
 
             estacionamento.QtdVagasLivres++;
 
-            var registro = new RegistroOcupacao { QuantidadeVagasLivresEntrada = estacionamento.QtdVagasLivres, Estacionamento_Id = estacionamento.Id, DataEntrada = entidade.DataEntrada, DataSaida = entidade.DataSaida  };
 
-            await _commonRepository.AdicionarEntidadeAsync(registro);
+            entidade.RegistrosOcupacao.Add(new RegistroOcupacao { Data = entidade.DataSaida.Value, QuantidadeVagasLivres = estacionamento.QtdVagasLivres });
+
+
             await _commonRepository.SalvarAlteracoesAsync();
 
             return true;
@@ -144,7 +151,8 @@ namespace CefetPark.Application.Services
             if (entidade.Usuario_Id == 0) entidade.Usuario_Id = null;
             else entidade.Convidado_Id = null;
 
-            
+            entidade.RegistrosOcupacao.Add(new RegistroOcupacao { Data = entidade.DataEntrada, QuantidadeVagasLivres = estacionamento.QtdVagasLivres });
+          
 
             await _commonRepository.AdicionarEntidadeAsync(entidade);
             await _commonRepository.SalvarAlteracoesAsync();

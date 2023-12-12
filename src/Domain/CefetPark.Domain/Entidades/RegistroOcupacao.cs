@@ -2,11 +2,10 @@
 {
     public class RegistroOcupacao : CommonEntity
     {
-        public int QuantidadeVagasLivresEntrada { get; set; }
-        public DateTime DataEntrada { get; set; }
-        public DateTime? DataSaida { get; set; }
-        public int Estacionamento_Id { get; set; }
-        public Estacionamento Estacionamento { get; set; }
+        public int QuantidadeVagasLivres { get; set; }
+        public DateTime Data { get; set; }
+        public int RegistroEntradaSaida_Id { get; set; }
+        public RegistroEntradaSaida RegistroEntradaSaida { get; set; }
     }
     
 }

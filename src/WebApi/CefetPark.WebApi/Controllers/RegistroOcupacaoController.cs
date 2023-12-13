@@ -18,8 +18,9 @@ namespace CefetPark.WebApi.Controllers
             _registroOcupacaoService = registroOcupacaoService;
         }
 
-        
-        [HttpGet("obter-grafico-historico-ocupacao")]
+
+        //[HttpGet("obter-grafico-historico-ocupacao")]
+        [HttpGet("obter-grafico-hoje")]
         public async Task<ActionResult> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, [EnumDataType(typeof(DayOfWeek))]  DayOfWeek dia)
         {
             var result = await _registroOcupacaoService.ObterGraficoHistoricoOcupacaoAsync(estacionamentoId, dia);

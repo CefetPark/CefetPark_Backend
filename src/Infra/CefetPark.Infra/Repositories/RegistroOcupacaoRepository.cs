@@ -19,9 +19,9 @@ namespace CefetPark.Infra.Repositories
             _context = dataContext;
         }
 
-        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DayOfWeek dia, ICollection<HorariosGraficoModel> horarios, int? estacionamentoId)
+        public async Task<ICollection<int>> ObterMediasQtdLivresPorHorarioAsync(DayOfWeek? dia, ICollection<HorariosGraficoModel> horarios, int? estacionamentoId)
         {
-
+            dia = dia == null ? DateTime.Now.DayOfWeek : dia;
 
             var mediasQtdLivresPorHorario = new List<int>();
             var query = _context.RegistrosOcupacoes.AsQueryable();
@@ -42,11 +42,11 @@ namespace CefetPark.Infra.Repositories
             {
 
                 var quantidadeTotalLivres = await query
-     .Where(r => r.Data >= dataLimite &&
-                 r.Data.Hour >= horario.Inicial.Hours &&
-                 r.Data.Hour < horario.Final.Hours &&
-                 r.Data.DayOfWeek == dia)
-     .SumAsync(r => r.QuantidadeVagasLivres);
+                                             .Where(r => r.Data >= dataLimite &&
+                                                         r.Data.Hour >= horario.Inicial.Hours &&
+                                                         r.Data.Hour < horario.Final.Hours &&
+                                                         r.Data.DayOfWeek == dia)
+                                             .SumAsync(r => r.QuantidadeVagasLivres);
 
                 var quantidadeRegistros = await query
                     .CountAsync(r => r.Data >= dataLimite &&
@@ -54,8 +54,8 @@ namespace CefetPark.Infra.Repositories
                                      r.Data.Hour < horario.Final.Hours &&
                                      r.Data.DayOfWeek == dia);
 
-                var mediaVagasLivres = quantidadeRegistros > 0 ? (quantidadeTotalLivres / quantidadeRegistros) : 0;
-                var porcentagemVagasLivres = (((double)mediaVagasLivres / quantidadeTotalVagas)) * 100;
+                double mediaVagasLivres = quantidadeRegistros > 0 ? ((double)quantidadeTotalLivres / quantidadeRegistros) : 0;
+                double porcentagemVagasLivres = (((double)mediaVagasLivres / quantidadeTotalVagas)) * 100;
 
                 double porcentagemVagasOcupadas = porcentagemVagasLivres != 0 ? 100 - porcentagemVagasLivres : 0;
 

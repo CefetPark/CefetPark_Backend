@@ -12,7 +12,7 @@ namespace CefetPark.Application.Services
         {
             _registroOcupacaoRepository = registroOcupacaoRepository;
         }
-        public async Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, DayOfWeek dia)
+        public async Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, DayOfWeek? dia)
         {
             var horarios = new List<HorariosGraficoModel>()
             {

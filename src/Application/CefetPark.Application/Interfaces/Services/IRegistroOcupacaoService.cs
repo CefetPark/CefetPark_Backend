@@ -9,6 +9,6 @@ namespace CefetPark.Application.Interfaces.Services
 {
     public interface IRegistroOcupacaoService
     {
-        public Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, DayOfWeek dia);
+        public Task<ObterGraficoHojeRegistroOcupacaoRequest> ObterGraficoHistoricoOcupacaoAsync(int? estacionamentoId, DayOfWeek? dia);
     }
 }

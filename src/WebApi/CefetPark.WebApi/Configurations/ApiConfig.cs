@@ -15,7 +15,7 @@ namespace CefetPark.WebApi.Configurations
 
             services.AddDbContext<DataContext>(options =>
             {
-                string defaultConnection = configuration.GetConnectionString("DefaultConnection");
+                string defaultConnection = Environment.GetEnvironmentVariable("defaultConnection");
 
                 options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
             });
